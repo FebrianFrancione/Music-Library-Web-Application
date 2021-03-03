@@ -4,7 +4,7 @@ import Soap.service.HelloWorldImpl;
 import org.glassfish.grizzly.http.server.HttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
-import org.glassfish.grizzly.jaxws.JaxwsHandler;
+//import org.glassfish.grizzly.jaxws.JaxwsHandler;
 
 import java.io.IOException;
 
@@ -26,14 +26,14 @@ public class ServicePublisher {
         System.out.println("SOAP Service listening on " + BASE_URI + "?wsdl");
 
         NetworkListener networkListener = new NetworkListener("jaxws-listener", "0.0.0.0", port);
-        HttpHandler httpHandler = new JaxwsHandler(new HelloWorldImpl());
-
-        HttpServer httpServer = new HttpServer();
-        httpServer.getServerConfiguration().addHttpHandler(httpHandler, servicePath);
-        httpServer.addListener(networkListener);
-
-        httpServer.start();
-        System.in.read();
-        httpServer.stop();
+//        HttpHandler httpHandler = new JaxwsHandler(new HelloWorldImpl());
+//
+//        HttpServer httpServer = new HttpServer();
+//        httpServer.getServerConfiguration().addHttpHandler(httpHandler, servicePath);
+//        httpServer.addListener(networkListener);
+//
+//        httpServer.start();
+//        System.in.read();
+//        httpServer.stop();
 	}
 }
