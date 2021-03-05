@@ -14,6 +14,21 @@ import java.io.IOException;
 
 public class AlbumClient {
 
+//    placeholder for Album Files
+    public void getAlbumImage(){
+        try(CloseableHttpClient client = HttpClients.createDefault()){
+            HttpGet request = new HttpGet("http://localhost:8080/core/files/txt");
+            ResponseHandler<String> responseHandler = readResponse();
+            String result = client.execute(request, responseHandler);
+            System.out.println();
+            System.out.println(result);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+//    end
+
     public void showAll(){
         try(CloseableHttpClient client = HttpClients.createDefault()){
             HttpGet request = new HttpGet("http://localhost:8080/core/album/list");

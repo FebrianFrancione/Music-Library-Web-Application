@@ -1,8 +1,10 @@
 package client;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import Exception.RepException;
 
 public class ClientDriver {
 
@@ -122,6 +124,10 @@ public class ClientDriver {
                 case 6:
                     System.out.println("Exiting albums driver.");
                     break;
+                case 7:
+                    displayAlbumImage();
+                case 8:
+                   uploadAlbumImage();
                 default:
                     System.out.println("You chose an invalid option.");
             }
@@ -139,6 +145,8 @@ public class ClientDriver {
         System.out.println("4. Update existing album info");
         System.out.println("5. Delete an existing album");
         System.out.println("6. Return to main menu");
+        System.out.println("7. displayAlbumImage file Stuff (Placeholder)");
+        System.out.println("8. uploadAlbumImage file Stuff (Placeholder)");
         System.out.println();
 
         System.out.print("Please choose one of the above numbers : ");
@@ -149,7 +157,8 @@ public class ClientDriver {
         }catch(InputMismatchException e){
             sc.nextLine();
             System.out.println("Please enter a number. Try again.");
-            return 0;
+            throw new RepException("Incorrect" + e);
+//            return 0;
         }
     }
 
@@ -183,6 +192,38 @@ public class ClientDriver {
     private static void displayArtists(){
         artistClient.showAll();
 
+    }
+
+    private static void displayAlbumImage(){
+        System.out.println("Here are the files you can retrieve");
+        String[] pathnames;
+
+        // Creates a new File instance by converting the given pathname string
+        // into an abstract pathname
+        File f = new File("demo/src/main/java/savedFiles");
+
+        // Populates the array with names of files and directories
+        pathnames = f.list();
+
+        // For each pathname in the pathnames array
+        for (String pathname : pathnames) {
+            // Print the names of files and directories
+            System.out.println(pathname);
+        }
+
+        try{
+            System.out.println("Enter the image file");
+            albumClient.getAlbumImage();
+        }catch (InputMismatchException e){
+            System.out.println("You put the wrong information. Try again.");
+            System.out.println();
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void  uploadAlbumImage(){
+        System.out.println("Upload files");
     }
 
     private static void retrieveAlbum(Scanner sc){

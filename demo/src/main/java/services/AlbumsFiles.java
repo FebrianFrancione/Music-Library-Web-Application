@@ -18,7 +18,7 @@ import java.io.InputStream;
 @Path("/files")
 public class AlbumsFiles {
 
-    private static final String FILE_PATH = "demo/src/main/java/savedFiles/test.txt";
+    private static final String FILE_PATH = "demo/src/main/java/savedFiles/test.png";
 //    private static final String FILE_PATH = "C:\\Users\\febri\\IdeaProjects\\SOEN-487-A2\\demo\\pom.xml";
 
     /**
@@ -31,6 +31,15 @@ public class AlbumsFiles {
     public File getFile() {
         return new File(FILE_PATH);
     }
+
+
+
+//    @GET
+//    @Path("/txt/{file}")
+//    @Produces("text/plain")
+//    public File getFile(@PathParam("file") String file) {
+//        return new File(FILE_PATH + file);
+//    }
 
     /**
      * This API method will upload a file to the specified file location
@@ -60,15 +69,6 @@ public class AlbumsFiles {
     public void deleteAlbum() {
         File file = new File(FILE_PATH);
         file.delete();
-//        if(albumsManager.deleteAlbum(ISRC)){
-//            message = "Album " + ISRC + " successfully deleted!";
-//            return Response.ok(message).build();
-//        }
-//
-//        else{
-//            message = "Album " + ISRC + " was not found";
-//            return Response.status(Response.Status.NOT_FOUND).entity(message).build();
-//        }
     }
 
 
