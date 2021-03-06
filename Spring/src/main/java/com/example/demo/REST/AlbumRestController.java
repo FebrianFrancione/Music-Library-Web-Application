@@ -9,11 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-
-
 @Controller
 @RequestMapping(value = "/album", method = {RequestMethod.GET, RequestMethod.POST,RequestMethod.PUT, RequestMethod.DELETE})
 public class AlbumRestController implements WebMvcConfigurer {
@@ -51,33 +46,24 @@ public class AlbumRestController implements WebMvcConfigurer {
         return "Album";
     }
 
-
-
-    @PostMapping("/create")
-//    @PostMapping("/create/{ISRC}/{title}/{description}/{year}/{artist}")
-//    public String createAlbum(@RequestBody String ISRC, @RequestBody String title, @RequestBody String description, @RequestBody int year, @RequestBody String artist_first_name, @RequestBody String artist_last_name){
-        public String createAlbum(){
-        albumService.createNewAlbum();
+    @PostMapping("/create/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
+    public String createAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name){
+        albumService.createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
         return "Created";
     }
 
 
-//    @DELETE
-//    @Produces({MediaType.TEXT_PLAIN})
-//    @Path("{ISRC}")
-//    public Response deleteAlbum(@PathParam("ISRC") String ISRC){
-//        if(albumsManager.deleteAlbum(ISRC)){
-//            message = "Album " + ISRC + " successfully deleted!";
-//            return Response.ok(message).build();
-//        }
-//
-//        else{
-//            message = "Album " + ISRC + " was not found";
-//            return Response.status(Response.Status.NOT_FOUND).entity(message).build();
-//        }
-//    }
+    @DeleteMapping("/{ISRC}")
+    public String deleteAlbum(@PathVariable("ISRC") String ISRC){
+        albumService.deleteAlbum(ISRC);
+        return "Deleted";
+    }
 
-
+    @PutMapping("/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
+    public String modifyAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name){
+        albumService.modifyAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
+        return "Modified";
+    }
 
 //    @PUT
 //    @Produces({MediaType.TEXT_PLAIN})

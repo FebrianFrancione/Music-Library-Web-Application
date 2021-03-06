@@ -42,12 +42,11 @@ public class AlbumServiceImpl implements AlbumService{
 
     public Album getAlbum(String ISRC){
         return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
-
     }
 
     @Override
-//    public Album createAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {
-    public Album createNewAlbum() {
+    public Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {
+//    public Album createNewAlbum() {
 
 //        if(getAlbum(ISRC) == null){
 //            Album newAlbum = new Album(ISRC, title, description, year, artist_first_name, artist_last_name);
@@ -55,20 +54,31 @@ public class AlbumServiceImpl implements AlbumService{
 //        } else {
 //            return null;
 //        }
-        Album newAlbum = new Album();
-//        Album newAlbum = new Album(, "title", "description", 2020, "artistFirst", "artistLast");
-        newAlbum.setISRC("new_alb3");
-        newAlbum.setTitle("title");
-        newAlbum.setDescription("description");
-        newAlbum.setYear(2021);
-        newAlbum.setArtist_first_name("artistFirst");
-        newAlbum.setArtist_last_name( "artistLast");
+        Album newAlbum = new Album(ISRC, title, description,year,artist_first_name,artist_last_name);
+//        newAlbum.setISRC(ISRC);
+//        newAlbum.setTitle(title);
+//        newAlbum.setDescription(description);
+//        newAlbum.setYear(year);
+//        newAlbum.setArtist_first_name(artist_first_name);
+//        newAlbum.setArtist_last_name(artist_last_name);
         newAlbum.setCover_image_name("noName");
         newAlbum.setCover_image(null);
         newAlbum.setImage_mime("NoMime");
 
         albumRepository.save(newAlbum);
         return newAlbum;
+    }
+
+    @Override
+    public void deleteAlbum(String ISRC){
+        Album album = getAlbum(ISRC);
+        albumRepository.delete(album);
+    }
+
+    @Override
+    public void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {
+        deleteAlbum(ISRC);
+        createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
     }
 }
 
@@ -138,20 +148,6 @@ public class AlbumServiceImpl implements AlbumService{
 //
 //
 //
-//        @DELETE
-//        @Produces({MediaType.TEXT_PLAIN})
-//        @Path("{ISRC}")
-//        public Response deleteAlbum(@PathParam("ISRC") String ISRC){
-//            if(albumsManager.deleteAlbum(ISRC)){
-//                message = "Album " + ISRC + " successfully deleted!";
-//                return Response.ok(message).build();
-//            }
-//
-//            else{
-//                message = "Album " + ISRC + " was not found";
-//                return Response.status(Response.Status.NOT_FOUND).entity(message).build();
-//            }
-//        }
 //
 //        @PUT
 //        @Produces({MediaType.TEXT_PLAIN})
