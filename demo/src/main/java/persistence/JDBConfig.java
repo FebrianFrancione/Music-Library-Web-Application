@@ -7,11 +7,11 @@ public class JDBConfig {
     private PreparedStatement ps = null;
     private String dbURL = "jdbc:mysql://localhost:3306/albums_db?allowPublicKeyRetrieval=true&useSSL=false";
     private String username = "root";
-    private String password = "root";
+    private String password = "1234";
 
     static{
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("Connection Driver error");

@@ -109,7 +109,7 @@ public class AlbumDao {
 
                     String extension = (image_mime != null) ? getImageExtension(image_mime) : ".jpg";
                     String cover_image = cover_image_name + extension;
-                    Path searchPath = Paths.get("demo/src/main/java/persistence/img/" + cover_image).toAbsolutePath();
+                    Path searchPath = Paths.get("demo/src/main/java/persistence/" + cover_image).toAbsolutePath();
                     File f=new File(String.valueOf(searchPath));
                     FileOutputStream fs = new FileOutputStream(f);
                     b = blob.getBytes(1, (int)blob.length());
