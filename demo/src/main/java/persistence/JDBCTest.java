@@ -3,7 +3,6 @@ package persistence;
 import core.Album;
 import core.LogEntry;
 import persistence.helpers.LogEntryType;
-
 import java.util.ArrayList;
 
 public class JDBCTest {

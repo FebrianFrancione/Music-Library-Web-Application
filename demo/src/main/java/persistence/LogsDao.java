@@ -2,10 +2,6 @@ package persistence;
 
 import core.LogEntry;
 import persistence.helpers.LogEntryType;
-
-import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,14 +14,11 @@ public class LogsDao {
     private JDBConfig jdbc = new JDBConfig();
 
     public void addLogEntry(String ISRC, int type_of_change) {
-        /*ZonedDateTime date = ZonedDateTime.now();
-        String time_stamp = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss 'UTC'").format(date);*/
         java.util.Date utilDate = new java.util.Date();
         Timestamp time_stamp = new Timestamp(utilDate.getTime());
         String sql = "insert into logs (time_stamp, type_of_change, ISRC) values (?,?,?)";
         statement = jdbc.prepareStatement(sql);
         try {
-            //statement.setString(1, time_stamp);
             statement.setTimestamp(1, time_stamp);
             statement.setInt(2, type_of_change);
             statement.setString(3, ISRC);

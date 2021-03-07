@@ -1,14 +1,10 @@
 package core;
 
 import persistence.helpers.LogEntryType;
-
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class LogEntry {
-    //private ZonedDateTime timeStamp;
     private Calendar time_stamp;
     private String timeStampString;
     private String ISRC;
@@ -22,31 +18,13 @@ public class LogEntry {
         this.time_stamp = time_stamp;
     }
 
-    /*
-    public LogEntry(String timeStamp, String ISRC, LogEntryType type_of_change) {
-        this.ISRC = ISRC;
-        this.type_of_change = type_of_change;
-        this.timeStamp = ZonedDateTime.parse(timeStamp, DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm:ss z" ));
-        timeStampString = this.timeStamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss 'UTC'"));
-    }
-*/
-
     public LogEntry(Calendar time_stamp, String ISRC, LogEntryType type_of_change) {
         this.ISRC = ISRC;
         this.type_of_change = type_of_change;
         this.time_stamp = time_stamp;
         timeStampString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.time_stamp.getTime());
     }
-/*
-    public ZonedDateTime getTimeStamp() {
-        return timeStamp;
-    }
 
-    public void setTimeStamp(ZonedDateTime timeStamp) {
-        this.timeStamp = timeStamp;
-        this.timeStampString = this.timeStamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss 'UTC'"));
-    }
-*/
     public String getTimeStampString() {
         return timeStampString;
     }
