@@ -7,4 +7,8 @@ public class RepException extends Exception{
     public RepException(){
         super("The method is not yet supported.");
     }
+
+    public RepException(String errorMessage){
+        super(errorMessage);
+    }
 }

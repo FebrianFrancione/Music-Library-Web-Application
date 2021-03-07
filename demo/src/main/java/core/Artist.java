@@ -6,6 +6,13 @@ public class Artist {
     private String last_name;
     private String biography;
 
+    public Artist(){}
+
+    public Artist(String first_name, String last_name){
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+
     public Artist(String nickname, String first_name, String last_name, String biography) {
         this.nickname = nickname;
         this.first_name = first_name;

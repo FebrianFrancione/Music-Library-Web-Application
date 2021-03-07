@@ -57,7 +57,7 @@ public class AlbumDao {
                 String first_name = resultSet.getString("artist_first_name");
                 String last_name = resultSet.getString("artist_last_name");
                 String artist = first_name + " " + last_name;
-                Album newAlbum = new Album(ISRC, title, description, year, artist);
+                Album newAlbum = new Album(ISRC, title, description, year, first_name, last_name);
                 albums.add(newAlbum);
             }
 
@@ -95,7 +95,7 @@ public class AlbumDao {
                 first_name = resultSet.getString("artist_first_name");
                 last_name = resultSet.getString("artist_last_name");
                 String artist = first_name + " " + last_name;
-                album = new Album(ISRC, title, description, year, artist);
+                album = new Album(ISRC, title, description, year, first_name, last_name);
 
                 //Testing getting an image from DB
                 Blob blob = resultSet.getBlob("cover_image");

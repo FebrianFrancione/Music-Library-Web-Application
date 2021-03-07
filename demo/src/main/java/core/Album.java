@@ -5,14 +5,16 @@ public class Album {
     private String title;
     private String description;
     private int year;
-    private String artist;
+    private Artist artist;
 
-    public Album (String ISRC, String title, String description, int year, String artist){
+    public Album(){}
+
+    public Album (String ISRC, String title, String description, int year, String firstName, String lastName){
         this.ISRC = ISRC;
         this.title = title;
         this.description = description;
         this.year = year;
-        this.artist = artist;
+        artist = new Artist(firstName, lastName);
     }
 
     public String toString() {
@@ -21,7 +23,7 @@ public class Album {
                 ", title: '" + title + '\'' +
                 ", description: '" + description + '\'' +
                 ", release year: " + year +
-                ", artist: '" + artist + '\'' +
+                ", artist: '" + artist.getFirst_name() + ' ' + artist.getLast_name() + '\'' +
                 '}';
     }
 
@@ -57,12 +59,5 @@ public class Album {
         this.year = year;
     }
 
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
 }
 

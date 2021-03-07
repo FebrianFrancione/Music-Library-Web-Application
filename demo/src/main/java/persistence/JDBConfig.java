@@ -7,7 +7,7 @@ public class JDBConfig {
     private PreparedStatement ps = null;
     private String dbURL = "jdbc:mysql://localhost:3306/albums_db?allowPublicKeyRetrieval=true&useSSL=false";
     private String username = "root";
-    private String password = "1234";
+    private String password = "Histary7!";
 
     static{
         try {
