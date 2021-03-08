@@ -1,22 +1,25 @@
 package com.example.demo.REST;
 
-import com.example.demo.Entity.Album;
 import com.example.demo.Service.AlbumService;
+import com.example.demo.Service.ImageUtil;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-//import javax.ws.rs.*;
-//import javax.ws.rs.core.MediaType;
-//import javax.ws.rs.core.Response;
-import java.net.URLDecoder;
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 
-@RestController
+
+@Controller
 //@RequestMapping("/album")
 public class AlbumRestController implements WebMvcConfigurer {
+
+
     private AlbumService albumService;
 
     @Autowired
@@ -29,20 +32,52 @@ public class AlbumRestController implements WebMvcConfigurer {
     public String welcome() {
         return "Album";
     }
-//
-//    @GetMapping("/")
-//    public String showHome(Model model){
-//        model.addAttribute("theDate", new java.util.Date());
-//
+
+
+
+    @GetMapping("/")
+    public String showHome(Model model){
+        model.addAttribute("theDate", new java.util.Date());
+
+        return "Album";
+    }
+
+//    @GetMapping("/list")
+////    @Produces({MediaType.TEXT_PLAIN})
+////    @Path("/list")
+//    public List<Album> getAlbums(Model model) {
+//        model.addAttribute(albumService.getAlbums());
+////        return albumService.getAlbums();
 //        return "Album";
 //    }
+
+
 
     @GetMapping("/list")
 //    @Produces({MediaType.TEXT_PLAIN})
 //    @Path("/list")
-    public List<Album> getAlbums() {
-        return albumService.getAlbums();
+    public String getAlbums(Model model, HttpServletResponse response) {
+        model.addAttribute("imgUtil", new ImageUtil());
+//        model.addAttribute("imgUtil", new ImageUtil());
+
+//        List<Album> albums = albumService.getAlbums();
+
+//        byte[] encode = Base64.getEncoder().encode(albums.);
+//        model.addAttribute("image", new String(encode, "UTF-8"));
+
+//        String base64EncodedImage = Base64.encodeBase64String();
+
+        model.addAttribute(albumService.getAlbums());
+
+//        return albumService.getAlbums();
+        return "Album";
     }
+
+//    public class ImageUtil {
+//        public String getImgData(byte[] byteData) {
+//            return Base64.getMimeEncoder().encodeToString(byteData);
+//        }
+//    }
 //
 //        if(albumsManager.hasAlbums()) {
 //            System.out.println();
@@ -78,13 +113,15 @@ public class AlbumRestController implements WebMvcConfigurer {
 //        }
 //    }
 
-    @PostMapping("/create/{ISRC}/{title}/{description}/{year}/{artist}")
-//    @Produces(MediaType.TEXT_PLAIN)
-//    @Path("/create/{ISRC}/{title}/{description}/{year}/{artist}")
-    public void createAlbum(@RequestBody String ISRC, @RequestBody String title, @RequestBody String description, @RequestBody int year, @RequestBody String artist) {
 
-        albumService.createAlbum(ISRC,title,description,year,artist);
-    }
+
+//    @PostMapping("/create/{ISRC}/{title}/{description}/{year}/{artist}")
+////    @Produces(MediaType.TEXT_PLAIN)
+////    @Path("/create/{ISRC}/{title}/{description}/{year}/{artist}")
+//    public void createAlbum(@RequestBody String ISRC, @RequestBody String title, @RequestBody String description, @RequestBody int year, @RequestBody String artist) throws IOException{
+//
+//        albumService.createAlbum(ISRC,title,description,year,artist);
+//    }
 
 //        title = URLDecoder.decode(title);
 //        description = URLDecoder.decode(description);

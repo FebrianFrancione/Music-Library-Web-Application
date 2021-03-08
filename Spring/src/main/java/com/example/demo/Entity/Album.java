@@ -32,8 +32,11 @@ public class Album {
     @Column(name = "image_mime")
     private String image_mime;
 
+    //    @Column(name = "cover_image")
+//    private String cover_image;
     @Column(name = "cover_image")
-    private String cover_image;
+    private byte[] cover_image;
+
 
     public Album(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {
         this.ISRC = ISRC;
@@ -44,7 +47,7 @@ public class Album {
         this.artist_last_name = artist_last_name;
     }
 
-    public Album(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, String cover_image) {
+    public Album(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) {
         this.ISRC = ISRC;
         this.title = title;
         this.description = description;
@@ -165,12 +168,14 @@ public class Album {
         this.image_mime = image_mime;
     }
 
-    public String getCover_image() {
+    public byte[] getCover_image() {
         return cover_image;
     }
 
-    public void setCover_image(String cover_image) {
+    public void setCover_image(byte[] cover_image) {
         this.cover_image = cover_image;
     }
+
+
 }
 

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 //import javax.ws.rs.*;
 //import javax.ws.rs.core.MediaType;
 //import javax.ws.rs.core.Response;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +17,10 @@ import java.util.Optional;
 @Service
 public class AlbumServiceImpl implements AlbumService{
 
+    @Autowired
     private AlbumRepository albumRepository;
 
-    @Autowired
+//    @Autowired
     public AlbumServiceImpl(AlbumRepository albumRepository) {
         this.albumRepository = albumRepository;
     }
@@ -30,6 +33,11 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Override
     public Album getAlbum(String ISRC, String title) {
+        return null;
+    }
+
+    @Override
+    public Album createAlbum(Album album) {
         return null;
     }
 
@@ -46,10 +54,10 @@ public class AlbumServiceImpl implements AlbumService{
 //        return null;
 //    }
 
-    @Override
-    public void createAlbum(String ISRC, String title, String description, int year, String artist) {
-
-    }
+//    @Override
+//    public void createAlbum(String ISRC, String title, String description, int year, String artist) {
+//
+//    }
 
 //
 ////    @Path("/album")
