@@ -1,22 +1,20 @@
 package com.example.demo.REST;
 
+import com.example.demo.Entity.Album;
 import com.example.demo.Service.AlbumService;
 import com.example.demo.Service.ImageUtil;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.List;
 
 
 @Controller
-//@RequestMapping("/album")
+@RequestMapping("/album")
 public class AlbumRestController implements WebMvcConfigurer {
 
 
@@ -27,67 +25,39 @@ public class AlbumRestController implements WebMvcConfigurer {
         this.albumService = albumService;
     }
 
-    @RequestMapping("/")
-    @ResponseBody
-    public String welcome() {
-        return "Album";
-    }
-
+//    @RequestMapping("/")
+//    @ResponseBody
+//    public String welcome() {
+//        return "Album";
+//    }
+//
 
 
     @GetMapping("/")
     public String showHome(Model model){
-        model.addAttribute("theDate", new java.util.Date());
+//        model.addAttribute("theDate", new java.util.Date());
 
         return "Album";
     }
-
-//    @GetMapping("/list")
-////    @Produces({MediaType.TEXT_PLAIN})
-////    @Path("/list")
-//    public List<Album> getAlbums(Model model) {
-//        model.addAttribute(albumService.getAlbums());
-////        return albumService.getAlbums();
-//        return "Album";
-//    }
-
-
 
     @GetMapping("/list")
-//    @Produces({MediaType.TEXT_PLAIN})
-//    @Path("/list")
-    public String getAlbums(Model model, HttpServletResponse response) {
+    public String getAlbums(Model model) {
         model.addAttribute("imgUtil", new ImageUtil());
-//        model.addAttribute("imgUtil", new ImageUtil());
-
-//        List<Album> albums = albumService.getAlbums();
-
-//        byte[] encode = Base64.getEncoder().encode(albums.);
-//        model.addAttribute("image", new String(encode, "UTF-8"));
-
-//        String base64EncodedImage = Base64.encodeBase64String();
-
         model.addAttribute(albumService.getAlbums());
-
-//        return albumService.getAlbums();
         return "Album";
     }
 
-//    public class ImageUtil {
-//        public String getImgData(byte[] byteData) {
-//            return Base64.getMimeEncoder().encodeToString(byteData);
-//        }
-//    }
-//
-//        if(albumsManager.hasAlbums()) {
-//            System.out.println();
-//            return Response.ok(albumsManager.getAllAlbums()).build();
-//        }
-//        else{
-//            message = "No albums to return!";
-////            return Response.status(Response.Status.OK).entity(message).build();
-//            return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
-//        }
+    @GetMapping("/{ISRC}/{title}")
+    public String getAlbum(Model model, @PathVariable("ISRC") String ISRC, @PathVariable("title") String title) {
+        Album album = albumService.findByISRCAndTitle(ISRC, title);
+        if (album == null) {
+            throw new RuntimeException("Album ISRC not found " + ISRC + title);
+        }
+        model.addAttribute("imgUtil", new ImageUtil());
+        model.addAttribute("album1", album);
+
+        return "Album";
+    }
 
 
 //    @GetMapping("{ISRC}/{title}")

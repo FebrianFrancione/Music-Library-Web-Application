@@ -3,6 +3,9 @@ package com.example.demo.Service;
 import com.example.demo.DAO.AlbumRepository;
 import com.example.demo.Entity.Album;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 //import javax.ws.rs.*;
@@ -32,9 +35,31 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public Album getAlbum(String ISRC, String title) {
-        return null;
+    public Album findByISRCAndTitle(String ISRC, String title) {
+//        albumRepository.findAll().forEach(albums1 -> albums1.getISRC().equals(ISRC) && albums1.getTitle().equals(title));
+//        albumRepository.findAll().stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title)).findFirst().orElse(null);
+
+//        album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title))
+//                .findFirst()
+//                .orElse(null);
+//
+//        return albums.stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title))
+//                .findFirst()
+//                .orElse(null);
+        return albumRepository.findAll().stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title)).findFirst().orElse(null);
     }
+
+//    @Override
+//    public Album getAlbum(String ISRC, String title) {
+//        return null;
+//    }
+
+//    @Override
+//    @Query(value="SELECT * FROM albums where ISRC,title =",nativeQuery=true)
+//    public Album findByISRCAndTitle(String ISRC, String title) {
+//
+//                return albumRepository.findByDevname(ISRC);
+//    }
 
     @Override
     public Album createAlbum(Album album) {
