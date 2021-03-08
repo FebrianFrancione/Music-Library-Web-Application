@@ -58,35 +58,8 @@ public class AlbumRestController implements WebMvcConfigurer {
 //    public String createAlbum(@RequestBody String ISRC, @RequestBody String title, @RequestBody String description, @RequestBody int year, @RequestBody String artist_first_name, @RequestBody String artist_last_name){
         public String createAlbum(){
         albumService.createNewAlbum();
-//        model.addAttribute("album1", album);
         return "Created";
     }
-
-//        title = URLDecoder.decode(title);
-//        description = URLDecoder.decode(description);
-//        artist = URLDecoder.decode(artist);
-
-//        if(ISRC.isEmpty() || title.isEmpty() || year == 0 || artist.isEmpty()){
-//            message = "A Form parameter is incorrect!";
-//            return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
-//        }
-//        else{
-//            Album album = albumsManager.createAlbum(ISRC, title, description, year, artist);
-//            message = (album != null) ? "New Album created!: \n" + album : " This ISRC already exists, please use a unique ISRC";
-//            return Response.ok(message).build();
-//        }
-
-//    @POST
-//    @Produces(MediaType.TEXT_PLAIN)
-//    @Path("/create/{ISRC}/{title}/{description}/{year}/{artist}")
-//    public String createAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
-//            Album album = albumsManager.createAlbum(ISRC, title, description, year, artist);
-//
-////            message = (album != null) ? "Album created!: \n" + album : " This ISRC already exists, please use a unique ISRC";
-////            return Response.ok(message).build();
-//        return "ok" + album.toString();
-//    }
-
 
 
 //    @DELETE

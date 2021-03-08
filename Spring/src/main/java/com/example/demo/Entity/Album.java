@@ -85,7 +85,6 @@ public class Album {
                 '}';
     }
 
-
     public String getISRC() {
         return ISRC;
     }
@@ -117,14 +116,6 @@ public class Album {
     public void setYear(int year) {
         this.year = year;
     }
-
-//    public String getArtist() {
-//        return artist_first_name;
-//    }
-//
-//    public void setArtist(String artist) {
-//        this.artist_first_name = artist;
-//    }
 
     public String getArtist_first_name() {
         return artist_first_name;
@@ -165,7 +156,5 @@ public class Album {
     public void setCover_image(byte[] cover_image) {
         this.cover_image = cover_image;
     }
-
-
 }
 

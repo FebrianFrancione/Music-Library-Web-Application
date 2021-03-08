@@ -20,10 +20,10 @@ I'm an album
     <td th:text="${album.getYear()}"/>
     <td th:text="${album.getArtist_first_name()}"/>
     <td th:text="${album.getArtist_last_name()}"/>
-<!--    <td th:text="${album.getCover_image_name()}"/>-->
-<!--    <td th:text="${album.getCover_image()}"/>-->
-<!--    <td><img class='img-thumbnail' style=" width: 100px;height: 200px; object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/></td>-->
-    <!--        <td th:src="*{'/img/' + entity.id}"/>-->
+    <td th:text="${album.getCover_image_name()}"/>
+    <td th:text="${album.getCover_image()}"/>
+    <td><img class='img-thumbnail' style=" width: 100px;height: 200px; object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/></td>
+<!--    <td th:src="*{'/img/' + entity.id}"/>-->
     <!--        <td><img class='img-thumbnail' style=" min-width: 50%;-->
     <!--    height: fit-content;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}" /></td>-->
     <!--    <td th:src="${album.getImage_mime()}"/>-->

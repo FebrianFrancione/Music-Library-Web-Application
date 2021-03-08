@@ -13,17 +13,17 @@ I'm an album
 
 
 <table>
-<tr>
-    <td th:text="${album1.getISRC()}"/>
-    <td th:text="${album1.getTitle()}"/>
-    <td th:text="${album1.getDescription()}"/>
-    <td th:text="${album1.getYear()}"/>
-    <td th:text="${album1.getArtist_first_name()}"/>
-    <td th:text="${album1.getArtist_last_name()}"/>
-<!--    <td th:text="${album1.getCover_image_name()}"/>-->
-<!--    <td th:text="${album1.getCover_image()}"/>-->
-<!--    <td><img class='img-thumbnail' style=" width: 100px;height: 200px; object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album1.getCover_image())}"/></td>-->
-</tr>
+    <tr>
+        <td th:text="${album1.getISRC()}"/>
+        <td th:text="${album1.getTitle()}"/>
+        <td th:text="${album1.getDescription()}"/>
+        <td th:text="${album1.getYear()}"/>
+        <td th:text="${album1.getArtist_first_name()}"/>
+        <td th:text="${album1.getArtist_last_name()}"/>
+        <td th:text="${album1.getCover_image_name()}"/>
+        <td th:text="${album1.getCover_image()}"/>
+        <td><img class='img-thumbnail' style=" width: 100px;height: 200px; object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album1.getCover_image())}"/></td>
+    </tr>
 </table>
 
 
