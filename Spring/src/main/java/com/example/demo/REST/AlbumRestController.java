@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 
 @Controller
-@RequestMapping("/album")
+@RequestMapping(value = "/album", method = {RequestMethod.GET, RequestMethod.POST,RequestMethod.PUT, RequestMethod.DELETE})
 public class AlbumRestController implements WebMvcConfigurer {
 
 
@@ -25,26 +26,17 @@ public class AlbumRestController implements WebMvcConfigurer {
         this.albumService = albumService;
     }
 
-//    @RequestMapping("/")
-//    @ResponseBody
-//    public String welcome() {
-//        return "Album";
-//    }
-//
-
-
     @GetMapping("/")
     public String showHome(Model model){
-//        model.addAttribute("theDate", new java.util.Date());
-
-        return "Album";
+        return "Home";
     }
+
 
     @GetMapping("/list")
     public String getAlbums(Model model) {
         model.addAttribute("imgUtil", new ImageUtil());
         model.addAttribute(albumService.getAlbums());
-        return "Album";
+        return "Albums";
     }
 
     @GetMapping("/{ISRC}/{title}")
@@ -60,38 +52,15 @@ public class AlbumRestController implements WebMvcConfigurer {
     }
 
 
-//    @GetMapping("{ISRC}/{title}")
-////    @Produces(MediaType.TEXT_PLAIN)
-////    @Path("{ISRC}/{title}")
-//    public Album getAlbum(String ISRC, String title) {
-//        Album album = albumService.findById(ISRC, title);
-//        if (album == null) {
-//            throw new RuntimeException("Album ISRC not found " + ISRC + title);
-//        }
-//        return album;
-//    }
 
-
-//        title = URLDecoder.decode(title);
-//
-//        Album album = albumsManager.getAlbum(ISRC,title);
-//        if (album != null) {
-//            return Response.status(Response.Status.OK).entity(album.toString()).build();
-//        }else{
-//            message = "Album not found!";
-//            return Response.status(Response.Status.NOT_FOUND).entity(message).build();
-//        }
-//    }
-
-
-
+    @PostMapping("/create")
 //    @PostMapping("/create/{ISRC}/{title}/{description}/{year}/{artist}")
-////    @Produces(MediaType.TEXT_PLAIN)
-////    @Path("/create/{ISRC}/{title}/{description}/{year}/{artist}")
-//    public void createAlbum(@RequestBody String ISRC, @RequestBody String title, @RequestBody String description, @RequestBody int year, @RequestBody String artist) throws IOException{
-//
-//        albumService.createAlbum(ISRC,title,description,year,artist);
-//    }
+//    public String createAlbum(@RequestBody String ISRC, @RequestBody String title, @RequestBody String description, @RequestBody int year, @RequestBody String artist_first_name, @RequestBody String artist_last_name){
+        public String createAlbum(){
+        albumService.createNewAlbum();
+//        model.addAttribute("album1", album);
+        return "Created";
+    }
 
 //        title = URLDecoder.decode(title);
 //        description = URLDecoder.decode(description);

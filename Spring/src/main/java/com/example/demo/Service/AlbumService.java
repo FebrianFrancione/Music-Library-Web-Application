@@ -10,13 +10,11 @@ import java.util.List;
 public interface AlbumService {
 
         public List<Album> getAlbums();
-//        public Album getAlbum(String ISRC, String title);
+        public Album getAlbum(String ISRC);
         public Album findByISRCAndTitle(String ISRC, String title);
 
-
-//        public void createAlbum(String ISRC,String title, String description, int year, String artist);
-
-        public Album createAlbum(Album album);
+        public Album createNewAlbum();
+//        public Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name);
 
 
 //        public void deleteAlbum(String ISRC);

@@ -23,7 +23,7 @@ public class AlbumServiceImpl implements AlbumService{
     @Autowired
     private AlbumRepository albumRepository;
 
-//    @Autowired
+    @Autowired
     public AlbumServiceImpl(AlbumRepository albumRepository) {
         this.albumRepository = albumRepository;
     }
@@ -36,48 +36,42 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Override
     public Album findByISRCAndTitle(String ISRC, String title) {
-//        albumRepository.findAll().forEach(albums1 -> albums1.getISRC().equals(ISRC) && albums1.getTitle().equals(title));
-//        albumRepository.findAll().stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title)).findFirst().orElse(null);
-
-//        album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title))
-//                .findFirst()
-//                .orElse(null);
-//
-//        return albums.stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title))
-//                .findFirst()
-//                .orElse(null);
         return albumRepository.findAll().stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title)).findFirst().orElse(null);
     }
 
-//    @Override
-//    public Album getAlbum(String ISRC, String title) {
-//        return null;
-//    }
 
-//    @Override
-//    @Query(value="SELECT * FROM albums where ISRC,title =",nativeQuery=true)
-//    public Album findByISRCAndTitle(String ISRC, String title) {
-//
-//                return albumRepository.findByDevname(ISRC);
-//    }
+    public Album getAlbum(String ISRC){
+        return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
 
-    @Override
-    public Album createAlbum(Album album) {
-        return null;
     }
 
-//    @Override
-//    public Album getAlbum(String ISRC, String title) {
-//        Optional<Album> result = albumRepository.findById(ISRC, title);
-//        Album theAlbum = null;
-//        if(result.isPresent()){
-//            theAlbum = result.get();
-//        }else{
-//            throw new RuntimeException("Did not find Album " + ISRC);
+    @Override
+//    public Album createAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {
+    public Album createNewAlbum() {
+
+//        if(getAlbum(ISRC) == null){
+//            Album newAlbum = new Album(ISRC, title, description, year, artist_first_name, artist_last_name);
+//            return albumRepository.save(newAlbum);
+//        } else {
+//            return null;
 //        }
-//        return theAlbum;
-//        return null;
-//    }
+        Album newAlbum = new Album();
+//        Album newAlbum = new Album(, "title", "description", 2020, "artistFirst", "artistLast");
+        newAlbum.setISRC("new_alb3");
+        newAlbum.setTitle("title");
+        newAlbum.setDescription("description");
+        newAlbum.setYear(2021);
+        newAlbum.setArtist_first_name("artistFirst");
+        newAlbum.setArtist_last_name( "artistLast");
+        newAlbum.setCover_image_name("noName");
+        newAlbum.setCover_image(null);
+        newAlbum.setImage_mime("NoMime");
+
+        albumRepository.save(newAlbum);
+        return newAlbum;
+    }
+}
+
 
 //    @Override
 //    public void createAlbum(String ISRC, String title, String description, int year, String artist) {
@@ -186,8 +180,6 @@ public class AlbumServiceImpl implements AlbumService{
 //        }
 
 
-
-    }
 
 
 //curl -v http://localhost:8080/core/album/ISRC/newTitle

@@ -1,5 +1,8 @@
 package com.example.demo.Entity;
 
+
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +10,9 @@ import javax.persistence.*;
 public class Album {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ISRC")
     private String ISRC;
 
@@ -60,8 +65,10 @@ public class Album {
     }
 
     public Album() {
-
     }
+
+
+
 
     @Override
     public String toString() {
@@ -78,23 +85,6 @@ public class Album {
                 '}';
     }
 
-    //    public Album (String ISRC, String title, String description, int year, String artist){
-//        this.ISRC = ISRC;
-//        this.title = title;
-//        this.description = description;
-//        this.year = year;
-//        this.artist = artist;
-//    }
-//
-//    public String toString() {
-//        return "Album{" +
-//                "ISRC: '" + ISRC + '\'' +
-//                ", title: '" + title + '\'' +
-//                ", description: '" + description + '\'' +
-//                ", release year: " + year +
-//                ", artist: '" + artist + '\'' +
-//                '}';
-//    }
 
     public String getISRC() {
         return ISRC;

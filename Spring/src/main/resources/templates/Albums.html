@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<p>Hello World!</p>
+I'm an album
+<hr>
+<br>
+
+<tbody>
+<tr th:each="album : ${albumList}">
+
+    <td th:text="${album.getISRC()}"/>
+    <td th:text="${album.getTitle()}"/>
+    <td th:text="${album.getDescription()}"/>
+    <td th:text="${album.getYear()}"/>
+    <td th:text="${album.getArtist_first_name()}"/>
+    <td th:text="${album.getArtist_last_name()}"/>
+<!--    <td th:text="${album.getCover_image_name()}"/>-->
+<!--    <td th:text="${album.getCover_image()}"/>-->
+<!--    <td><img class='img-thumbnail' style=" width: 100px;height: 200px; object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/></td>-->
+    <!--        <td th:src="*{'/img/' + entity.id}"/>-->
+    <!--        <td><img class='img-thumbnail' style=" min-width: 50%;-->
+    <!--    height: fit-content;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}" /></td>-->
+    <!--    <td th:src="${album.getImage_mime()}"/>-->
+    <!--&lt;!&ndash; th:text="${album.getCover_image()}-->
+    <!--    <td>-->
+    <!--        <img class='img-thumbnail' th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getImage_mime())}" />-->
+    <!--    </td>-->
+    <td><br><hr></td>
+</tr>
+</tbody>
+
+<!--    <img th:each="album : ${albumList}" class='img-thumbnail' style=" width: 200px;-->
+<!--  height: 300px;-->
+<!--  object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/>-->
+
+<!--    <img th:src="@{/img/spot_me.png}"/>-->
+
+</body>
+</html>

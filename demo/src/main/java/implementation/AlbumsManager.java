@@ -18,6 +18,7 @@ public class AlbumsManager {
     public Album createAlbum(String ISRC, String title, String description, int year, String artist){
         if(getAlbum(ISRC) == null){
             Album newAlbum = new Album(ISRC, title, description, year, artist);
+//            Album newAlbum = new Album(ISRC, title, description, year, artist);
             albums.add(newAlbum);
             return newAlbum;
         } else {
