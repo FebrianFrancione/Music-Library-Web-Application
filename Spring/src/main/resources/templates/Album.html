@@ -20,21 +20,27 @@ I'm an album
         <td th:text="${album.getArtist_first_name()}"/>
         <td th:text="${album.getArtist_last_name()}"/>
         <td th:text="${album.getCover_image_name()}"/>
-        <td th:text="${album.getCover_image()}"/>\
+        <td th:text="${album.getCover_image()}"/>
+        <td><img class='img-thumbnail' style=" width: 200px;height: 300px; object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/></td>
 <!--        <td th:src="*{'/img/' + entity.id}"/>-->
-        <img class='img-thumbnail' th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}" />
-
+<!--        <td><img class='img-thumbnail' style=" min-width: 50%;-->
+<!--    height: fit-content;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}" /></td>-->
         <!--    <td th:src="${album.getImage_mime()}"/>-->
-
         <!--&lt;!&ndash; th:text="${album.getCover_image()}-->
         <!--    <td>-->
         <!--        <img class='img-thumbnail' th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getImage_mime())}" />-->
         <!--    </td>-->
-
+        <br>
     </tr>
-
     </tbody>
 
-    <img th:src="@{/img/spot_me.png}"/>
+<hr>
+<br>
+<!--    <img th:each="album : ${albumList}" class='img-thumbnail' style=" width: 200px;-->
+<!--  height: 300px;-->
+<!--  object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/>-->
+
+<!--    <img th:src="@{/img/spot_me.png}"/>-->
+
 </body>
 </html>
