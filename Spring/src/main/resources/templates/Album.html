@@ -22,12 +22,13 @@ I'm an album
         <td th:text="${album1.getArtist_last_name()}"/>
         <td th:text="${album1.getCover_image_name()}"/>
         <td th:text="${album1.getCover_image()}"/>
-        <td><img class='img-thumbnail' style=" width: 100px;height: 200px; object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album1.getCover_image())}"/></td>
+        <td th:if="${album1.getCover_image() != null}"><img class='img-thumbnail' style=" width: 200px;height: 200px; object-fit: fill;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album1.getCover_image())}"/></td>
+        <td th:unless="${album1.getCover_image() != null}"><img class='img-thumbnail' style=" width: 200px;height: 200px; object-fit: fill;" th:src="@{/img/spot_me.png}"/></td>
     </tr>
 </table>
 
 
-<!--    <img th:each="album : ${albumList}" class='img-thumbnail' style=" width: 200px;-->
+<!--    <img th:each="album1 : ${albumList}" class='img-thumbnail' style=" width: 200px;-->
 <!--  height: 300px;-->
 <!--  object-fit: cover;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/>-->
 

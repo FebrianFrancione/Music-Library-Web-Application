@@ -10,9 +10,6 @@ import javax.persistence.*;
 public class Album {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ISRC")
     private String ISRC;
 
