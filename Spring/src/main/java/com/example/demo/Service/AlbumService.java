@@ -1,10 +1,6 @@
 package com.example.demo.Service;
 
 import com.example.demo.Entity.Album;
-
-//import javax.ws.rs.*;
-//import javax.ws.rs.core.MediaType;
-//import javax.ws.rs.core.Response;
 import java.util.List;
 
 public interface AlbumService {
@@ -15,7 +11,14 @@ public interface AlbumService {
     Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name);
     void deleteAlbum(String ISRC);
     void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name);
+    //cover images CRUD
+    void getCoverImage();
+    void deleteCoverImage();
+    void updateCoverImage();
 
+    //CRUD for Logs
+    void getLogs();
+    void clearLogs();
 
 
 

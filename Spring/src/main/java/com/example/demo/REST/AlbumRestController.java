@@ -47,7 +47,7 @@ public class AlbumRestController implements WebMvcConfigurer {
     }
 
     @PostMapping("/create/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
-    public String createAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name){
+    public String createNewAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name){
         albumService.createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
         return "Created";
     }
@@ -63,6 +63,39 @@ public class AlbumRestController implements WebMvcConfigurer {
     public String modifyAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name){
         albumService.modifyAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
         return "Modified";
+    }
+
+
+//CRUD For Cover Images
+    //add ISRC to find album
+    @GetMapping("/image/get")
+    public String getCoverImage(Model model){
+        //
+//        albumService.getCoverImage();
+                return "Image";
+    }
+
+    @DeleteMapping("/image/delete")
+    public String deleteCoverImage(Model model){
+//        albumService.deleteCoverImage();
+        return "Image";
+    }
+
+    @PutMapping("/image/put")
+    public String updateCoverImage(Model model){
+//        albumService.updateImage();
+        return "Image";
+    }
+
+    //GET/CLEAR for LOGS
+    @GetMapping("/logs")
+    public String getLogs(Model model){
+        return "Logs";
+    }
+
+    @DeleteMapping("/logs")
+    public String clearLogs(Model model){
+        return "Logs";
     }
 
 //    @PUT

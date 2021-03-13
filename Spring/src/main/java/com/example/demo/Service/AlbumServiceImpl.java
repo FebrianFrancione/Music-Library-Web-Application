@@ -3,19 +3,11 @@ package com.example.demo.Service;
 import com.example.demo.DAO.AlbumRepository;
 import com.example.demo.Entity.Album;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.stereotype.Service;
 
-//import javax.ws.rs.*;
-//import javax.ws.rs.core.MediaType;
-//import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
-import java.net.URLDecoder;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class AlbumServiceImpl implements AlbumService{
@@ -46,7 +38,6 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Override
     public Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {
-//    public Album createNewAlbum() {
 
 //        if(getAlbum(ISRC) == null){
 //            Album newAlbum = new Album(ISRC, title, description, year, artist_first_name, artist_last_name);
@@ -55,12 +46,6 @@ public class AlbumServiceImpl implements AlbumService{
 //            return null;
 //        }
         Album newAlbum = new Album(ISRC, title, description,year,artist_first_name,artist_last_name);
-//        newAlbum.setISRC(ISRC);
-//        newAlbum.setTitle(title);
-//        newAlbum.setDescription(description);
-//        newAlbum.setYear(year);
-//        newAlbum.setArtist_first_name(artist_first_name);
-//        newAlbum.setArtist_last_name(artist_last_name);
         newAlbum.setCover_image_name("noName");
         newAlbum.setCover_image(null);
         newAlbum.setImage_mime("NoMime");
@@ -80,6 +65,37 @@ public class AlbumServiceImpl implements AlbumService{
         deleteAlbum(ISRC);
         createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
     }
+
+
+    //Cover Images CRUD
+
+    @Override
+    public void getCoverImage() {
+
+    }
+
+    @Override
+    public void deleteCoverImage() {
+
+    }
+
+    @Override
+    public void updateCoverImage() {
+
+    }
+
+    //LOGS
+
+    @Override
+    public void getLogs() {
+
+    }
+
+    @Override
+    public void clearLogs() {
+
+    }
+
 }
 
 
