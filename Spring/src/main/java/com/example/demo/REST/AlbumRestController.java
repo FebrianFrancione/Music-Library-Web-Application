@@ -71,15 +71,20 @@ public class AlbumRestController implements WebMvcConfigurer {
 //    http://localhost:8080/album/image/ISRC
     @GetMapping("/image/{ISRC}")
     public String getCoverImage(Model model, @PathVariable("ISRC") String ISRC){
-        Album ThisAlbum = albumService.getCoverImage(ISRC);
+        Album album = albumService.getCoverImage(ISRC);
+        if (album == null) {
+            throw new RuntimeException("Album ISRC not found " + ISRC);
+        }
         model.addAttribute("imgUtil", new ImageUtil());
-        model.addAttribute("album", ThisAlbum);
+        model.addAttribute("album", album);
         return "Images";
     }
 
-    @DeleteMapping("/image/delete")
-    public String deleteCoverImage(Model model){
-//        albumService.deleteCoverImage();
+    @DeleteMapping("/image/delete/{ISRC}")
+    public String deleteCoverImage(Model model, @PathVariable("ISRC") String ISRC){
+        Album album = albumService.deleteCoverImage(ISRC);
+        model.addAttribute("imgUtil", new ImageUtil());
+        model.addAttribute("album", album);
         return "Images";
     }
 

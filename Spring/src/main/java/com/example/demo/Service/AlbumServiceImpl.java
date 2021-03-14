@@ -76,8 +76,18 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public void deleteCoverImage() {
+    public Album deleteCoverImage(String ThisISRC) {
+        Album album = getAlbum(ThisISRC);
 
+        String ISRC = ThisISRC;
+        String title = album.getTitle();
+        String description = album.getDescription();
+        int year = album.getYear();
+        String first_name = album.getArtist_first_name();
+        String last_name = album.getArtist_last_name();
+
+        albumRepository.delete(album);
+        return createNewAlbum(ISRC, title, description, year, first_name, last_name);
     }
 
     @Override

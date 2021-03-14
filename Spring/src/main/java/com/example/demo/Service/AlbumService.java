@@ -13,7 +13,7 @@ public interface AlbumService {
     void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name);
     //cover images CRUD
     Album getCoverImage(String ISRC);
-    void deleteCoverImage();
+    Album deleteCoverImage(String ISRC);
     void updateCoverImage();
 
 }
