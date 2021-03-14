@@ -68,35 +68,27 @@ public class AlbumRestController implements WebMvcConfigurer {
 
 //CRUD For Cover Images
     //add ISRC to find album
-    @GetMapping("/image/get")
-    public String getCoverImage(Model model){
-        //
-//        albumService.getCoverImage();
-                return "Image";
+//    http://localhost:8080/album/image/ISRC
+    @GetMapping("/image/{ISRC}")
+    public String getCoverImage(Model model, @PathVariable("ISRC") String ISRC){
+        Album ThisAlbum = albumService.getCoverImage(ISRC);
+        model.addAttribute("imgUtil", new ImageUtil());
+        model.addAttribute("album", ThisAlbum);
+        return "Images";
     }
 
     @DeleteMapping("/image/delete")
     public String deleteCoverImage(Model model){
 //        albumService.deleteCoverImage();
-        return "Image";
+        return "Images";
     }
 
     @PutMapping("/image/put")
     public String updateCoverImage(Model model){
 //        albumService.updateImage();
-        return "Image";
+        return "Images";
     }
 
-    //GET/CLEAR for LOGS
-    @GetMapping("/logs")
-    public String getLogs(Model model){
-        return "Logs";
-    }
-
-    @DeleteMapping("/logs")
-    public String clearLogs(Model model){
-        return "Logs";
-    }
 
 //    @PUT
 //    @Produces({MediaType.TEXT_PLAIN})

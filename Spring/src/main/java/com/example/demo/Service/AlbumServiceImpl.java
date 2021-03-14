@@ -70,8 +70,9 @@ public class AlbumServiceImpl implements AlbumService{
     //Cover Images CRUD
 
     @Override
-    public void getCoverImage() {
-
+    public Album getCoverImage(String ISRC) {
+       Album album = getAlbum(ISRC);
+       return album;
     }
 
     @Override
@@ -84,17 +85,6 @@ public class AlbumServiceImpl implements AlbumService{
 
     }
 
-    //LOGS
-
-    @Override
-    public void getLogs() {
-
-    }
-
-    @Override
-    public void clearLogs() {
-
-    }
 
 }
 

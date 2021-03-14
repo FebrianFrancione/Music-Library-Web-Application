@@ -31,10 +31,9 @@ public class Album {
     @Column(name = "image_mime")
     private String image_mime;
 
-    //    @Column(name = "cover_image")
-//    private String cover_image;
     @Column(name = "cover_image")
     private byte[] cover_image;
+
 
 
     public Album(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {

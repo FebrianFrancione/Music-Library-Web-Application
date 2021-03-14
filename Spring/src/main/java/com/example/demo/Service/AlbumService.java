@@ -12,14 +12,8 @@ public interface AlbumService {
     void deleteAlbum(String ISRC);
     void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name);
     //cover images CRUD
-    void getCoverImage();
+    Album getCoverImage(String ISRC);
     void deleteCoverImage();
     void updateCoverImage();
-
-    //CRUD for Logs
-    void getLogs();
-    void clearLogs();
-
-
 
 }

@@ -10,5 +10,14 @@
 <hr>
 <br>
 Images
+<table>
+    <tr>
+        <td th:text="${album.getISRC()}"/>
+        <td th:text="${album.getCover_image_name()}"/>
+        <td th:text="${album.getCover_image()}"/>
+        <td th:if="${album.getCover_image() != null}"><img class='img-thumbnail' style=" width: 200px;height: 200px; object-fit: fill;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/></td>
+        <td th:unless="${album.getCover_image() != null}"><img class='img-thumbnail' style=" width: 200px;height: 200px; object-fit: fill;" th:src="@{/img/spot_me.png}"/></td>
+    </tr>
+</table>
 </body>
 </html>
