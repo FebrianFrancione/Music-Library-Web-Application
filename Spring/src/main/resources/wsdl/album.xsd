@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:n1="http://www.jpworks.com/album" targetNamespace="http://www.jpworks.com/album" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+
+    <xs:element name="album">
+        <xs:annotation>
+            <xs:documentation>Album personal information</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+<!--            <xs:sequence maxOccurs="unbounded">-->
+<!--                <xs:element ref="n1:address"/>-->
+<!--            </xs:sequence>-->
+            <xs:attribute name="ISRC" type="xs:string" use="required"/>
+            <xs:attribute name="title" type="xs:string" use="required"/>
+            <xs:attribute name="description" type="xs:string" use="required"/>
+            <xs:attribute name="year" type="xs:int" use="required"/>
+            <xs:attribute name="artist_first_name" type="xs:string" use="required"/>
+            <xs:attribute name="artist_last_name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+<!--    <xs:element name="address">-->
+<!--        <xs:annotation>-->
+<!--            <xs:documentation>Address of the employee</xs:documentation>-->
+<!--        </xs:annotation>-->
+<!--        <xs:complexType>-->
+<!--            <xs:attribute name="fromdate" type="xs:date" use="required"/>-->
+<!--            <xs:attribute name="todate" type="xs:date" use="optional"/>-->
+<!--            <xs:attribute name="address" type="xs:string" use="required"/>-->
+<!--        </xs:complexType>-->
+<!--    </xs:element>-->
+
+    <xs:element name="AlbumResponse">
+        <xs:complexType>
+            <xs:sequence minOccurs="0">
+                <xs:element ref="n1:album"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AlbumsResponse">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="n1:album"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AlbumByISRCRequest">
+        <xs:annotation>
+            <xs:documentation>Query Album by ISRC</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="ISRC" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AlbumByNameRequest">
+        <xs:annotation>
+            <xs:documentation>Query an album by name</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="artist_first_name" type="xs:string" use="optional"/>
+            <xs:attribute name="artist_last_name" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
