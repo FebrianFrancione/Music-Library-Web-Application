@@ -1,3 +1,4 @@
+#config for spring SOAP
 server:
   port: 8080
   error:
