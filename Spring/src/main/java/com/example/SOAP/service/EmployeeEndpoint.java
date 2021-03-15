@@ -24,6 +24,7 @@ public class EmployeeEndpoint implements AlbumServicePortType {
         return albumResponse;
     }
 
+
     @Override
     public AlbumsResponse getAlbumsByName(AlbumByNameRequest parameters) {
         return null;

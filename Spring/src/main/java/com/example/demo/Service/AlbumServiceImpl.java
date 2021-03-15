@@ -35,6 +35,10 @@ public class AlbumServiceImpl implements AlbumService{
         return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
     }
 
+//    public Album getAlbumHtml(String ISRC){
+//        return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
+//    }
+
     @Override
     public Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {
 

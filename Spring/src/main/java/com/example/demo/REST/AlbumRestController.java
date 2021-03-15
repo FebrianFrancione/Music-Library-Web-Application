@@ -4,13 +4,16 @@ import com.example.demo.Entity.Album;
 import com.example.demo.Service.AlbumService;
 import com.example.demo.Service.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
 @Controller
-@RequestMapping(value = "/album", method = {RequestMethod.GET, RequestMethod.POST,RequestMethod.PUT, RequestMethod.DELETE})
+//@RequestMapping(value = "/album", produces = {MediaType.APPLICATION_JSON_VALUE}, method = {RequestMethod.GET, RequestMethod.POST,RequestMethod.PUT, RequestMethod.DELETE})
 public class AlbumRestController implements WebMvcConfigurer {
 
 
@@ -21,30 +24,151 @@ public class AlbumRestController implements WebMvcConfigurer {
         this.albumService = albumService;
     }
 
-    @GetMapping("/home")
-    public String showHome(Model model){
+//    @GetMapping(value = "/")
+//    public String showHome(Model model){
+//        return "Home";
+//    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public String showHome(){
         return "Home";
     }
 
-
-    @GetMapping("/list")
-    public String getAlbums(Model model) {
-        model.addAttribute("imgUtil", new ImageUtil());
-        model.addAttribute(albumService.getAlbums());
-        return "Albums";
+    //    @GetMapping(value = "/{ISRC}/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{ISRC}/{title}")
+    @ResponseBody
+    public Album getAlbum(@PathVariable String ISRC, @PathVariable("title") String title) {
+        return albumService.getAlbum(ISRC);
     }
 
-    @GetMapping("/{ISRC}/{title}")
-    public String getAlbum(Model model, @PathVariable("ISRC") String ISRC, @PathVariable("title") String title) {
-        Album album = albumService.findByISRCAndTitle(ISRC, title);
-        if (album == null) {
-            throw new RuntimeException("Album ISRC not found " + ISRC + title);
-        }
+    @GetMapping(value = "/{ISRC}/{title}", produces = MediaType.TEXT_HTML_VALUE)
+    public String getAlbumHTML(Model model, @PathVariable String ISRC, @PathVariable("title") String title) {
+        Album album = albumService.getAlbum(ISRC);
         model.addAttribute("imgUtil", new ImageUtil());
         model.addAttribute("album1", album);
-
         return "Album";
     }
+
+//    @RequestMapping(value = "/{ISRC}/{title}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+////    @GetMapping(value = "/{ISRC}/{title}", produces = MediaType.TEXT_HTML_VALUE)
+//    public String getAlbumHtml(Model model, @PathVariable String ISRC, @PathVariable("title") String title) {
+//        Album album = albumService.findByISRCAndTitle(ISRC, title);
+//        if (album == null) {
+//            throw new RuntimeException("Album ISRC not found " + ISRC + title);
+//        }
+//        model.addAttribute("imgUtil", new ImageUtil());
+//        model.addAttribute("album1", album);
+//        return "Album";
+//    }
+
+//    @GetMapping("/{ISRC}/{title}")
+//    public String getAlbum(Model model, @PathVariable("ISRC") String ISRC, @PathVariable("title") String title) {
+//        Album album = albumService.findByISRCAndTitle(ISRC, title);
+//        if (album == null) {
+//            throw new RuntimeException("Album ISRC not found " + ISRC + title);
+//        }
+//        model.addAttribute("imgUtil", new ImageUtil());
+//        model.addAttribute("album1", album);
+//
+//        return "Album";
+//    }
+
+//    @RequestMapping(value = "/{ISRC}/{title}", method = RequestMethod.GET, produces = "application/json")
+//    public Album getAlbum(Model model, @PathVariable("ISRC") String ISRC, @PathVariable("title") String title) {
+//        Album album = albumService.findByISRCAndTitle(ISRC, title);
+//        if (album == null) {
+//            throw new RuntimeException("Album ISRC not found " + ISRC + title);
+//        }
+//        model.addAttribute("imgUtil", new ImageUtil());
+//        model.addAttribute("album1", album);
+//
+//        return album;
+//    }
+
+//    @GetMapping("/{ISRC}/{title}")
+//    @RequestMapping(value = "/{ISRC}/{title}", method = RequestMethod.GET)
+//    public String getAlbumHtml(Model model, @PathVariable("ISRC") String ISRC, @PathVariable("title") String title) {
+//        Album album = albumService.findByISRCAndTitle(ISRC, title);
+//        if (album == null) {
+//            throw new RuntimeException("Album ISRC not found " + ISRC + title);
+//        }
+//        model.addAttribute("imgUtil", new ImageUtil());
+//        model.addAttribute("album1", album);
+//
+//        return "Album";
+//    }
+
+//    @RequestMapping(value = "/{ISRC}/{title}", method = RequestMethod.GET, produces = "application/json")
+//    @ResponseBody
+//    public Album getAlbumREST() {
+//        return new Album("Album");
+//    }
+//
+//    // call http://<host>/hello.html or just http://<host>/hello
+//    @RequestMapping(value = "/{ISRC}/{title}", method = RequestMethod.GET)
+//    public String getAlbumHTML(Model model) {
+//        model.addAttribute("myObject", new MyObject("helloWorld"));
+//        return "myView";
+//    }
+
+//    @GetMapping("/{ISRC}/{title}")
+//    @RequestMapping(value = "/{ISRC}/{title}", method = RequestMethod.GET, produces = "application/json")
+//    public String getAlbum(Model model, @PathVariable("ISRC") String ISRC, @PathVariable("title") String title) {
+//        Album album = albumService.findByISRCAndTitle(ISRC, title);
+//        if (album == null) {
+//            throw new RuntimeException("Album ISRC not found " + ISRC + title);
+//        }
+//        model.addAttribute("imgUtil", new ImageUtil());
+//        model.addAttribute("album1", album);
+//
+//        return new Album();
+//    }
+
+
+
+
+
+//    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json")
+//    @ResponseBody
+//    public List<Album> getAlbumsREST(){
+//        return new List<Album> Album;
+//    }
+//
+//    @RequestMapping(value = "/list", method = RequestMethod.GET)
+//    public String getAlbumsHTML(Model model) {
+//        model.addAttribute("imgUtil", new ImageUtil());
+//        model.addAttribute("", albumService.getAlbums());
+//        return "Albums";
+//    }
+
+
+
+//    @GetMapping(value = "/list")
+//    public List<Album> getAlbums(Model model) {
+//        model.addAttribute("imgUtil", new ImageUtil());
+//        model.addAttribute(albumService.getAlbums());
+////        return "Albums";
+//        return albumService.getAlbums();
+//    }
+
+//
+//    @GetMapping("/list")
+//    public String getAlbums(Model model) {
+//
+//    }
+
+//    @GetMapping("/{ISRC}/{title}")
+//    public String getAlbum(Model model, @PathVariable("ISRC") String ISRC, @PathVariable("title") String title) {
+//        Album album = albumService.findByISRCAndTitle(ISRC, title);
+//        if (album == null) {
+//            throw new RuntimeException("Album ISRC not found " + ISRC + title);
+//        }
+//        model.addAttribute("imgUtil", new ImageUtil());
+//        model.addAttribute("album1", album);
+//
+//        return "Album";
+//    }
 
     @PostMapping("/create/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
     public String createNewAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name){
@@ -66,7 +190,7 @@ public class AlbumRestController implements WebMvcConfigurer {
     }
 
 
-//CRUD For Cover Images
+    //CRUD For Cover Images
     //add ISRC to find album
 //    http://localhost:8080/album/image/ISRC
     @GetMapping("/image/{ISRC}")
