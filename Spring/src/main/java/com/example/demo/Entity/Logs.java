@@ -5,11 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 @Entity
 @Table(name = "logs")
-public class Logs {
+public class Logs implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "log_id")
@@ -24,15 +27,16 @@ public class Logs {
     @Column(name = "ISRC")
     private String ISRC;
 
-    public Logs() {
-    }
 
-    public Logs(int logId, Calendar timeStamp, int type_of_change, String ISRC) {
-        this.logId = logId;
-        this.timeStamp = timeStamp;
-        this.typeOfChange = type_of_change;
-        this.ISRC = ISRC;
-    }
+//    public Logs() {
+//    }
+//
+//    public Logs(int logId, Calendar timeStamp, int type_of_change, String ISRC) {
+//        this.logId = logId;
+//        this.timeStamp = timeStamp;
+//        this.typeOfChange = type_of_change;
+//        this.ISRC = ISRC;
+//    }
 
     public int getLogId() {
         return logId;
@@ -64,5 +68,15 @@ public class Logs {
 
     public void setISRC(String ISRC) {
         this.ISRC = ISRC;
+    }
+
+    @Override
+    public String toString() {
+        return "Logs{" +
+                "logId=" + logId +
+                ", timeStamp=" + timeStamp +
+                ", typeOfChange=" + typeOfChange +
+                ", ISRC='" + ISRC + '\'' +
+                '}';
     }
 }
