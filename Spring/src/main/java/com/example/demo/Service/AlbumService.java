@@ -15,5 +15,4 @@ public interface AlbumService {
     Album getCoverImage(String ISRC);
     void deleteCoverImage();
     void updateCoverImage();
-
 }

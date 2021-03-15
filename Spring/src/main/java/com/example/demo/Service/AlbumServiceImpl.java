@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 public class AlbumServiceImpl implements AlbumService{
 
-    @Autowired
     private AlbumRepository albumRepository;
 
     @Autowired

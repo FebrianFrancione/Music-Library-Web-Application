@@ -21,7 +21,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         this.albumService = albumService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String showHome(Model model){
         return "Home";
     }
@@ -71,9 +71,9 @@ public class AlbumRestController implements WebMvcConfigurer {
 //    http://localhost:8080/album/image/ISRC
     @GetMapping("/image/{ISRC}")
     public String getCoverImage(Model model, @PathVariable("ISRC") String ISRC){
-        Album ThisAlbum = albumService.getCoverImage(ISRC);
+        Album thisAlbum = albumService.getCoverImage(ISRC);
         model.addAttribute("imgUtil", new ImageUtil());
-        model.addAttribute("album", ThisAlbum);
+        model.addAttribute("album", thisAlbum);
         return "Images";
     }
 
