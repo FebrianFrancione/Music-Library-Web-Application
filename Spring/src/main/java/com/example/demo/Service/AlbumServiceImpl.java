@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,7 +24,9 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Override
     public List<Album> getAlbums() {
-        return albumRepository.findAll();
+        List<Album> sortedAlbums = albumRepository.findAll().stream()
+                .sorted((a,b) -> a.getTitle().compareTo(b.getTitle())).collect(Collectors.toList());
+        return sortedAlbums;
     }
 
     @Override
