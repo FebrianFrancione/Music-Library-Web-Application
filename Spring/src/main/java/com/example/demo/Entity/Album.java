@@ -2,36 +2,36 @@ package com.example.demo.Entity;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "albums")
+//@Entity
+//@Table(name = "albums")
 public class Album {
 
-    @Id
-    @Column(name = "ISRC")
+//    @Id
+//    @Column(name = "ISRC")
     private String ISRC;
 
-    @Column(name = "title")
+//    @Column(name = "title")
     private String title;
 
-    @Column(name = "description")
+//    @Column(name = "description")
     private String description;
 
-    @Column(name = "year")
+//    @Column(name = "year")
     private int year;
 
-    @Column(name = "artist_first_name")
+//    @Column(name = "artist_first_name")
     private String artist_first_name;
 
-    @Column(name = "artist_last_name")
+//    @Column(name = "artist_last_name")
     private String artist_last_name;
 
-    @Column(name = "cover_image_name")
+//    @Column(name = "cover_image_name")
     private String cover_image_name;
 
-    @Column(name = "image_mime")
+//    @Column(name = "image_mime")
     private String image_mime;
 
-    @Column(name = "cover_image")
+//    @Column(name = "cover_image")
     private byte[] cover_image;
 
 

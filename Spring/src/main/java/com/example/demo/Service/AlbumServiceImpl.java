@@ -1,46 +1,49 @@
 package com.example.demo.Service;
 
-import com.example.demo.DAO.AlbumRepository;
+//import com.example.demo.DAO.AlbumRepository;
 import com.example.demo.Entity.Album;
+import com.example.demo.persistence.AlbumDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 
 @Service
 public class AlbumServiceImpl implements AlbumService{
 
-    private AlbumRepository albumRepository;
-
-    @Autowired
-    public AlbumServiceImpl(AlbumRepository albumRepository) {
-        this.albumRepository = albumRepository;
-    }
-
-
-    @Override
-    public List<Album> getAlbums() {
-        return albumRepository.findAll();
-    }
-
-    @Override
-    public Album findByISRCAndTitle(String ISRC, String title) {
-        return albumRepository.findAll().stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title)).findFirst().orElse(null);
-    }
+//    private AlbumRepository albumRepository;
+    private AlbumDao albumDao;
+//
+//    @Autowired
+//    public AlbumServiceImpl(AlbumDao albumDao) {
+//        this.albumDao = albumDao;
+//    }
 
 
-    public Album getAlbum(String ISRC){
-        return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
-    }
+//    @Override
+//    public List<Album> getAlbums() {
+//        return albumRepository.findAll();
+//    }
+
+//    @Override
+//    public Album findByISRCAndTitle(String ISRC, String title) {
+//        return albumRepository.findAll().stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title)).findFirst().orElse(null);
+//    }
+//
+//
+//    public Album getAlbum(String ISRC){
+//        return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
+//    }
 
 //    public Album getAlbumHtml(String ISRC){
 //        return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
 //    }
 
     @Override
-    public Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {
+    public Album createNewAlbumTestService(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
 
 //        if(getAlbum(ISRC) == null){
 //            Album newAlbum = new Album(ISRC, title, description, year, artist_first_name, artist_last_name);
@@ -48,48 +51,51 @@ public class AlbumServiceImpl implements AlbumService{
 //        } else {
 //            return null;
 //        }
+        AlbumDao albumDao = new AlbumDao();
         Album newAlbum = new Album(ISRC, title, description,year,artist_first_name,artist_last_name);
         newAlbum.setCover_image_name("noName");
         newAlbum.setCover_image(null);
         newAlbum.setImage_mime("NoMime");
 
-        albumRepository.save(newAlbum);
+        albumDao.insertAlbumTest(newAlbum);
+//        albumRepository.save(newAlbum);
         return newAlbum;
     }
 
-    @Override
-    public void deleteAlbum(String ISRC){
-        Album album = getAlbum(ISRC);
-        albumRepository.delete(album);
-    }
-
-    @Override
-    public void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) {
-        deleteAlbum(ISRC);
-        createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
-    }
-
-
-    //Cover Images CRUD
-
-    @Override
-    public Album getCoverImage(String ISRC) {
-       Album album = getAlbum(ISRC);
-       return album;
-    }
-
-    @Override
-    public void deleteCoverImage() {
-
-    }
-
-    @Override
-    public void updateCoverImage() {
-
-    }
+//    @Override
+//    public void deleteAlbum(String ISRC){
+//        Album album = getAlbum(ISRC);
+//        albumRepository.delete(album);
+//    }
+//
+//    @Override
+//    public void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
+//        deleteAlbum(ISRC);
+//        createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
+//    }
+//
+//
+//    //Cover Images CRUD
+//
+//    @Override
+//    public Album getCoverImage(String ISRC) {
+//       Album album = getAlbum(ISRC);
+//       return album;
+//    }
+//
+//    @Override
+//    public void deleteCoverImage() {
+//
+//    }
+//
+//    @Override
+//    public void updateCoverImage() {
+//
+//    }
 
 
 }
+
 
 
 //
