@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -26,16 +29,23 @@ public class AlbumRestController implements WebMvcConfigurer {
         this.albumService = albumService;
     }
 
-//    private AlbumService albumService;
-
     @GetMapping(value = "/")
     @ResponseBody
     public void getHome() {
     }
 
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
-    public String showHomeHtml(){
-        return "Home";
+    public String showHomeHtml(Model model){
+//        if (cover_image.isEmpty()) {
+//            model.addAttribute("message", "Please select a file to upload.");
+//            return "redirect:/Home";
+//        }
+//        String cover_image_name = StringUtils.cleanPath(cover_image.getOriginalFilename());
+
+//        albumService.createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
+//        model.addAttribute("message", "You successfully uploaded " + cover_image_name + '!');
+        model.addAttribute("message", "You successfully uploaded !");
+        return "/Home";
     }
 
 
