@@ -1,0 +1,76 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/guides/gs-producing-web-service"
+           targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">
+
+    <xs:complexType name="logEntry">
+        <xs:sequence>
+            <xs:element name="log_id" type="xs:int"/>
+            <xs:element name="ISRC" type="xs:string"/>
+            <xs:element name="time_stamp" type="xs:dateTime"/>
+            <xs:element name="type_of_change" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="getAllLogsRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="getAllLogsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="logEntry" type="tns:logEntry" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllLogsByDatesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="from" type="xs:string"/>
+                <xs:element name="to" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllLogsByDatesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="logEntry" type="tns:logEntry" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllLogsByChangeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="change_type" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllLogsByChangeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="logEntry" type="tns:logEntry" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllLogsByByDateAndChangeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="from" type="xs:string"/>
+                <xs:element name="to" type="xs:string"/>
+                <xs:element name="change_type" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllLogsByByDateAndChangeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="logEntry" type="tns:logEntry" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
