@@ -14,28 +14,11 @@ import java.util.List;
 @Service
 public class AlbumServiceImpl implements AlbumService{
 
-//    private AlbumRepository albumRepository;
     AlbumDao albumDao = new AlbumDao();
-//
-//    @Autowired
-//    public AlbumServiceImpl(AlbumDao albumDao) {
-//        this.albumDao = albumDao;
-//    }
-
-//    public Album getAlbum(String ISRC){
-//        return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
-//    }
-//
-//    public Album getAlbumHtml(String ISRC){
-//        return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
-//    }
-
-
 
     @Override
     public Album findByISRCAndTitle(String ISRC, String title) throws Exception {
         return albumDao.findByISRCAndTitle(ISRC, title);
-//        return albumRepository.findAll().stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title)).findFirst().orElse(null);
     }
 
     @Override
@@ -45,35 +28,27 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Override
     public Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
-
-//        if(getAlbum(ISRC) == null){
-//            Album newAlbum = new Album(ISRC, title, description, year, artist_first_name, artist_last_name);
-//            return albumRepository.save(newAlbum);
-//        } else {
-//            return null;
-//        }
-
         Album newAlbum = new Album(ISRC, title, description,year,artist_first_name,artist_last_name);
         newAlbum.setCover_image_name("noName");
         newAlbum.setCover_image(null);
         newAlbum.setImage_mime("NoMime");
         albumDao.insertAlbum(newAlbum);
-//        albumRepository.save(newAlbum);
         return newAlbum;
     }
 
-//    @Override
-//    public void deleteAlbum(String ISRC){
-//        Album album = getAlbum(ISRC);
-//        albumRepository.delete(album);
-//    }
-//
-//    @Override
-//    public void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
-//        deleteAlbum(ISRC);
-//        createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
-//    }
-//
+    @Override
+    public void deleteAlbum(String ISRC){
+        albumDao.delete(ISRC);
+    }
+
+    @Override
+    public void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
+        deleteAlbum(ISRC);
+        createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
+    }
+
+
+
 //
 //    //Cover Images CRUD
 //

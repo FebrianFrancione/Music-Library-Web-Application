@@ -74,8 +74,6 @@ public class AlbumDao {
                 String title = resultSet.getString("title");
                 String description = resultSet.getString("description");
                 int year = resultSet.getInt("year");
-                String first_name = resultSet.getString("artist_first_name");
-                String last_name = resultSet.getString("artist_last_name");
                 String artist_first_name = resultSet.getString("artist_first_name");
                 String artist_last_name = resultSet.getString("artist_last_name");
                 String cover_image_name = resultSet.getString("cover_image_name");
@@ -122,6 +120,24 @@ public class AlbumDao {
         }
     }
 
+        public void delete(String ISRC){
+//        boolean deleted = false;
+        String sql = "delete from albums where ISRC=?";
+        JDBConfig jdbc = new JDBConfig();
+        statement = jdbc.prepareStatement(sql);
+        try {
+            statement.setString(1, ISRC);
+            statement.executeUpdate();
+//            int deletedRow = statement.executeUpdate();
+//            if(deletedRow == 1)
+//                deleted = true;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            jdbc.close();
+        }
+//        return deleted;
+    }
 
 
 //    public void updateAlbum(String ISRC,String title,String description,int year,String artist_first_name,String artist_last_name){
@@ -143,24 +159,7 @@ public class AlbumDao {
 //        }
 //    }
 //
-//    public boolean deleteAlbum(String ISRC){
-//        boolean deleted = false;
-//        String sql = "delete from albums where ISRC=?";
-//        JDBConfig jdbc = new JDBConfig();
-//        statement = jdbc.prepareStatement(sql);
-//        try {
-//            statement.setString(1, ISRC);
-//            int deletedRow = statement.executeUpdate();
-//            if(deletedRow == 1)
-//                deleted = true;
-//
-//        }catch(SQLException e){
-//            e.printStackTrace();
-//        }finally {
-//            jdbc.close();
-//        }
-//        return deleted;
-//    }
+
 
     public String getImageExtension(String MIME_type){
         String extension = "";

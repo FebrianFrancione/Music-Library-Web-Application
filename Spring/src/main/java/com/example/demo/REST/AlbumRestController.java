@@ -80,33 +80,30 @@ public class AlbumRestController implements WebMvcConfigurer {
         return "Created";
     }
 
-//
-//
-//    @DeleteMapping(value = "/{ISRC}")
-//    @ResponseBody
-//    public void deleteAlbum(@PathVariable("ISRC") String ISRC) {
-//        albumService.deleteAlbum(ISRC);
-//    }
-//
-//    @DeleteMapping(value = "/{ISRC}", produces = MediaType.TEXT_HTML_VALUE)
-//    public String deleteAlbumHtml(@PathVariable("ISRC") String ISRC) {
-//        albumService.deleteAlbum(ISRC);
-//        return "Deleted";
-//    }
 
+    @DeleteMapping(value = "/{ISRC}")
+    @ResponseBody
+    public void deleteAlbum(@PathVariable("ISRC") String ISRC) {
+        albumService.deleteAlbum(ISRC);
+    }
 
+    @DeleteMapping(value = "/{ISRC}", produces = MediaType.TEXT_HTML_VALUE)
+    public String deleteAlbumHtml(@PathVariable("ISRC") String ISRC) {
+        albumService.deleteAlbum(ISRC);
+        return "Deleted";
+    }
 
-//    @PutMapping(value = "/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
-//    @ResponseBody
-//    public void modifyAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
-//        albumService.modifyAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
-//    }
-//
-//    @PutMapping(value = "/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}", produces = MediaType.TEXT_HTML_VALUE)
-//    public String modifyAlbumHtml(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
-//        albumService.modifyAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
-//        return "Modified";
-//    }
+    @PutMapping(value = "/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
+    @ResponseBody
+    public void modifyAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
+        albumService.modifyAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
+    }
+
+    @PutMapping(value = "/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}", produces = MediaType.TEXT_HTML_VALUE)
+    public String modifyAlbumHtml(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
+        albumService.modifyAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
+        return "Modified";
+    }
 
 
     //CRUD For Cover Images
@@ -133,30 +130,3 @@ public class AlbumRestController implements WebMvcConfigurer {
 //    }
 
 }
-
-//    @PUT
-//    @Produces({MediaType.TEXT_PLAIN})
-//    @Path("{ISRC}/{title}/{description}/{year}/{artist}")
-//    public Response modifyAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
-//        title = URLDecoder.decode(title);
-//        description = URLDecoder.decode(description);
-//        artist = URLDecoder.decode(artist);
-//
-//        if(ISRC == null || title == null || year == 0 || artist == null){
-//            message = "A Form parameter is incorrect!";
-//            return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
-//        }
-//        else{
-//            if(albumsManager.updateAlbum(ISRC, title, description, year, artist)){
-//                message = "Album modified :\n" + albumsManager.getAlbum(ISRC);
-//                return Response.ok(message).build();
-//            }
-//            else{
-//                message = "Album " + ISRC + " could not be modified";
-//                return Response.status(Response.Status.NOT_FOUND).entity(message).build();
-//            }
-//
-//        }
-//
-//    }
-
