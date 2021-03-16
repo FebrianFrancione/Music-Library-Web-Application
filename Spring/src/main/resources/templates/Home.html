@@ -3,28 +3,30 @@
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/Style.css" th:href="@{/css/Style.css}" />
 </head>
 <body>
 
 <p>Hello World!</p>
 Home
 <hr>
-<section class="my-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <h2>Upload File Example</h2>
-                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
-                <form method="post" th:action="@{/album/create/ISRC/title/description/2021/artist_first_name/artist_last_name}" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <input type="file" name="file" class="form-control-file">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Upload File Button</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+<!--<section class="my-5">-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-8 mx-auto">-->
+<!--                <h2>Upload File Example</h2>-->
+<!--                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>-->
+<!--                <form method="post" th:action="@{/album/create/ISRC/title/description/2021/artist_first_name/artist_last_name}" enctype="multipart/form-data">-->
+<!--                    <div class="form-group">-->
+<!--                        <input type="file" name="file" class="form-control-file">-->
+<!--                    </div>-->
+<!--                    <button type="submit" class="btn btn-primary">Upload File Button</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
 
 </body>
 </html>

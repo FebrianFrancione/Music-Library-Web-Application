@@ -6,6 +6,7 @@ import com.example.demo.persistence.AlbumDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -29,9 +30,9 @@ public class AlbumServiceImpl implements AlbumService{
     @Override
     public Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
         Album newAlbum = new Album(ISRC, title, description,year,artist_first_name,artist_last_name);
-        newAlbum.setCover_image_name("noName");
-        newAlbum.setCover_image(null);
-        newAlbum.setImage_mime("NoMime");
+//        newAlbum.setCover_image_name("noName");
+//        newAlbum.setCover_image(null);
+//        newAlbum.setImage_mime("NoMime");
         albumDao.insertAlbum(newAlbum);
         return newAlbum;
     }
@@ -44,9 +45,13 @@ public class AlbumServiceImpl implements AlbumService{
     @Override
     public void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
         deleteAlbum(ISRC);
-        createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
+//        createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name, );
     }
 
+    @Override
+    public void upload(String ISRC, byte[] cover_image) throws FileNotFoundException {
+        albumDao.insertImage(ISRC, cover_image);
+    }
 
 
 //

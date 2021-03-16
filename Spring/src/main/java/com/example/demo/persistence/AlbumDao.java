@@ -3,6 +3,7 @@ package com.example.demo.persistence;
 
 
 import com.example.demo.Entity.Album;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -14,6 +15,53 @@ import java.util.List;
 public class AlbumDao {
 
     private PreparedStatement statement = null;
+
+    public void insertImage(String ISRC, byte[] cover_image) throws FileNotFoundException {
+        String sql = "Update albums_db.albums SET cover_image = ? where ISRC=?;";
+        JDBConfig jdbc = new JDBConfig();
+        statement = jdbc.prepareStatement(sql);
+
+        try {
+            statement.setBytes(1, cover_image);
+            statement.setString(2, ISRC);
+//            statement.setString(7, album.getCover_image_name());
+//            statement.setString(8, album.getImage_mime());
+//            statement.setBytes(7, album.getCover_image());
+
+            //Testing adding an image to DB
+//            Path searchPath = Paths.get("demo/src/main/java/persistence/test_image.jpg").toAbsolutePath();
+//            File f = new File(String.valueOf(searchPath));
+//            FileInputStream fs= new FileInputStream(f);
+//            statement.setBinaryStream(9,fs,(int)f.length());
+            statement.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            jdbc.close();
+        }
+    }
+
+//    public void delete(String ISRC){
+////        boolean deleted = false;
+//        String sql = "delete from albums where ISRC=?";
+//        JDBConfig jdbc = new JDBConfig();
+//        statement = jdbc.prepareStatement(sql);
+//        try {
+//            statement.setString(1, ISRC);
+//            statement.executeUpdate();
+////            int deletedRow = statement.executeUpdate();
+////            if(deletedRow == 1)
+////                deleted = true;
+//        }catch(SQLException e){
+//            e.printStackTrace();
+//        }finally {
+//            jdbc.close();
+//        }
+////        return deleted;
+//    }
+
+
 
 
     public Album findByISRCAndTitle(String ISRC, String theTitle) throws Exception, IOException {
@@ -105,6 +153,9 @@ public class AlbumDao {
             statement.setInt(4, album.getYear());
             statement.setString(5, album.getArtist_first_name());
             statement.setString(6, album.getArtist_last_name());
+//            statement.setString(7, album.getCover_image_name());
+//            statement.setString(8, album.getImage_mime());
+//            statement.setBytes(7, album.getCover_image());
 
             //Testing adding an image to DB
 //            Path searchPath = Paths.get("demo/src/main/java/persistence/test_image.jpg").toAbsolutePath();

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -90,6 +91,16 @@ public class AlbumRestController implements WebMvcConfigurer {
         return "Created";
     }
 
+
+    @PostMapping(value = "/upload")
+    @ResponseBody
+    public void uploadFile(@RequestPart("ISRC") String ISRC, @RequestPart("cover_image") MultipartFile cover_image) throws IOException {
+        byte[] byteARR = cover_image.getBytes();
+    albumService.upload(ISRC, byteARR);
+    }
+
+
+//    , @PathVariable("cover_image_name") String cover_image_name, @PathVariable("image_mime") String image_mime, @PathVariable("cover_image") byte[] cover_image
 
     @DeleteMapping(value = "/{ISRC}")
     @ResponseBody
