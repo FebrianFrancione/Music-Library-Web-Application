@@ -64,22 +64,32 @@ public class AlbumServiceImpl implements AlbumService{
 
 //
 //    //Cover Images CRUD
-//
-//    @Override
-//    public Album getCoverImage(String ISRC) {
-//       Album album = getAlbum(ISRC);
-//       return album;
-//    }
-//
-//    @Override
-//    public void deleteCoverImage() {
-//
-//    }
-//
-//    @Override
-//    public void updateCoverImage() {
-//
-//    }
+    @Override
+    public Album getCoverImage(String ISRC, String title) {
+        Album album = findByISRCAndTitle(ISRC, title);
+        return album;
+    }
+
+    @Override
+    public Album deleteCoverImage(String thisISRC, String thisTitle) throws FileNotFoundException {
+        Album album = findByISRCAndTitle(thisISRC, thisTitle);
+
+        String ISRC = thisISRC;
+        String title = thisTitle;
+        String description = album.getDescription();
+        int year = album.getYear();
+        String first_name = album.getArtist_first_name();
+        String last_name = album.getArtist_last_name();
+
+        deleteAlbum(ISRC);
+        return createNewAlbum(ISRC, title, description, year, first_name, last_name);
+
+    }
+
+    @Override
+    public void updateCoverImage() {
+
+    }
 
 
 }
