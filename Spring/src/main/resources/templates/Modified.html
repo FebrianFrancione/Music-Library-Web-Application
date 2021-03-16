@@ -3,13 +3,33 @@
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/Style.css" th:href="@{/css/Style.css}" />
 </head>
 <body>
+<header>
+    <div class="container">
+        <div class="welcome-banner">
+            <h1>Welcome to Album Repository Service</h1>
+        </div>
+    </div>
+</header>
 
-<p>Hello World!</p>
-<hr>
-<br>
-Modified the album
-
+<section class="my-5">
+    <div class="container">
+        <div class="input-label">
+            <h2>Albums</h2>
+        </div>
+        <div class="result">
+            <p class="message">Modified the album!</p>
+            <!--                <form method="post" th:action="@{/album/create/ISRC/title/description/2021/artist_first_name/artist_last_name}" enctype="multipart/form-data">-->
+            <!--                    <div class="form-group">-->
+            <!--                        <input type="file" name="file" class="form-control-file">-->
+            <!--                    </div>-->
+            <!--                    <button type="submit" class="btn btn-primary">Upload File Button</button>-->
+            <!--                </form>-->
+        </div>
+    </div>
+</section>
 </body>
 </html>
