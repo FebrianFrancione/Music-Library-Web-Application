@@ -216,19 +216,24 @@ public class AlbumRestController implements WebMvcConfigurer {
     //CRUD For Cover Images
     //add ISRC to find album
 //    http://localhost:8080/album/image/ISRC
-//    @GetMapping("/image/{ISRC}")
-//    public String getCoverImage(Model model, @PathVariable("ISRC") String ISRC){
-//        Album thisAlbum = albumService.getCoverImage(ISRC);
-//        model.addAttribute("imgUtil", new ImageUtil());
-//        model.addAttribute("album", thisAlbum);
-//        return "Images";
-//    }
-//
-//    @DeleteMapping("/image/delete")
-//    public String deleteCoverImage(Model model){
-////        albumService.deleteCoverImage();
-//        return "Images";
-//    }
+    @GetMapping(value = "image/{ISRC}/{title}", produces = MediaType.TEXT_HTML_VALUE)
+    public String getCoverImage(Model model, @PathVariable("ISRC") String ISRC, @PathVariable("title") String title) throws Exception{
+        Album album = albumService.getCoverImage(ISRC, title);
+        if(album == null){
+            return "Error";
+        }
+        model.addAttribute("imgUtil", new ImageUtil());
+        model.addAttribute("album", album);
+        return "Images";
+    }
+
+    @DeleteMapping(value = "/image/delete/{ISRC}/{title}", produces = MediaType.TEXT_HTML_VALUE)
+    public String deleteCoverImage(Model model, @PathVariable("ISRC") String ISRC, @PathVariable("title") String title) throws FileNotFoundException {
+        Album album = albumService.deleteCoverImage(ISRC, title);
+        model.addAttribute("imgUtil", new ImageUtil());
+        model.addAttribute("album", album);
+        return "Images";
+    }
 //
 //    @PutMapping("/image/put")
 //    public String updateCoverImage(Model model){

@@ -21,7 +21,7 @@ public interface AlbumService {
 
 
 //    //cover images CRUD
-//    Album getCoverImage(String ISRC);
-//    void deleteCoverImage();
-//    void updateCoverImage();
+    Album getCoverImage(String ISRC, String title);
+    Album deleteCoverImage(String ISRC, String title)throws FileNotFoundException;
+    void updateCoverImage();
 }
