@@ -4,8 +4,10 @@ import com.example.demo.Entity.Album;
 import com.example.demo.Service.AlbumService;
 import com.example.demo.Service.ImageUtil;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -34,7 +36,8 @@ public class AlbumRestController implements WebMvcConfigurer {
 
     @GetMapping(value = "/")
     @ResponseBody
-    public void getHome() {
+    public ResponseEntity getHome() {
+        return ResponseEntity.ok("Home");
     }
 
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
@@ -54,8 +57,9 @@ public class AlbumRestController implements WebMvcConfigurer {
 
     @GetMapping(value = "/{ISRC}/{title}")
     @ResponseBody
-    public Album getAlbum(@PathVariable String ISRC, @PathVariable("title") String title) throws Exception {
-        return albumService.findByISRCAndTitle(ISRC, title);
+    public ResponseEntity<Album> getAlbum(@PathVariable String ISRC, @PathVariable("title") String title) throws Exception {
+//        return albumService.findByISRCAndTitle(ISRC, title);
+        return ResponseEntity.ok(albumService.findByISRCAndTitle(ISRC, title));
     }
 
     @GetMapping(value = "/{ISRC}/{title}", produces = MediaType.TEXT_HTML_VALUE)
@@ -69,8 +73,11 @@ public class AlbumRestController implements WebMvcConfigurer {
 
     @GetMapping(value = "/list")
     @ResponseBody
-    public List<Album> getAlbums() {
-        return albumService.getAlbums();
+    public ResponseEntity getAlbums() {
+//        return albumService.getAlbums();
+        List<Album> entityList = albumService.getAlbums();
+
+        return ResponseEntity.ok(entityList);
     }
 
     @GetMapping(value = "/list", produces = MediaType.TEXT_HTML_VALUE)
@@ -83,8 +90,9 @@ public class AlbumRestController implements WebMvcConfigurer {
 
     @PostMapping(value = "/create/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
     @ResponseBody
-    public void createNewAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
+    public ResponseEntity createNewAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
         albumService.createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
+        return ResponseEntity.ok("Successfully created new album: " + ISRC);
     }
 
     @PostMapping(value = "/create/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}", produces = MediaType.TEXT_HTML_VALUE)
@@ -95,29 +103,36 @@ public class AlbumRestController implements WebMvcConfigurer {
 
     @PostMapping(value = "/upload")
     @ResponseBody
-    public void uploadFile(@RequestPart("ISRC") String ISRC, @RequestPart("cover_image") MultipartFile cover_image) throws IOException {
+    public ResponseEntity uploadFile(@RequestPart("ISRC") String ISRC, @RequestPart("cover_image") MultipartFile cover_image) throws IOException {
         String cover_image_name = FilenameUtils.removeExtension(cover_image.getOriginalFilename());
         String image_mime = FilenameUtils.getExtension(cover_image.getOriginalFilename());
         byte[] cover_imageBytes = cover_image.getBytes();
         albumService.upload(ISRC,cover_image_name, image_mime, cover_imageBytes);
+        return ResponseEntity.ok("Successfully uploaded cover image info: " + ISRC);
     }
 
     //Combining both methods together
-
+    //must be done in postman
     @PostMapping(value = "/upload2")
     @ResponseBody
-    public void uploadFile2(@RequestPart("ISRC") String ISRC, @RequestPart("title") String title, @RequestPart("description") String description,@RequestPart("year") String year, @RequestPart("artist_first_name") String artist_first_name, @RequestPart("artist_first_name") String artist_last_name, @RequestPart("cover_image") MultipartFile cover_image) throws IOException {
+    public ResponseEntity uploadFile2(@RequestPart("ISRC") String ISRC, @RequestPart("title") String title, @RequestPart("description") String description,@RequestPart("year") String year, @RequestPart("artist_first_name") String artist_first_name, @RequestPart("artist_first_name") String artist_last_name, @RequestPart("cover_image") MultipartFile cover_image) throws IOException {
         String cover_image_name = FilenameUtils.removeExtension(cover_image.getOriginalFilename());
         String image_mime = FilenameUtils.getExtension(cover_image.getOriginalFilename());
         byte[] cover_imageBytes = cover_image.getBytes();
         int yearInt = Integer.parseInt(year);
         albumService.upload2(ISRC,title, description, yearInt, artist_first_name, artist_last_name,cover_image_name, image_mime, cover_imageBytes);
+        return ResponseEntity.ok("Successfully uploaded album + cover image info: " + ISRC);
     }
+
+    //add method for html file upload?
+
+
 
     @DeleteMapping(value = "/{ISRC}")
     @ResponseBody
-    public void deleteAlbum(@PathVariable("ISRC") String ISRC) {
+    public ResponseEntity deleteAlbum(@PathVariable("ISRC") String ISRC) {
         albumService.deleteAlbum(ISRC);
+        return ResponseEntity.ok("Successfully deleted the album: " + ISRC);
     }
 
     @DeleteMapping(value = "/{ISRC}", produces = MediaType.TEXT_HTML_VALUE)
@@ -126,10 +141,13 @@ public class AlbumRestController implements WebMvcConfigurer {
         return "Deleted";
     }
 
+
+
     @PutMapping(value = "/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
     @ResponseBody
-    public void modifyAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
+    public ResponseEntity modifyAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
         albumService.modifyAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
+        return ResponseEntity.ok("Successfully modified the album: " + ISRC);
     }
 
     @PutMapping(value = "/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}", produces = MediaType.TEXT_HTML_VALUE)

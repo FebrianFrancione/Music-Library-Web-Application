@@ -45,7 +45,7 @@ public class AlbumServiceImpl implements AlbumService{
     @Override
     public void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
         deleteAlbum(ISRC);
-//        createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name, );
+        createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
     }
 
     @Override
