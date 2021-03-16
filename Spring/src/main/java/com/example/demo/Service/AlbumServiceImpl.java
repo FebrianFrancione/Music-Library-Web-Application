@@ -49,8 +49,10 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public void upload(String ISRC, byte[] cover_image) throws FileNotFoundException {
-        albumDao.insertImage(ISRC, cover_image);
+    public void upload(String ISRC, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
+
+        image_mime = "image/" + image_mime;
+        albumDao.insertImage(ISRC, cover_image_name, image_mime, cover_image);
     }
 
 

@@ -16,14 +16,16 @@ public class AlbumDao {
 
     private PreparedStatement statement = null;
 
-    public void insertImage(String ISRC, byte[] cover_image) throws FileNotFoundException {
-        String sql = "Update albums_db.albums SET cover_image = ? where ISRC=?;";
+    public void insertImage(String ISRC, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
+        String sql = "Update albums_db.albums set cover_image_name = ?, image_mime=?, cover_image=? where ISRC=?;";
         JDBConfig jdbc = new JDBConfig();
         statement = jdbc.prepareStatement(sql);
 
         try {
-            statement.setBytes(1, cover_image);
-            statement.setString(2, ISRC);
+            statement.setString(1, cover_image_name);
+            statement.setString(2, image_mime);
+            statement.setBytes(3,cover_image);
+            statement.setString(4, ISRC);
 //            statement.setString(7, album.getCover_image_name());
 //            statement.setString(8, album.getImage_mime());
 //            statement.setBytes(7, album.getCover_image());
@@ -171,7 +173,7 @@ public class AlbumDao {
         }
     }
 
-        public void delete(String ISRC){
+    public void delete(String ISRC){
 //        boolean deleted = false;
         String sql = "delete from albums where ISRC=?";
         JDBConfig jdbc = new JDBConfig();

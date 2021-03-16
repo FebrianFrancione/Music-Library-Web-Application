@@ -3,6 +3,7 @@ package com.example.demo.REST;
 import com.example.demo.Entity.Album;
 import com.example.demo.Service.AlbumService;
 import com.example.demo.Service.ImageUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 //@RequestMapping(value = "/album")
@@ -91,16 +93,15 @@ public class AlbumRestController implements WebMvcConfigurer {
         return "Created";
     }
 
-
     @PostMapping(value = "/upload")
     @ResponseBody
     public void uploadFile(@RequestPart("ISRC") String ISRC, @RequestPart("cover_image") MultipartFile cover_image) throws IOException {
-        byte[] byteARR = cover_image.getBytes();
-    albumService.upload(ISRC, byteARR);
+        String cover_image_name = FilenameUtils.removeExtension(cover_image.getOriginalFilename());
+        String image_mime = FilenameUtils.getExtension(cover_image.getOriginalFilename());
+        byte[] cover_imageBytes = cover_image.getBytes();
+        albumService.upload(ISRC,cover_image_name, image_mime, cover_imageBytes);
     }
 
-
-//    , @PathVariable("cover_image_name") String cover_image_name, @PathVariable("image_mime") String image_mime, @PathVariable("cover_image") byte[] cover_image
 
     @DeleteMapping(value = "/{ISRC}")
     @ResponseBody

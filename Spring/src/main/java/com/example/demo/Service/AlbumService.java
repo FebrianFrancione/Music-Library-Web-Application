@@ -14,7 +14,7 @@ public interface AlbumService {
     void deleteAlbum(String ISRC);
     void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException;
 
-    void upload(String ISRC, byte[] cover_image) throws FileNotFoundException;
+    void upload(String ISRC, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException;
 
     //    Album getAlbum(String ISRC);
 ////    Album getAlbumHtml(String ISRC);
