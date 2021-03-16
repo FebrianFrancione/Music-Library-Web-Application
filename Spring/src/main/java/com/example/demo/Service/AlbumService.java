@@ -9,13 +9,13 @@ import java.util.List;
 public interface AlbumService {
 
     List<Album> getAlbums();
-    Album findByISRCAndTitle(String ISRC, String title) throws Exception;
+    Album findByISRCAndTitle(String ISRC, String title);
     Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException;
-    void deleteAlbum(String ISRC);
-    void modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException;
+    boolean deleteAlbum(String ISRC);
+    boolean modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException;
 
-    void upload(String ISRC, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException;
-    void upload2(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException;
+    Album upload(String ISRC, String title, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException;
+    Album upload2(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException;
     //    Album getAlbum(String ISRC);
 ////    Album getAlbumHtml(String ISRC);
 

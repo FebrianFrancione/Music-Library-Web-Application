@@ -1,3 +1,8 @@
-*{
-    background-color: aqua;
+body{
+    background-color: greenyellow;
+}
+/*brightness 0 pls*/
+.Error{
+    background-color: red;
+    color: darkorange;
 }

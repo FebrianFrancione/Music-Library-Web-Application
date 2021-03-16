@@ -16,16 +16,17 @@ public class AlbumDao {
 
     private PreparedStatement statement = null;
 
-    public void insertImage(String ISRC, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
-        String sql = "Update albums_db.albums set cover_image_name = ?, image_mime=?, cover_image=? where ISRC=?;";
+    public Album insertImage(String ISRC, String title, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
+        String sql = "Update albums_db.albums set cover_image_name = ?, image_mime=?, cover_image=? where ISRC=? and title = ?;";
         JDBConfig jdbc = new JDBConfig();
         statement = jdbc.prepareStatement(sql);
-
+        Album album = null;
         try {
             statement.setString(1, cover_image_name);
             statement.setString(2, image_mime);
-            statement.setBytes(3,cover_image);
+            statement.setBytes(3, cover_image);
             statement.setString(4, ISRC);
+            statement.setString(5, title);
 //            statement.setString(7, album.getCover_image_name());
 //            statement.setString(8, album.getImage_mime());
 //            statement.setBytes(7, album.getCover_image());
@@ -36,19 +37,21 @@ public class AlbumDao {
 //            FileInputStream fs= new FileInputStream(f);
 //            statement.setBinaryStream(9,fs,(int)f.length());
             statement.executeUpdate();
-
-        }catch(SQLException e){
+            album = findByISRCAndTitle(ISRC, title);
+            return album;
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             jdbc.close();
         }
+        return album;
     }
 
-    public void insertImage2(String ISRC, String title, String description, int year, String artist_first_name,String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
+    public Album insertImage2(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
         String sql = "insert into albums (ISRC,title,description,year,artist_first_name,artist_last_name, cover_image_name, image_mime, cover_image) values (?,?,?,?,?,?,?,?,?)";
         JDBConfig jdbc = new JDBConfig();
         statement = jdbc.prepareStatement(sql);
-
+        Album album = null;
         try {
 
             statement.setString(1, ISRC);
@@ -59,7 +62,7 @@ public class AlbumDao {
             statement.setString(6, artist_last_name);
             statement.setString(7, cover_image_name);
             statement.setString(8, image_mime);
-            statement.setBytes(9,cover_image);
+            statement.setBytes(9, cover_image);
 //            statement.setString(7, album.getCover_image_name());
 //            statement.setString(8, album.getImage_mime());
 //            statement.setBytes(7, album.getCover_image());
@@ -70,13 +73,17 @@ public class AlbumDao {
 //            FileInputStream fs= new FileInputStream(f);
 //            statement.setBinaryStream(9,fs,(int)f.length());
             statement.executeUpdate();
-
-        }catch(SQLException e){
+            album = findByISRCAndTitle(ISRC, title);
+            return album;
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             jdbc.close();
         }
+        return album;
     }
+
+
 
 //    public void delete(String ISRC){
 ////        boolean deleted = false;
@@ -100,7 +107,7 @@ public class AlbumDao {
 
 
 
-    public Album findByISRCAndTitle(String ISRC, String theTitle) throws Exception, IOException {
+    public Album findByISRCAndTitle(String ISRC, String theTitle){
         Album album = null;
         String title;
         String description;
@@ -207,23 +214,24 @@ public class AlbumDao {
         }
     }
 
-    public void delete(String ISRC){
-//        boolean deleted = false;
+    public boolean delete(String ISRC){
+        boolean isDeleted = false;
         String sql = "delete from albums where ISRC=?";
         JDBConfig jdbc = new JDBConfig();
         statement = jdbc.prepareStatement(sql);
         try {
             statement.setString(1, ISRC);
-            statement.executeUpdate();
-//            int deletedRow = statement.executeUpdate();
-//            if(deletedRow == 1)
-//                deleted = true;
+            int deletedRow = statement.executeUpdate();
+            if(deletedRow == 1)
+                isDeleted = true;
+            return isDeleted;
         }catch(SQLException e){
             e.printStackTrace();
         }finally {
             jdbc.close();
         }
-//        return deleted;
+
+        return isDeleted;
     }
 
 
