@@ -44,6 +44,40 @@ public class AlbumDao {
         }
     }
 
+    public void insertImage2(String ISRC, String title, String description, int year, String artist_first_name,String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
+        String sql = "insert into albums (ISRC,title,description,year,artist_first_name,artist_last_name, cover_image_name, image_mime, cover_image) values (?,?,?,?,?,?,?,?,?)";
+        JDBConfig jdbc = new JDBConfig();
+        statement = jdbc.prepareStatement(sql);
+
+        try {
+
+            statement.setString(1, ISRC);
+            statement.setString(2, title);
+            statement.setString(3, description);
+            statement.setInt(4, year);
+            statement.setString(5, artist_first_name);
+            statement.setString(6, artist_last_name);
+            statement.setString(7, cover_image_name);
+            statement.setString(8, image_mime);
+            statement.setBytes(9,cover_image);
+//            statement.setString(7, album.getCover_image_name());
+//            statement.setString(8, album.getImage_mime());
+//            statement.setBytes(7, album.getCover_image());
+
+            //Testing adding an image to DB
+//            Path searchPath = Paths.get("demo/src/main/java/persistence/test_image.jpg").toAbsolutePath();
+//            File f = new File(String.valueOf(searchPath));
+//            FileInputStream fs= new FileInputStream(f);
+//            statement.setBinaryStream(9,fs,(int)f.length());
+            statement.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            jdbc.close();
+        }
+    }
+
 //    public void delete(String ISRC){
 ////        boolean deleted = false;
 //        String sql = "delete from albums where ISRC=?";

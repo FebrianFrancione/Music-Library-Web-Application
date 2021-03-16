@@ -102,6 +102,17 @@ public class AlbumRestController implements WebMvcConfigurer {
         albumService.upload(ISRC,cover_image_name, image_mime, cover_imageBytes);
     }
 
+    //Combining both methods together
+
+    @PostMapping(value = "/upload2")
+    @ResponseBody
+    public void uploadFile2(@RequestPart("ISRC") String ISRC, @RequestPart("title") String title, @RequestPart("description") String description,@RequestPart("year") String year, @RequestPart("artist_first_name") String artist_first_name, @RequestPart("artist_first_name") String artist_last_name, @RequestPart("cover_image") MultipartFile cover_image) throws IOException {
+        String cover_image_name = FilenameUtils.removeExtension(cover_image.getOriginalFilename());
+        String image_mime = FilenameUtils.getExtension(cover_image.getOriginalFilename());
+        byte[] cover_imageBytes = cover_image.getBytes();
+        int yearInt = Integer.parseInt(year);
+        albumService.upload2(ISRC,title, description, yearInt, artist_first_name, artist_last_name,cover_image_name, image_mime, cover_imageBytes);
+    }
 
     @DeleteMapping(value = "/{ISRC}")
     @ResponseBody
