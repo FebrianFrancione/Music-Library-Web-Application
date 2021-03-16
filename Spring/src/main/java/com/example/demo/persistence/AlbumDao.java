@@ -9,12 +9,93 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AlbumDao {
 
     private PreparedStatement statement = null;
 
-    public void insertAlbumTest(Album album) throws FileNotFoundException {
+
+    public Album findByISRCAndTitle(String ISRC, String theTitle) throws Exception, IOException {
+        Album album = null;
+        String title;
+        String description;
+        int year;
+        String artist_first_name;
+        String artist_last_name;
+        String cover_image_name;
+        String image_mime;
+        byte[] cover_image;
+
+        String sql = "select * from albums_db.albums where ISRC=? and title=?";
+        JDBConfig jdbc = new JDBConfig();
+        statement = jdbc.prepareStatement(sql);
+
+        ResultSet resultSet = null;
+        try {
+            statement.setString(1, ISRC);
+            statement.setString(2, theTitle);
+            resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                ISRC = resultSet.getString("ISRC");
+                title = resultSet.getString("title");
+                description = resultSet.getString("description");
+                year = resultSet.getInt("year");
+                artist_first_name = resultSet.getString("artist_first_name");
+                artist_last_name = resultSet.getString("artist_last_name");
+                cover_image_name = resultSet.getString("cover_image_name");
+                image_mime = resultSet.getString("image_mime");
+                cover_image = resultSet.getBytes("cover_image");
+
+                album = new Album(ISRC, title, description, year, artist_first_name, artist_last_name,cover_image_name, image_mime, cover_image);
+                return album;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            jdbc.close();
+        }
+
+        return album;
+    }
+
+    public List<Album> getAlbums(){
+
+        List<Album> albums = new ArrayList<>();
+        JDBConfig jdbc = new JDBConfig();
+        ResultSet resultSet = null;
+        try {
+            String sql = "select * from albums";
+            statement = jdbc.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String ISRC = resultSet.getString("ISRC");
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+                int year = resultSet.getInt("year");
+                String first_name = resultSet.getString("artist_first_name");
+                String last_name = resultSet.getString("artist_last_name");
+                String artist_first_name = resultSet.getString("artist_first_name");
+                String artist_last_name = resultSet.getString("artist_last_name");
+                String cover_image_name = resultSet.getString("cover_image_name");
+                String image_mime = resultSet.getString("image_mime");
+                byte[] cover_image = resultSet.getBytes("cover_image");
+                Album newAlbum = new Album(ISRC, title, description, year, artist_first_name, artist_last_name,cover_image_name, image_mime, cover_image);
+                albums.add(newAlbum);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            jdbc.close();
+        }
+
+        return albums;
+    }
+
+
+    public void insertAlbum(Album album) throws FileNotFoundException {
         String sql = "insert into albums (ISRC,title,description,year,artist_first_name,artist_last_name) values (?,?,?,?,?,?)";
         JDBConfig jdbc = new JDBConfig();
         statement = jdbc.prepareStatement(sql);
@@ -41,92 +122,8 @@ public class AlbumDao {
         }
     }
 
-//    public ArrayList<Album> getAlbums(){
-//
-//        ArrayList<Album> albums = new ArrayList<>();
-//        JDBConfig jdbc = new JDBConfig();
-//        ResultSet resultSet = null;
-//        try {
-//            String sql = "select * from albums";
-//            statement = jdbc.prepareStatement(sql);
-//            resultSet = statement.executeQuery();
-//            while (resultSet.next()) {
-//                String ISRC = resultSet.getString("ISRC");
-//                String title = resultSet.getString("title");
-//                String description = resultSet.getString("description");
-//                int year = resultSet.getInt("year");
-//                String first_name = resultSet.getString("artist_first_name");
-//                String last_name = resultSet.getString("artist_last_name");
-//                String artist = first_name + " " + last_name;
-//                Album newAlbum = new Album(ISRC, title, description, year, artist);
-//                albums.add(newAlbum);
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            jdbc.close();
-//        }
-//
-//        return albums;
-//    }
-//
-//    public Album getAlbum(String ISRC) throws Exception, IOException {
-//        Album album = null;
-//        String title;
-//        String description;
-//        int year;
-//        String first_name;
-//        String last_name;
-//        String cover_image_name;
-//        String image_mime;
-//
-//        JDBConfig jdbc = new JDBConfig();
-//        String sql = "select * from albums where ISRC=?";
-//        statement = jdbc.prepareStatement(sql);
-//        ResultSet resultSet = null;
-//        try {
-//            statement.setString(1, ISRC);
-//            resultSet = statement.executeQuery();
-//            while(resultSet.next()){
-//                ISRC = resultSet.getString("ISRC");
-//                title = resultSet.getString("title");
-//                description = resultSet.getString("description");
-//                year = resultSet.getInt("year");
-//                first_name = resultSet.getString("artist_first_name");
-//                last_name = resultSet.getString("artist_last_name");
-//                String artist = first_name + " " + last_name;
-//                album = new Album(ISRC, title, description, year, artist);
-//
-//                //Testing getting an image from DB
-//                Blob blob = resultSet.getBlob("cover_image");
-//                if(blob != null){
-//                    byte[] b;
-//                    cover_image_name = resultSet.getString("cover_image_name");
-//                    image_mime = resultSet.getString("image_mime");
-//
-//                    if(cover_image_name == null)
-//                        cover_image_name = "image";
-//
-//                    String extension = (image_mime != null) ? getImageExtension(image_mime) : ".jpg";
-//                    String cover_image = cover_image_name + extension;
-//                    Path searchPath = Paths.get("demo/src/main/java/persistence/" + cover_image).toAbsolutePath();
-//                    File f=new File(String.valueOf(searchPath));
-//                    FileOutputStream fs = new FileOutputStream(f);
-//                    b = blob.getBytes(1, (int)blob.length());
-//                    fs.write(b);
-//                }
-//
-//            }
-//        }catch(SQLException e){
-//            e.printStackTrace();
-//        }finally {
-//            jdbc.close();
-//        }
-//
-//        return album;
-//    }
-//
+
+
 //    public void updateAlbum(String ISRC,String title,String description,int year,String artist_first_name,String artist_last_name){
 //        String sql = "update albums set title=?,description=?,year=?,artist_first_name=?, artist_last_name=? where ISRC=?";
 //        JDBConfig jdbc = new JDBConfig();

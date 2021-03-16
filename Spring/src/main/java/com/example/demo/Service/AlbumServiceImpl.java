@@ -15,35 +15,36 @@ import java.util.List;
 public class AlbumServiceImpl implements AlbumService{
 
 //    private AlbumRepository albumRepository;
-    private AlbumDao albumDao;
+    AlbumDao albumDao = new AlbumDao();
 //
 //    @Autowired
 //    public AlbumServiceImpl(AlbumDao albumDao) {
 //        this.albumDao = albumDao;
 //    }
 
-
-//    @Override
-//    public List<Album> getAlbums() {
-//        return albumRepository.findAll();
-//    }
-
-//    @Override
-//    public Album findByISRCAndTitle(String ISRC, String title) {
-//        return albumRepository.findAll().stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title)).findFirst().orElse(null);
-//    }
-//
-//
 //    public Album getAlbum(String ISRC){
 //        return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
 //    }
-
+//
 //    public Album getAlbumHtml(String ISRC){
 //        return albumRepository.findAll().stream().filter(album -> album.getISRC().equals(ISRC)).findFirst().orElse(null);
 //    }
 
+
+
     @Override
-    public Album createNewAlbumTestService(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
+    public Album findByISRCAndTitle(String ISRC, String title) throws Exception {
+        return albumDao.findByISRCAndTitle(ISRC, title);
+//        return albumRepository.findAll().stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title)).findFirst().orElse(null);
+    }
+
+    @Override
+    public List<Album> getAlbums() {
+        return albumDao.getAlbums();
+    }
+
+    @Override
+    public Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
 
 //        if(getAlbum(ISRC) == null){
 //            Album newAlbum = new Album(ISRC, title, description, year, artist_first_name, artist_last_name);
@@ -51,13 +52,12 @@ public class AlbumServiceImpl implements AlbumService{
 //        } else {
 //            return null;
 //        }
-        AlbumDao albumDao = new AlbumDao();
+
         Album newAlbum = new Album(ISRC, title, description,year,artist_first_name,artist_last_name);
         newAlbum.setCover_image_name("noName");
         newAlbum.setCover_image(null);
         newAlbum.setImage_mime("NoMime");
-
-        albumDao.insertAlbumTest(newAlbum);
+        albumDao.insertAlbum(newAlbum);
 //        albumRepository.save(newAlbum);
         return newAlbum;
     }

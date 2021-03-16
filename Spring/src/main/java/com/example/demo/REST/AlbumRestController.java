@@ -31,7 +31,6 @@ public class AlbumRestController implements WebMvcConfigurer {
     @GetMapping(value = "/")
     @ResponseBody
     public void getHome() {
-        return;
     }
 
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
@@ -40,45 +39,44 @@ public class AlbumRestController implements WebMvcConfigurer {
     }
 
 
+    @GetMapping(value = "/{ISRC}/{title}")
+    @ResponseBody
+    public Album getAlbum(@PathVariable String ISRC, @PathVariable("title") String title) throws Exception {
+        return albumService.findByISRCAndTitle(ISRC, title);
+    }
 
-//    @GetMapping(value = "/list")
-//    @ResponseBody
-//    public List<Album> getAlbums() {
-//        return albumService.getAlbums();
-//    }
-//
-//    @GetMapping(value = "/list", produces = MediaType.TEXT_HTML_VALUE)
-//    public String getAlbumsHtml(Model model){
-//        model.addAttribute("imgUtil", new ImageUtil());
-//        model.addAttribute(albumService.getAlbums());
-//        return "Albums";
-//    }
-//
-//
-//    @GetMapping(value = "/{ISRC}/{title}")
-//    @ResponseBody
-//    public Album getAlbum(@PathVariable String ISRC, @PathVariable("title") String title) {
-//        return albumService.findByISRCAndTitle(ISRC, title);
-//    }
-//
-//    @GetMapping(value = "/{ISRC}/{title}", produces = MediaType.TEXT_HTML_VALUE)
-//    public String getAlbumHtml(Model model, @PathVariable String ISRC, @PathVariable("title") String title) {
-//        Album album = albumService.findByISRCAndTitle(ISRC, title);
-//        model.addAttribute("imgUtil", new ImageUtil());
-//        model.addAttribute("album1", album);
-//        return "Album";
-//    }
+    @GetMapping(value = "/{ISRC}/{title}", produces = MediaType.TEXT_HTML_VALUE)
+    public String getAlbumHtml(Model model, @PathVariable String ISRC, @PathVariable("title") String title) throws Exception {
+        Album album = albumService.findByISRCAndTitle(ISRC, title);
+        model.addAttribute("imgUtil", new ImageUtil());
+        model.addAttribute("album1", album);
+        return "Album";
+    }
+
+
+    @GetMapping(value = "/list")
+    @ResponseBody
+    public List<Album> getAlbums() {
+        return albumService.getAlbums();
+    }
+
+    @GetMapping(value = "/list", produces = MediaType.TEXT_HTML_VALUE)
+    public String getAlbumsHtml(Model model){
+        model.addAttribute("imgUtil", new ImageUtil());
+        model.addAttribute(albumService.getAlbums());
+        return "Albums";
+    }
 
 
     @PostMapping(value = "/create/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
     @ResponseBody
     public void createNewAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
-        albumService.createNewAlbumTestService(ISRC, title, description, year, artist_first_name, artist_last_name);
+        albumService.createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
     }
 
     @PostMapping(value = "/create/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}", produces = MediaType.TEXT_HTML_VALUE)
     public String createNewAlbumHtml(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
-        albumService.createNewAlbumTestService(ISRC, title, description, year, artist_first_name, artist_last_name);
+        albumService.createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
         return "Created";
     }
 
