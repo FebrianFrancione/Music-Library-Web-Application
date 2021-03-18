@@ -248,28 +248,28 @@ public class AlbumRestController implements WebMvcConfigurer {
 
     // POST
 
-    @PostMapping( "/create")
-    public String createNewAlbum(@ModelAttribute("album") Album album, @RequestParam("file") MultipartFile file) throws IOException {
+//    @PostMapping( "/create")
+//    public String createNewAlbum(@ModelAttribute("album") Album album, @RequestParam("file") MultipartFile file) throws IOException {
+//
+//        String cover_image_name = FilenameUtils.removeExtension(file.getOriginalFilename());
+//        String image_mime = FilenameUtils.getExtension(file.getOriginalFilename());
+//        byte[] cover_imageBytes = file.getBytes();
+//
+//        if(album.getISRC().trim().isEmpty() || album.getTitle().isEmpty() || album.getYear() == 0 || album.getArtist_first_name().isEmpty() || album.getArtist_last_name().isEmpty() || cover_image_name.isEmpty()){
+//            return "Error";
+//        }
+//        else{
+//            // Check if ISRC already existed or not
+//            if(albumService.createNewAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name(), cover_image_name, image_mime, cover_imageBytes)){
+//                return "Created";
+//            }else{
+//                return "Error";
+//            }
+//
+//        }
+//    }
 
-        String cover_image_name = FilenameUtils.removeExtension(file.getOriginalFilename());
-        String image_mime = FilenameUtils.getExtension(file.getOriginalFilename());
-        byte[] cover_imageBytes = file.getBytes();
-
-        if(album.getISRC().trim().isEmpty() || album.getTitle().isEmpty() || album.getYear() == 0 || album.getArtist_first_name().isEmpty() || album.getArtist_last_name().isEmpty() || cover_image_name.isEmpty()){
-            return "Error";
-        }
-        else{
-            // Check if ISRC already existed or not
-            if(albumService.createNewAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name(), cover_image_name, image_mime, cover_imageBytes)){
-                return "Created";
-            }else{
-                return "Error";
-            }
-
-        }
-    }
-
-    /* This also works. If you click the button, the browser will show the message.
+    // This also works. If you click the button, the browser will show the message.
 
     @PostMapping( "/create")
     @ResponseBody
@@ -285,14 +285,14 @@ public class AlbumRestController implements WebMvcConfigurer {
         }else{
             // Check if ISRC already existed or not
             if(albumService.createNewAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name(), cover_image_name, image_mime, cover_imageBytes)){
-                return ResponseEntity.ok("Successfully created new album: " + ISRC);
+                return ResponseEntity.ok("Successfully created new album: " + album.getISRC());
             }else{
                 String message = "The album already existed.";
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
             }
         }
     }
-     */
+
 
 
 
@@ -366,7 +366,7 @@ public class AlbumRestController implements WebMvcConfigurer {
 
     // Get Cover Image
 
-    @GetMapping("/find/img}")
+    @GetMapping("/find/img")
     public String getCoverImage(Model model, @ModelAttribute("album") Album album){
         Album foundAlbum = albumService.getCoverImage(album.getISRC(), album.getTitle());
         if(foundAlbum == null){

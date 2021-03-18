@@ -24,58 +24,74 @@
         <div class="result">
             <p th:text="${message}" th:if="${message ne null}" class="message"></p>
 
-            <a th:href="@{/album/list}">VIEW ALBUM LIST</a>
+            <a th:href="@{/album/list}" class="list">VIEW ALBUM LIST</a>
 
-            <form action="#" method="get" th:action="@{/album/find}" th:object="${album}">
-                <input type="text" th:field="*{ISRC}" />
-                <input type="text" th:field="*{title}" />
-                <input type="submit" class="search" value="SEARCH" />
-            </form>
+            <div class="search">
+                <form class="search-form" action="#" method="get" th:action="@{/album/find}" th:object="${album}">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="text" th:field="*{title}" />
+                    <input type="submit" class="search-btn" value="SEARCH" />
+                </form>
+            </div>
 
-            <form action="#" method="post" th:action="@{/album/create}"
-                  th:object="${album}" enctype="multipart/form-data">
-                <input type="text" th:field="*{ISRC}" />
-                <input type="text" th:field="*{title}" />
-                <input type="text" th:field="*{description}" />
-                <input type="text" th:field="*{year}" />
-                <input type="text" th:field="*{artist_first_name}" />
-                <input type="text" th:field="*{artist_last_name}" />
-                <input type="file" name="file" class="cover-image">
-                <input type="submit" class="create" value="CREATE" />
-            </form>
+            <div class="create">
+                <form class="create-form" action="#" method="post" th:action="@{/album/create}"
+                      th:object="${album}" enctype="multipart/form-data">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="text" th:field="*{title}" />
+                    <input type="text" th:field="*{description}" />
+                    <input type="text" th:field="*{year}" />
+                    <input type="text" th:field="*{artist_first_name}" />
+                    <input type="text" th:field="*{artist_last_name}" />
+                    <input type="file" name="file" class="cover-image">
+                    <input type="submit" class="create-btn" value="CREATE" />
+                </form>
+            </div>
 
-            <form action="#" th:method="put" th:action="@{/album/update}" th:object="${album}">
-                <input type="text" th:field="*{ISRC}" />
-                <input type="text" th:field="*{title}" />
-                <input type="text" th:field="*{description}" />
-                <input type="text" th:field="*{year}" />
-                <input type="text" th:field="*{artist_first_name}" />
-                <input type="text" th:field="*{artist_last_name}" />
-                <input type="submit" class="update" value="UPDATE" />
-            </form>
+            <div class="update">
+                <form class="update-form" action="#" th:method="put" th:action="@{/album/update}" th:object="${album}">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="text" th:field="*{title}" />
+                    <input type="text" th:field="*{description}" />
+                    <input type="text" th:field="*{year}" />
+                    <input type="text" th:field="*{artist_first_name}" />
+                    <input type="text" th:field="*{artist_last_name}" />
+                    <input type="submit" class="update-btn" value="UPDATE" />
+                </form>
+            </div>
 
-            <form action="#" th:method="delete" th:action="@{/album/delete}" th:object="${album}">
-                <input type="text" th:field="*{ISRC}" />
-                <input type="submit" class="delete" value="DELETE" />
-            </form>
+            <div class="delete">
+                <form class="delete-form" action="#" th:method="delete" th:action="@{/album/delete}" th:object="${album}">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="submit" class="delete-btn" value="DELETE" />
+                </form>
+            </div>
+
 
             <!--  Cover Image  -->
-            <form action="#" method="get" th:action="@{/album/find/img}" th:object="${album}">
-                <input type="text" th:field="*{ISRC}" />
-                <input type="text" th:field="*{title}" />
-                <input type="submit" class="search" value="SEARCH" />
-            </form>
+            <div class="search">
+                <form class="search-form" action="#" method="get" th:action="@{/album/find/img}" th:object="${album}">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="text" th:field="*{title}" />
+                    <input type="submit" class="search-btn" value="SEARCH" />
+                </form>
+            </div>
 
-            <form action="#" th:method="put" th:action="@{/album/update/img}" th:object="${album}" enctype="multipart/form-data">
-                <input type="text" th:field="*{ISRC}" />
-                <input type="file" name="file" class="cover-image">
-                <input type="submit" class="update" value="UPDATE" />
-            </form>
+            <div class="update">
+                <form class="update-form" action="#" th:method="put" th:action="@{/album/update/img}" th:object="${album}" enctype="multipart/form-data">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="file" name="file" class="cover-image">
+                    <input type="submit" class="update-btn" value="UPDATE" />
+                </form>
+            </div>
 
-            <form action="#" th:method="delete" th:action="@{/album/delete/img}" th:object="${album}">
-                <input type="text" th:field="*{ISRC}" />
-                <input type="submit" class="delete" value="DELETE" />
-            </form>
+            <div class="delete">
+                <form class="delete-form" action="#" th:method="delete" th:action="@{/album/delete/img}" th:object="${album}">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="submit" class="delete-btn" value="DELETE" />
+                </form>
+            </div>
+
         </div>
     </div>
 </section>

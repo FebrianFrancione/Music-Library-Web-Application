@@ -79,3 +79,19 @@ header{
 .result .table-label{
     margin-bottom: 2rem;
 }
+
+.message{
+    margin-bottom: 1.7rem;
+}
+
+.list{
+    margin-bottom: 1.7rem;
+}
+
+.search, .create, .update, .delete{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
