@@ -26,7 +26,7 @@
 
 
         <div class="search">
-            <form class="search-form" action="#" method="get" th:action="@{/album/find}" th:object="${album}">
+            <form class="search-form" action="#" method="get" th:action="@{/album/html/find}" th:object="${album}">
                 <input type="text" th:field="*{ISRC}" />
                 <input type="text" th:field="*{title}" />
                 <input type="submit" class="search-btn" value="SEARCH" />

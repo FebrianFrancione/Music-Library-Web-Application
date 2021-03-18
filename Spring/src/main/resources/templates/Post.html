@@ -24,7 +24,7 @@
         </div>
 
         <div class="create">
-            <form class="create-form" action="#" method="post" th:action="@{/album/create}"
+            <form class="create-form" action="#" method="post" th:action="@{/album/html/create}"
                   th:object="${album}" enctype="multipart/form-data">
                 <input type="text" th:field="*{ISRC}" />
                 <input type="text" th:field="*{title}" />

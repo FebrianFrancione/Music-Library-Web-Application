@@ -24,7 +24,7 @@
         </div>
 
         <div class="delete">
-            <form class="delete-form" action="#" th:method="delete" th:action="@{/album/delete}" th:object="${album}">
+            <form class="delete-form" action="#" th:method="delete" th:action="@{/album/html/delete}" th:object="${album}">
                 <input type="text" th:field="*{ISRC}" />
                 <input type="submit" class="delete-btn" value="DELETE" />
             </form>

@@ -28,7 +28,7 @@
 
             <h3>Update Cover Image</h3>
             <div class="update">
-                <form class="update-form" action="#" th:method="put" th:action="@{/album/update/img}" th:object="${album}" enctype="multipart/form-data">
+                <form class="update-form" action="#" th:method="put" th:action="@{/album/html/update/img}" th:object="${album}" enctype="multipart/form-data">
                     <input type="text" th:field="*{ISRC}" />
                     <input type="file" name="file" class="cover-image">
                     <input type="submit" class="update-btn" value="UPDATE" />
@@ -43,7 +43,7 @@
 
             <h3>Delete Cover Image</h3>
             <div class="delete">
-                <form class="delete-form" action="#" th:method="delete" th:action="@{/album/delete/img}" th:object="${album}">
+                <form class="delete-form" action="#" th:method="delete" th:action="@{/album/html/delete/img}" th:object="${album}">
                     <input type="text" th:field="*{ISRC}" />
                     <input type="submit" class="delete-btn" value="DELETE" />
                 </form>
@@ -56,7 +56,7 @@
             <br>
             <h3>Get Cover Image</h3>
             <div class="search">
-                <form class="search-form" action="#" method="get" th:action="@{/album/find/img}" th:object="${album}">
+                <form class="search-form" action="#" method="get" th:action="@{/album/html/find/img}" th:object="${album}">
                     <input type="text" th:field="*{ISRC}" />
                     <input type="text" th:field="*{title}" />
                     <input type="submit" class="search-btn" value="SEARCH" />
