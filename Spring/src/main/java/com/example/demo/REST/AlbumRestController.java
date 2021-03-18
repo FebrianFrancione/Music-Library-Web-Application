@@ -1,7 +1,6 @@
 package com.example.demo.REST;
 
 import com.example.demo.Entity.Album;
-import com.example.demo.Exceptions.RepException;
 import com.example.demo.Service.AlbumService;
 import com.example.demo.Service.ImageUtil;
 import org.apache.commons.io.FilenameUtils;
@@ -9,11 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -36,6 +32,29 @@ public class AlbumRestController implements WebMvcConfigurer {
         this.albumService = albumService;
     }
 
+    @GetMapping("/Get")
+    public String showOne(Model model){
+        model.addAttribute("album", new Album());
+        return "Album";
+    }
+
+    @GetMapping("/Post")
+    public String showPost(Model model){
+        model.addAttribute("album", new Album());
+        return "Post";
+    }
+    @GetMapping("/Delete")
+    public String showDelete(Model model){
+        model.addAttribute("album", new Album());
+        return "Delete";
+    }
+
+    @GetMapping("/Modify")
+    public String showModify(Model model){
+        model.addAttribute("album", new Album());
+        return "Modify";
+    }
+
     @GetMapping(value = "/")
     @ResponseBody
     public ResponseEntity getHome() {
@@ -53,7 +72,7 @@ public class AlbumRestController implements WebMvcConfigurer {
 //        albumService.createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
 //        model.addAttribute("message", "You successfully uploaded " + cover_image_name + '!');
         model.addAttribute("album", new Album());
-        model.addAttribute("message", "You successfully uploaded !");
+//        model.addAttribute("message", "You successfully uploaded !");
         return "/Home";
     }
 
@@ -152,6 +171,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         }
 
     }
+     */
 
     //Combining both methods together
     //must be done in postman
@@ -170,7 +190,6 @@ public class AlbumRestController implements WebMvcConfigurer {
         }
 
     }
-     */
 
 
 
@@ -235,11 +254,13 @@ public class AlbumRestController implements WebMvcConfigurer {
     // GET
 
     @GetMapping("/find")
+//    public String getAlbumHtml(Model model, @ModelAttribute("album") Album album) {
     public String getAlbumHtml(Model model, @ModelAttribute("album") Album album) {
         Album foundAlbum = albumService.findByISRCAndTitle(album.getISRC(), album.getTitle());
         if(foundAlbum == null){
             return "Error";
         }
+//        model.addAttribute("imgUtil", new ImageUtil());
         model.addAttribute("imgUtil", new ImageUtil());
         model.addAttribute("album", foundAlbum);
         return "Album";
@@ -248,30 +269,31 @@ public class AlbumRestController implements WebMvcConfigurer {
 
     // POST
 
-//    @PostMapping( "/create")
-//    public String createNewAlbum(@ModelAttribute("album") Album album, @RequestParam("file") MultipartFile file) throws IOException {
-//
-//        String cover_image_name = FilenameUtils.removeExtension(file.getOriginalFilename());
-//        String image_mime = FilenameUtils.getExtension(file.getOriginalFilename());
-//        byte[] cover_imageBytes = file.getBytes();
-//
-//        if(album.getISRC().trim().isEmpty() || album.getTitle().isEmpty() || album.getYear() == 0 || album.getArtist_first_name().isEmpty() || album.getArtist_last_name().isEmpty() || cover_image_name.isEmpty()){
-//            return "Error";
-//        }
-//        else{
-//            // Check if ISRC already existed or not
-//            if(albumService.createNewAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name(), cover_image_name, image_mime, cover_imageBytes)){
-//                return "Created";
-//            }else{
-//                return "Error";
-//            }
-//
-//        }
-//    }
+    @PostMapping( "/create")
+    public String createNewAlbumHtml(Model model, @ModelAttribute("album") Album album, @RequestParam("file") MultipartFile file) throws IOException {
+
+        String cover_image_name = FilenameUtils.removeExtension(file.getOriginalFilename());
+        String image_mime = FilenameUtils.getExtension(file.getOriginalFilename());
+        byte[] cover_imageBytes = file.getBytes();
+
+        if(album.getISRC().trim().isEmpty() || album.getTitle().isEmpty() || album.getYear() == 0 || album.getArtist_first_name().isEmpty() || album.getArtist_last_name().isEmpty() || cover_image_name.isEmpty()){
+            return "Error";
+        }
+        else{
+            // Check if ISRC already existed or not
+            if(albumService.createNewAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name(), cover_image_name, image_mime, cover_imageBytes)){
+                model.addAttribute("updated", true);
+                return "Post";
+            }else{
+                return "Error";
+            }
+
+        }
+    }
 
     // This also works. If you click the button, the browser will show the message.
 
-    @PostMapping( "/create")
+    @PostMapping( "/createJson")
     @ResponseBody
     public ResponseEntity createNewAlbum(@ModelAttribute("album") Album album, @RequestParam("file") MultipartFile file) throws IOException {
 
@@ -299,14 +321,15 @@ public class AlbumRestController implements WebMvcConfigurer {
     // Delete
 
     @DeleteMapping( "/delete")
-    public String deleteAlbum(@ModelAttribute("album") Album album) {
+    public String deleteAlbum(Model model, @ModelAttribute("album") Album album) {
         String ISRC = album.getISRC();
         if (ISRC.trim().isEmpty()) {
             return "Error";
         } else {
 
             if (albumService.deleteAlbum(ISRC)) {
-                return "Deleted";
+                model.addAttribute("deleted", true);
+                return "Delete";
             } else {
                 return "Error";
             }
@@ -334,12 +357,13 @@ public class AlbumRestController implements WebMvcConfigurer {
     // Put
 
     @PutMapping( "/update")
-    public String modifyAlbum(@ModelAttribute("album") Album album) throws FileNotFoundException {
+    public String modifyAlbum(Model model, @ModelAttribute("album") Album album) throws FileNotFoundException {
         if(album.getISRC().trim().isEmpty() || album.getTitle().isEmpty() || album.getYear() == 0 || album.getArtist_first_name().isEmpty() || album.getArtist_last_name().isEmpty()){
             return "Error";
         }else{
             if(albumService.modifyAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name())){
-                return "Modified";
+                model.addAttribute("modified", true);
+                return "Modify";
             }else {
                 return "Error";
             }
@@ -393,7 +417,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         else{
             // Check if ISRC already existed or not
             if(albumService.updateCoverImage(album.getISRC(), cover_image_name, image_mime, cover_imageBytes)){
-                return "Modified";
+                return "Modify";
             }else{
                 return "Error";
             }
@@ -437,7 +461,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         } else {
 
             if (albumService.deleteCoverImage(ISRC)) {
-                return "Deleted";
+                return "Delete";
             } else {
                 return "Error";
             }

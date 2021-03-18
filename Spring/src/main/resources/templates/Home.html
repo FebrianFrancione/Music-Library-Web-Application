@@ -21,52 +21,15 @@
         <div class="input-label">
             <h2>Albums</h2>
         </div>
+
+        <a th:href="@{/album/Get}"  style="--i: 0.05s;">Get an album</a>
+        <a th:href="@{/album/list}"  style="--i: 0.05s;">Get all albums</a>
+        <a th:href="@{/album/Post}"  style="--i: 0.05s;">Post an album</a>
+        <a th:href="@{/album/Delete}"  style="--i: 0.05s;">Delete an album</a>
+        <a th:href="@{/album/Modify}"  style="--i: 0.05s;">Modify an album</a>
+
         <div class="result">
-            <p th:text="${message}" th:if="${message ne null}" class="message"></p>
-
-            <a th:href="@{/album/list}" class="list">VIEW ALBUM LIST</a>
-
-            <div class="search">
-                <form class="search-form" action="#" method="get" th:action="@{/album/find}" th:object="${album}">
-                    <input type="text" th:field="*{ISRC}" />
-                    <input type="text" th:field="*{title}" />
-                    <input type="submit" class="search-btn" value="SEARCH" />
-                </form>
-            </div>
-
-            <div class="create">
-                <form class="create-form" action="#" method="post" th:action="@{/album/create}"
-                      th:object="${album}" enctype="multipart/form-data">
-                    <input type="text" th:field="*{ISRC}" />
-                    <input type="text" th:field="*{title}" />
-                    <input type="text" th:field="*{description}" />
-                    <input type="text" th:field="*{year}" />
-                    <input type="text" th:field="*{artist_first_name}" />
-                    <input type="text" th:field="*{artist_last_name}" />
-                    <input type="file" name="file" class="cover-image">
-                    <input type="submit" class="create-btn" value="CREATE" />
-                </form>
-            </div>
-
-            <div class="update">
-                <form class="update-form" action="#" th:method="put" th:action="@{/album/update}" th:object="${album}">
-                    <input type="text" th:field="*{ISRC}" />
-                    <input type="text" th:field="*{title}" />
-                    <input type="text" th:field="*{description}" />
-                    <input type="text" th:field="*{year}" />
-                    <input type="text" th:field="*{artist_first_name}" />
-                    <input type="text" th:field="*{artist_last_name}" />
-                    <input type="submit" class="update-btn" value="UPDATE" />
-                </form>
-            </div>
-
-            <div class="delete">
-                <form class="delete-form" action="#" th:method="delete" th:action="@{/album/delete}" th:object="${album}">
-                    <input type="text" th:field="*{ISRC}" />
-                    <input type="submit" class="delete-btn" value="DELETE" />
-                </form>
-            </div>
-
+<!--            <p th:text="${message}" th:if="${message ne null}" class="message"></p>-->
 
             <!--  Cover Image  -->
             <div class="search">

@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/SOEN-487-A2.iml" filepath="$PROJECT_DIR$/.idea/SOEN-487-A2.iml" />
       <module fileurl="file://$PROJECT_DIR$/Spring/Spring.iml" filepath="$PROJECT_DIR$/Spring/Spring.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Spring/.mvn/wrapper/wrapper.iml" filepath="$PROJECT_DIR$/Spring/.mvn/wrapper/wrapper.iml" />
     </modules>
   </component>
 </project>

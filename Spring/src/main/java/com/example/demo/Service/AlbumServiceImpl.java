@@ -56,13 +56,13 @@ public class AlbumServiceImpl implements AlbumService{
         image_mime = "image/" + image_mime;
         return albumDao.insertImage(ISRC, title, cover_image_name, image_mime, cover_image);
     }
-
+   */
     @Override
     public Album upload2(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
         image_mime = "image/" + image_mime;
         return albumDao.insertImage2(ISRC, title, description,year,artist_first_name,artist_last_name, cover_image_name, image_mime, cover_image);
     }
-     */
+
 
 
     //Cover Images CRUD

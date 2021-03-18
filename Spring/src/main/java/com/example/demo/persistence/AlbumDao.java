@@ -48,7 +48,7 @@ public class AlbumDao {
         }
         return album;
     }
-
+*/
     public Album insertImage2(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
         String sql = "insert into albums (ISRC,title,description,year,artist_first_name,artist_last_name, cover_image_name, image_mime, cover_image) values (?,?,?,?,?,?,?,?,?)";
         JDBConfig jdbc = new JDBConfig();
@@ -85,7 +85,6 @@ public class AlbumDao {
         return album;
     }
 
-     */
 
 
 

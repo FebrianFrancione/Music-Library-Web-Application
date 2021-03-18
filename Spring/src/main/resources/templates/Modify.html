@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/Style.css" th:href="@{/css/Style.css}" />
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="welcome-banner">
+            <h1>Welcome to Album Repository Service</h1>
+        </div>
+    </div>
+</header>
+
+<a th:href="@{/album/}"  style="--i: 0.05s;">Home</a>
+
+<section class="my-5">
+    <div class="container">
+        <div class="input-label">
+            <h2>Albums</h2>
+        </div>
+
+        <div class="update">
+            <form class="update-form" action="#" th:method="put" th:action="@{/album/update}" th:object="${album}">
+                <input type="text" th:field="*{ISRC}" />
+                <input type="text" th:field="*{title}" />
+                <input type="text" th:field="*{description}" />
+                <input type="text" th:field="*{year}" />
+                <input type="text" th:field="*{artist_first_name}" />
+                <input type="text" th:field="*{artist_last_name}" />
+                <input type="submit" class="update-btn" value="UPDATE" />
+            </form>
+        </div>
+
+        <div class="result" th:if="${modified}">
+            <p class="message">Modified the album!</p>
+        </div>
+    </div>
+</section>
+</body>
+</html>

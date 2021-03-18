@@ -24,6 +24,7 @@ public interface AlbumService {
 
     */
 
+    Album upload2(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException;
 
    //cover images CRUD
     Album getCoverImage(String ISRC, String title);
