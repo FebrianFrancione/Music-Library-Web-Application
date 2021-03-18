@@ -14,16 +14,16 @@ I'm an album
 <br>
 <table>
     <tr>
-        <td th:text="${album1.getISRC()}"/>
-        <td th:text="${album1.getTitle()}"/>
-        <td th:text="${album1.getDescription()}"/>
-        <td th:text="${album1.getYear()}"/>
-        <td th:text="${album1.getArtist_first_name()}"/>
-        <td th:text="${album1.getArtist_last_name()}"/>
-        <td th:text="${album1.getCover_image_name()}"/>
-        <td th:text="${album1.getCover_image()}"/>
-        <td th:if="${album1.getCover_image() != null}"><img class='img-thumbnail' style=" width: 200px;height: 200px; object-fit: fill;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album1.getCover_image())}"/></td>
-        <td th:unless="${album1.getCover_image() != null}"><img class='img-thumbnail' style=" width: 200px;height: 200px; object-fit: fill;" th:src="@{/img/spot_me.png}"/></td>
+        <td th:text="${album.getISRC()}"/>
+        <td th:text="${album.getTitle()}"/>
+        <td th:text="${album.getDescription()}"/>
+        <td th:text="${album.getYear()}"/>
+        <td th:text="${album.getArtist_first_name()}"/>
+        <td th:text="${album.getArtist_last_name()}"/>
+        <td th:text="${album.getCover_image_name()}"/>
+        <td th:text="${album.getCover_image()}"/>
+        <td th:if="${album.getCover_image() != null}"><img class='img-thumbnail' style=" width: 200px;height: 200px; object-fit: fill;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/></td>
+        <td th:unless="${album.getCover_image() != null}"><img class='img-thumbnail' style=" width: 200px;height: 200px; object-fit: fill;" th:src="@{/img/spot_me.png}"/></td>
     </tr>
 </table>
 

@@ -28,10 +28,10 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
-    public Album createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
-        Album newAlbum = new Album(ISRC, title, description,year,artist_first_name,artist_last_name);
-        albumDao.insertAlbum(newAlbum);
-        return newAlbum;
+    public boolean createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
+        image_mime = "image/" + image_mime;
+        Album newAlbum = new Album(ISRC, title, description,year,artist_first_name,artist_last_name, cover_image_name, image_mime, cover_image );
+        return albumDao.insertAlbum(newAlbum);
     }
 
     @Override
@@ -41,12 +41,11 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Override
     public boolean modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException {
-        if(deleteAlbum(ISRC)){
-            createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
-            return true;
-        }
-        return false;
+        return albumDao.updateAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
     }
+
+
+    /* Not used
 
     @Override
     public Album upload(String ISRC, String title, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
@@ -60,35 +59,24 @@ public class AlbumServiceImpl implements AlbumService{
         image_mime = "image/" + image_mime;
         return albumDao.insertImage2(ISRC, title, description,year,artist_first_name,artist_last_name, cover_image_name, image_mime, cover_image);
     }
+     */
 
 
-//
-//    //Cover Images CRUD
+    //Cover Images CRUD
+
     @Override
     public Album getCoverImage(String ISRC, String title) {
-        Album album = findByISRCAndTitle(ISRC, title);
-        return album;
+        return findByISRCAndTitle(ISRC, title);
     }
 
     @Override
-    public Album deleteCoverImage(String thisISRC, String thisTitle) throws FileNotFoundException {
-        Album album = findByISRCAndTitle(thisISRC, thisTitle);
-
-        String ISRC = thisISRC;
-        String title = thisTitle;
-        String description = album.getDescription();
-        int year = album.getYear();
-        String first_name = album.getArtist_first_name();
-        String last_name = album.getArtist_last_name();
-
-        deleteAlbum(ISRC);
-        return createNewAlbum(ISRC, title, description, year, first_name, last_name);
-
+    public boolean deleteCoverImage(String ISRC) {
+        return albumDao.deleteImg(ISRC);
     }
 
     @Override
-    public void updateCoverImage() {
-
+    public boolean updateCoverImage(String ISRC, String cover_image_name, String image_mime, byte[] cover_image) {
+        return albumDao.updateImg(ISRC, cover_image_name, image_mime, cover_image);
     }
 
 
