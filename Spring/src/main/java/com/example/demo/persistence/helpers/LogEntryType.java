@@ -1,4 +1,4 @@
-package persistence.helpers;
+package com.example.demo.persistence.helpers;
 
 import java.util.HashMap;
 import java.util.Map;
