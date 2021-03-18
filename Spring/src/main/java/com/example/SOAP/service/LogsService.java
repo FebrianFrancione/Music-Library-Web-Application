@@ -1,37 +1,25 @@
 package com.example.SOAP.service;
 
-import com.example.demo.Entity.Logs;
-import com.example.demo.persistence.LogsDao;
-import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
+import com.example.demo.Entity.LogEntryEntity;
 
-@Service
-public class LogsService implements ILogsService{
-    private LogsDao logRepository = new LogsDao();
-    private List<Logs> logs = new ArrayList<>();
+@WebService
+@SOAPBinding
+public interface LogsService {
+    @WebMethod(operationName = "getAllLogs")
+    List<LogEntryEntity> getAllLogs();
 
-    @Override
-    public List<Logs> getAllLogs(){
-        logs = logRepository.getLogEntries();
-        return logs;
-    }
+    @WebMethod(operationName = "getAllLogsByChange")
+    List<LogEntryEntity> getAllLogsByChange(@WebParam(name="change_type") String change);
 
-    @Override
-    public List<Logs> getAllLogsByChange(int change_type){
-        logs = logRepository.filterLogsByChange(change_type);
-        return logs;
-    }
+    @WebMethod(operationName = "getAllLogsByDates")
+    List<LogEntryEntity> getAllLogsByDates(@WebParam(name="from") String from, @WebParam(name="to") String to);
 
-    @Override
-    public List<Logs> getAllLogsByDates(String from, String to){
-        logs = logRepository.filterLogsByDates(from, to);
-        return logs;
-    }
-
-    @Override
-    public List<Logs> getAllLogsByDatesAndByChange(String from, String to, int change_type){
-        logs = logRepository.filterLogsByDatesAndChange(from, to, change_type);
-        return logs;
-    }
+    @WebMethod(operationName = "getAllLogsByDatesAndByChange")
+    List<LogEntryEntity> getAllLogsByDatesAndByChange(@WebParam(name="from") String from, @WebParam(name="to") String to,
+                                                      @WebParam(name="change_type") String change);
 }

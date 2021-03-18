@@ -8,11 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import com.example.demo.persistence.helpers.LogEntryType;
-import com.example.demo.Entity.Logs;
+import com.example.demo.Entity.LogEntryEntity;
 
 public class LogsDao {
     private PreparedStatement statement = null;
-    private ArrayList<Logs> logs = new ArrayList<>();
+    private ArrayList<LogEntryEntity> logs = new ArrayList<>();
     private JDBConfig jdbc = new JDBConfig();
 
     public void addLogEntry(String ISRC, int type_of_change) {
@@ -32,7 +32,7 @@ public class LogsDao {
         }
     }
 
-    public ArrayList<Logs> getLogEntries(){
+    public ArrayList<LogEntryEntity> getLogEntries(){
 
         String sql = "select * from logs ORDER BY time_stamp";
 
@@ -49,8 +49,8 @@ public class LogsDao {
         return logs;
     }
 
-    public ArrayList<Logs> filterLogsByDates(String from_date, String to_date){
-        String sql = setDateQueryParams(from_date, to_date);
+    public ArrayList<LogEntryEntity> filterLogsByDates(String from_date, String to_date){
+        String sql = setQueryParams(from_date, to_date);
 
         try {
             statement = jdbc.prepareStatement(sql);
@@ -77,7 +77,7 @@ public class LogsDao {
         return logs;
     }
 
-    public ArrayList<Logs> filterLogsByChange(int type_of_change){
+    public ArrayList<LogEntryEntity> filterLogsByChange(int type_of_change){
 
         if(type_of_change < LogEntryType.CREATE.getValue() || type_of_change > LogEntryType.DELETE.getValue())
             return null;
@@ -98,7 +98,7 @@ public class LogsDao {
         return logs;
     }
 
-    public ArrayList<Logs> filterLogsByDatesAndChange(String from_date, String to_date, int type_of_change){
+    public ArrayList<LogEntryEntity> filterLogsByDatesAndChange(String from_date, String to_date, int type_of_change){
         String sql = "select * from logs WHERE DATE(time_stamp) BETWEEN ? AND ? AND type_of_change = ? ORDER BY time_stamp";
 
         try {
@@ -120,8 +120,7 @@ public class LogsDao {
 
         return logs;
     }
-
-    public String setDateQueryParams(String from_date, String to_date){
+    public String setQueryParams(String from_date, String to_date){
         String sql = "";
 
         if(!from_date.isEmpty() && !to_date.isEmpty()){
@@ -149,7 +148,7 @@ public class LogsDao {
                 Timestamp time_stamp = resultSet.getTimestamp("time_stamp");
                 XMLGregorianCalendar timeStamp = setTimeStamp(time_stamp);
                 String type_of_change = String.valueOf(LogEntryType.valueOf(type_of_change_col));
-                Logs newLogEntry = new Logs(log_id, timeStamp, ISRC, type_of_change);
+                LogEntryEntity newLogEntry = new LogEntryEntity(log_id, timeStamp, ISRC, type_of_change);
                 logs.add(newLogEntry);
             }
 
