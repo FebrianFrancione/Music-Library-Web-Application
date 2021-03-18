@@ -4,3 +4,9 @@ Created by: Ivan Gerasymenko 27006284, Febrian Francione 40049253, Kiho Lee 4007
 
 
 http://localhost:8080/ws/logs.wsdl
+
+separate html from json controllers
+
+connect logs dao and remove hibernate sql from logs
+
+connect restcontroller album serviceImpl to logs controller
