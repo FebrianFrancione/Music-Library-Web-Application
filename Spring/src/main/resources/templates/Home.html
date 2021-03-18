@@ -8,28 +8,77 @@
 </head>
 <body>
 
-<p>Hello World!</p>
-Home
-<hr>
-<!--<section class="my-5">-->
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-8 mx-auto">-->
-<!--                <h2>Upload File Example</h2>-->
-<!--                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>-->
-<!--                <form method="post" th:action="@{/album/create/ISRC/title/description/2021/artist_first_name/artist_last_name}" enctype="multipart/form-data">-->
-<!--                    <div class="form-group">-->
-<!--                        <input type="file" name="file" class="form-control-file">-->
-<!--                    </div>-->
-<!--                    <button type="submit" class="btn btn-primary">Upload File Button</button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
+<header>
+    <div class="container">
+        <div class="welcome-banner">
+            <h1>Welcome to Album Repository Service</h1>
+        </div>
+    </div>
+</header>
 
-</body>
-</html>
-<br>
+<section class="my-5">
+    <div class="container">
+        <div class="input-label">
+            <h2>Albums</h2>
+        </div>
+        <div class="result">
+            <p th:text="${message}" th:if="${message ne null}" class="message"></p>
+
+            <a th:href="@{/album/list}">VIEW ALBUM LIST</a>
+
+            <form action="#" method="get" th:action="@{/album/find}" th:object="${album}">
+                <input type="text" th:field="*{ISRC}" />
+                <input type="text" th:field="*{title}" />
+                <input type="submit" class="search" value="SEARCH" />
+            </form>
+
+            <form action="#" method="post" th:action="@{/album/create}"
+                  th:object="${album}" enctype="multipart/form-data">
+                <input type="text" th:field="*{ISRC}" />
+                <input type="text" th:field="*{title}" />
+                <input type="text" th:field="*{description}" />
+                <input type="text" th:field="*{year}" />
+                <input type="text" th:field="*{artist_first_name}" />
+                <input type="text" th:field="*{artist_last_name}" />
+                <input type="file" name="file" class="cover-image">
+                <input type="submit" class="create" value="CREATE" />
+            </form>
+
+            <form action="#" th:method="put" th:action="@{/album/update}" th:object="${album}">
+                <input type="text" th:field="*{ISRC}" />
+                <input type="text" th:field="*{title}" />
+                <input type="text" th:field="*{description}" />
+                <input type="text" th:field="*{year}" />
+                <input type="text" th:field="*{artist_first_name}" />
+                <input type="text" th:field="*{artist_last_name}" />
+                <input type="submit" class="update" value="UPDATE" />
+            </form>
+
+            <form action="#" th:method="delete" th:action="@{/album/delete}" th:object="${album}">
+                <input type="text" th:field="*{ISRC}" />
+                <input type="submit" class="delete" value="DELETE" />
+            </form>
+
+            <!--  Cover Image  -->
+            <form action="#" method="get" th:action="@{/album/find/img}" th:object="${album}">
+                <input type="text" th:field="*{ISRC}" />
+                <input type="text" th:field="*{title}" />
+                <input type="submit" class="search" value="SEARCH" />
+            </form>
+
+            <form action="#" th:method="put" th:action="@{/album/update/img}" th:object="${album}" enctype="multipart/form-data">
+                <input type="text" th:field="*{ISRC}" />
+                <input type="file" name="file" class="cover-image">
+                <input type="submit" class="update" value="UPDATE" />
+            </form>
+
+            <form action="#" th:method="delete" th:action="@{/album/delete/img}" th:object="${album}">
+                <input type="text" th:field="*{ISRC}" />
+                <input type="submit" class="delete" value="DELETE" />
+            </form>
+        </div>
+    </div>
+</section>
+
 </body>
 </html>

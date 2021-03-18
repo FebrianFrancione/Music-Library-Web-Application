@@ -1,8 +1,81 @@
-body{
-    background-color: greenyellow;
+@import url("https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro:400,900&display=swap");
+/*Global styles*/
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-/*brightness 0 pls*/
-.Error{
-    background-color: red;
-    color: darkorange;
+
+:root {
+    --main-font: "Cabin", sans-serif;
+    --secondary-font: "Herr Von Muellerhoff", cursive;
+    --main-font-color-dark: #252525;
+    --secondary-font-color: #c59d5f;
+}
+
+html {
+    font-family: var(--main-font);
+    font-size: 10px;
+    color: var(--secondary-font-color);
+    scroll-behavior: smooth;
+
+}
+
+body {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+header{
+    margin-top: 3rem;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.my-5{
+    margin-left: 5vw;
+    width: 90vw;
+}
+
+.input-label{
+    display: flex;
+    justify-content: center;
+}
+
+.input-label h2{
+    font-size: 3rem;
+    width: 15vw;
+    background: white;
+    margin-bottom: 1.5rem;
+}
+
+.message{
+    font-size: 1.6rem;
+    height: auto;
+}
+
+.result{
+    color: var(--main-font-color-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+.result th{
+    font-size: 1.5rem;
+}
+
+.result td{
+    font-size: 1.3rem;
+}
+
+.result .table-label{
+    margin-bottom: 2rem;
 }

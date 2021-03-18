@@ -16,6 +16,8 @@ public class AlbumDao {
 
     private PreparedStatement statement = null;
 
+    /* Not used
+
     public Album insertImage(String ISRC, String title, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException {
         String sql = "Update albums_db.albums set cover_image_name = ?, image_mime=?, cover_image=? where ISRC=? and title = ?;";
         JDBConfig jdbc = new JDBConfig();
@@ -82,6 +84,8 @@ public class AlbumDao {
         }
         return album;
     }
+
+     */
 
 
 
@@ -184,8 +188,16 @@ public class AlbumDao {
     }
 
 
-    public void insertAlbum(Album album) throws FileNotFoundException {
-        String sql = "insert into albums (ISRC,title,description,year,artist_first_name,artist_last_name) values (?,?,?,?,?,?)";
+    public boolean insertAlbum(Album album) throws FileNotFoundException {
+        List<Album> albums = getAlbums();
+        Album oldAlbum = albums.stream().filter(album1 -> album1.getISRC().equals(album.getISRC())).findFirst().orElse(null);
+
+        // ISRC already existed.
+        if (oldAlbum != null){
+            return false;
+        }
+
+        String sql = "insert into albums (ISRC,title,description,year,artist_first_name,artist_last_name, cover_image_name, image_mime, cover_image) values (?,?,?,?,?,?,?,?,?)";
         JDBConfig jdbc = new JDBConfig();
         statement = jdbc.prepareStatement(sql);
 
@@ -196,9 +208,9 @@ public class AlbumDao {
             statement.setInt(4, album.getYear());
             statement.setString(5, album.getArtist_first_name());
             statement.setString(6, album.getArtist_last_name());
-//            statement.setString(7, album.getCover_image_name());
-//            statement.setString(8, album.getImage_mime());
-//            statement.setBytes(7, album.getCover_image());
+            statement.setString(7, album.getCover_image_name());
+            statement.setString(8, album.getImage_mime());
+            statement.setBytes(9, album.getCover_image());
 
             //Testing adding an image to DB
 //            Path searchPath = Paths.get("demo/src/main/java/persistence/test_image.jpg").toAbsolutePath();
@@ -211,6 +223,7 @@ public class AlbumDao {
             e.printStackTrace();
         }finally {
             jdbc.close();
+            return true;
         }
     }
 
@@ -235,25 +248,74 @@ public class AlbumDao {
     }
 
 
-//    public void updateAlbum(String ISRC,String title,String description,int year,String artist_first_name,String artist_last_name){
-//        String sql = "update albums set title=?,description=?,year=?,artist_first_name=?, artist_last_name=? where ISRC=?";
-//        JDBConfig jdbc = new JDBConfig();
-//        statement = jdbc.prepareStatement(sql);
-//        try {
-//            statement.setString(1, title);
-//            statement.setString(2, description);
-//            statement.setInt(3, year);
-//            statement.setString(4, artist_first_name);
-//            statement.setString(5,artist_last_name);
-//            statement.setString(6,ISRC);
-//            statement.executeUpdate();
-//        }catch(SQLException e){
-//            e.printStackTrace();
-//        }finally {
-//            jdbc.close();
-//        }
-//    }
-//
+    public boolean updateAlbum(String ISRC,String title,String description,int year,String artist_first_name,String artist_last_name){
+        boolean isUpdated = false;
+        String sql = "update albums set title=?,description=?,year=?,artist_first_name=?, artist_last_name=? where ISRC=?";
+        JDBConfig jdbc = new JDBConfig();
+        statement = jdbc.prepareStatement(sql);
+        try {
+            statement.setString(1, title);
+            statement.setString(2, description);
+            statement.setInt(3, year);
+            statement.setString(4, artist_first_name);
+            statement.setString(5,artist_last_name);
+            statement.setString(6,ISRC);
+            int updatedRow = statement.executeUpdate();
+            if(updatedRow > 0)
+                isUpdated = true;
+            return isUpdated;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            jdbc.close();
+        }
+        return isUpdated;
+    }
+
+    public boolean updateImg(String ISRC, String cover_image_name, String image_mime, byte[] cover_image){
+        boolean isUpdated = false;
+        String sql = "update albums set cover_image_name=?, image_mime=?, cover_image=? where ISRC=?";
+        JDBConfig jdbc = new JDBConfig();
+        statement = jdbc.prepareStatement(sql);
+        try {
+            statement.setString(1, cover_image_name);
+            statement.setString(2, image_mime);
+            statement.setBytes(3, cover_image);
+            statement.setString(4,ISRC);
+            int updatedRow = statement.executeUpdate();
+            if(updatedRow > 0)
+                isUpdated = true;
+            return isUpdated;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            jdbc.close();
+        }
+        return isUpdated;
+    }
+
+    public boolean deleteImg(String ISRC){
+        boolean isUpdated = false;
+        String sql = "update albums set cover_image_name=?, image_mime=?, cover_image=? where ISRC=?";
+        JDBConfig jdbc = new JDBConfig();
+        statement = jdbc.prepareStatement(sql);
+        try {
+            statement.setString(1, null);
+            statement.setString(2, null);
+            statement.setBytes(3, null);
+            statement.setString(4,ISRC);
+            int updatedRow = statement.executeUpdate();
+            if(updatedRow > 0)
+                isUpdated = true;
+            return isUpdated;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            jdbc.close();
+        }
+        return isUpdated;
+    }
+
 
 
     public String getImageExtension(String MIME_type){
