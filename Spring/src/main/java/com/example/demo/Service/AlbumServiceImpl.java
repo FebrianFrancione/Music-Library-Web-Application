@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -24,7 +25,9 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Override
     public List<Album> getAlbums() {
-        return albumDao.getAlbums();
+        List<Album> sortedAlbums = albumDao.getAlbums().stream()
+                .sorted((a,b) -> a.getTitle().compareTo(b.getTitle())).collect(Collectors.toList());
+        return sortedAlbums;
     }
 
     @Override
