@@ -55,6 +55,12 @@ public class AlbumRestController implements WebMvcConfigurer {
         return "Modify";
     }
 
+    @GetMapping("/Images")
+    public String showImages(Model model){
+        model.addAttribute("album", new Album());
+        return "Images";
+    }
+
     @GetMapping(value = "/")
     @ResponseBody
     public ResponseEntity getHome() {
@@ -398,6 +404,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         }
         model.addAttribute("imgUtil", new ImageUtil());
         model.addAttribute("album", foundAlbum);
+        model.addAttribute("get", true);
         return "Images";
     }
 
@@ -405,7 +412,7 @@ public class AlbumRestController implements WebMvcConfigurer {
     // Put Cover Image
 
     @PutMapping( "/update/img")
-    public String modifyCover(@ModelAttribute("album") Album album, @RequestParam("file") MultipartFile file) throws IOException {
+    public String modifyCover(Model model, @ModelAttribute("album") Album album, @RequestParam("file") MultipartFile file) throws IOException {
 
         String cover_image_name = FilenameUtils.removeExtension(file.getOriginalFilename());
         String image_mime = FilenameUtils.getExtension(file.getOriginalFilename());
@@ -417,7 +424,8 @@ public class AlbumRestController implements WebMvcConfigurer {
         else{
             // Check if ISRC already existed or not
             if(albumService.updateCoverImage(album.getISRC(), cover_image_name, image_mime, cover_imageBytes)){
-                return "Modify";
+                model.addAttribute("modified", true);
+                return "Images";
             }else{
                 return "Error";
             }
@@ -454,14 +462,15 @@ public class AlbumRestController implements WebMvcConfigurer {
     // Delete Cover Image
 
     @DeleteMapping( "/delete/img")
-    public String deleteImg(@ModelAttribute("album") Album album) {
+    public String deleteImg(Model model, @ModelAttribute("album") Album album) {
         String ISRC = album.getISRC();
         if (ISRC.trim().isEmpty()) {
             return "Error";
         } else {
 
             if (albumService.deleteCoverImage(ISRC)) {
-                return "Delete";
+                model.addAttribute("deleted", true);
+                return "Images";
             } else {
                 return "Error";
             }

@@ -21,23 +21,56 @@
             <h2>Albums</h2>
         </div>
         <div class="result">
+            <!--  Cover Image  -->
+
+
+            <h3>Update Cover Image</h3>
+            <div class="update">
+                <form class="update-form" action="#" th:method="put" th:action="@{/album/update/img}" th:object="${album}" enctype="multipart/form-data">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="file" name="file" class="cover-image">
+                    <input type="submit" class="update-btn" value="UPDATE" />
+                </form>
+            </div>
+            <div class="result" th:if="${modified}">
+                <p class="message">Modified the album</p>
+            </div>
+
+
+            <br>
+
+            <h3>Delete Cover Image</h3>
+            <div class="delete">
+                <form class="delete-form" action="#" th:method="delete" th:action="@{/album/delete/img}" th:object="${album}">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="submit" class="delete-btn" value="DELETE" />
+                </form>
+            </div>
+            <div class="result" th:if="${deleted}">
+                <p class="message">Deleted the album</p>
+            </div>
+
+
+            <br>
+            <h3>Get Cover Image</h3>
+            <div class="search">
+                <form class="search-form" action="#" method="get" th:action="@{/album/find/img}" th:object="${album}">
+                    <input type="text" th:field="*{ISRC}" />
+                    <input type="text" th:field="*{title}" />
+                    <input type="submit" class="search-btn" value="SEARCH" />
+                </form>
+            </div>
             <table>
                 <tr>
                     <th>Cover Image</th>
                     <th>ISRC</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Year</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
                     <th>Cover Image Name</th>
                 </tr>
-                <tr>
+                <tr th:if="${get}">
                     <td th:if="${album.getCover_image() != null}"><img class='img-thumbnail' style=" width: 100px;height: 100px; object-fit: fill;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/></td>
-                    <td th:unless="${album.getCover_image() != null}"><img class='img-thumbnail' style=" width: 100px;height: 100px; object-fit: fill;" th:src="@{/img/spot_me.png}"/></td>
+                    <td th:unless="${album.getCover_image() != null}"><img class='img-thumbnail' style=" width: 100px;height: 100px; object-fit: fill;"/></td>
                     <td th:text="${album.getISRC()}"/>
                     <td th:text="${album.getCover_image_name()}"/>
-                    <td th:text="${album.getCover_image()}"/>
 
                 </tr>
             </table>
