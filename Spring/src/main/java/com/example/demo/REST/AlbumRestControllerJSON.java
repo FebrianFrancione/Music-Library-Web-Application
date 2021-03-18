@@ -52,36 +52,54 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
         }
     }
 
-    @PostMapping( "/create")
+    @GetMapping(value = "/{ISRC}/{title}")
     @ResponseBody
-    public ResponseEntity createNewAlbum(@ModelAttribute("album") Album album, @RequestParam("file") MultipartFile file) throws IOException {
-
-        String cover_image_name = FilenameUtils.removeExtension(file.getOriginalFilename());
-        String image_mime = FilenameUtils.getExtension(file.getOriginalFilename());
-        byte[] cover_imageBytes = file.getBytes();
-
-        if(album.getISRC().trim().isEmpty() || album.getTitle().isEmpty() || album.getYear() == 0 || album.getArtist_first_name().isEmpty() || album.getArtist_last_name().isEmpty() || cover_image_name.isEmpty()){
+    public ResponseEntity getAlbum(@PathVariable String ISRC, @PathVariable("title") String title){
+        if(ISRC.trim().isEmpty() || title.isEmpty()){
             String message = "A parameter is incorrect or is empty!";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+        Album album = albumService.findByISRCAndTitle(ISRC, title);
+        if(album != null){
+            return ResponseEntity.ok(album);
         }else{
-            // Check if ISRC already existed or not
-            if(albumService.createNewAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name(), cover_image_name, image_mime, cover_imageBytes)){
-                return ResponseEntity.ok("Successfully created new album: " + album.getISRC());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Album: " + ISRC + " not found!");
+        }
+    }
+
+    // Must include file
+    @PostMapping(value = "/create")
+    @ResponseBody
+    public ResponseEntity createNewAlbum(@RequestPart("ISRC") String ISRC, @RequestPart("title") String title, @RequestPart("description") String description,@RequestPart("year") String year, @RequestPart("artist_first_name") String artist_first_name, @RequestPart("artist_first_name") String artist_last_name, @RequestPart("cover_image") MultipartFile cover_image) throws IOException {
+
+        String cover_image_name = FilenameUtils.removeExtension(cover_image.getOriginalFilename());
+        String image_mime = FilenameUtils.getExtension(cover_image.getOriginalFilename());
+        byte[] cover_imageBytes = cover_image.getBytes();
+
+        int yearInt = Integer.parseInt(year);
+
+        if(ISRC.trim().isEmpty() || title.isEmpty() || yearInt == 0 || artist_first_name.isEmpty() || artist_last_name.isEmpty() || cover_image_name.isEmpty()){
+            String message = "A parameter is incorrect or is empty!";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+        else{
+            if(albumService.createNewAlbum(ISRC,title, description, yearInt, artist_first_name, artist_last_name,cover_image_name, image_mime, cover_imageBytes)){
+                return ResponseEntity.ok("Successfully created new album: " + ISRC);
             }else{
                 String message = "The album already existed.";
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
             }
+
         }
     }
 
-    @DeleteMapping(value = "/delete")
+    @DeleteMapping(value = "/delete/{ISRC}")
     @ResponseBody
-    public ResponseEntity deleteAlbum(@ModelAttribute("album") Album album) {
-        String ISRC = album.getISRC();
+    public ResponseEntity deleteAlbum(@PathVariable("ISRC") String ISRC) {
         if(ISRC.trim().isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ISRC cannot be empty");
         }else{
-            if(albumService.deleteAlbum(ISRC)) {
+            if(albumService.deleteAlbum(ISRC) == true) {
                 return ResponseEntity.ok("Successfully deleted the album: " + ISRC);
             }else{
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ISRC has not been found");
@@ -89,56 +107,66 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
         }
     }
 
-    @PutMapping("/update")
+    @PutMapping(value = "/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
     @ResponseBody
-    public ResponseEntity modifyAlbum(@ModelAttribute("album") Album album) throws FileNotFoundException {
-        if(album.getISRC().trim().isEmpty() || album.getTitle().isEmpty() || album.getYear() == 0 || album.getArtist_first_name().isEmpty() || album.getArtist_last_name().isEmpty()){
+    public ResponseEntity modifyAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
+        if(ISRC.trim().isEmpty() || title.isEmpty() || year == 0 || artist_first_name.isEmpty() || artist_last_name.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A parameter is incorrect or is empty!");
         }else{
-            if(albumService.modifyAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name())){
-                return ResponseEntity.ok("Successfully modified the album: " + album.getISRC());
+            if(albumService.modifyAlbum(ISRC, title, description, year, artist_first_name, artist_last_name)){
+                return ResponseEntity.ok("Successfully modified the album: " + ISRC);
             }else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Album does not exist.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Album has not been modified, errors in parameters are present");
             }
         }
-
     }
 
 
     // Cover Image
-
-
-
-
-
-
-    @PutMapping( "/update/img")
+    @GetMapping(value = "/img/{ISRC}/{title}")
     @ResponseBody
-    public ResponseEntity modifyCover(@ModelAttribute("album") Album album, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity getImg(@PathVariable String ISRC, @PathVariable("title") String title){
+        if(ISRC.trim().isEmpty() || title.isEmpty()){
+            String message = "A parameter is incorrect or is empty!";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+        Album album = albumService.getCoverImage(ISRC, title);
+        if(album != null){
+            if(album.getCover_image_name().isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Album: " + ISRC + " does not have a cover image.");
+            }
+            return ResponseEntity.ok(album.getCover_image());
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Album: " + ISRC + " not found!");
+        }
+    }
+
+    @PutMapping( "/img/update")
+    @ResponseBody
+    public ResponseEntity modifyCover(@RequestPart("ISRC") String ISRC, @RequestParam("file") MultipartFile file) throws IOException {
 
         String cover_image_name = FilenameUtils.removeExtension(file.getOriginalFilename());
         String image_mime = FilenameUtils.getExtension(file.getOriginalFilename());
         byte[] cover_imageBytes = file.getBytes();
 
-        if(album.getISRC().trim().isEmpty() || cover_image_name.isEmpty()){
+        if(ISRC.trim().isEmpty() || cover_image_name.isEmpty()){
             String message = "A parameter is incorrect or is empty!";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
         }
         else{
             // Check if ISRC already existed or not
-            if(albumService.updateCoverImage(album.getISRC(), cover_image_name, image_mime, cover_imageBytes)){
-                return ResponseEntity.ok("Successfully modified the album: " + album.getISRC());
+            if(albumService.updateCoverImage(ISRC, cover_image_name, image_mime, cover_imageBytes)){
+                return ResponseEntity.ok("Successfully modified the image: " + ISRC);
             }else{
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Album does not exist.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The image does not exist.");
             }
 
         }
     }
 
-    @DeleteMapping(value = "/delete/img")
+    @DeleteMapping(value = "/img/delete/{ISRC}")
     @ResponseBody
-    public ResponseEntity deleteImg(@ModelAttribute("album") Album album) {
-        String ISRC = album.getISRC();
+    public ResponseEntity deleteImg(@RequestPart("ISRC") String ISRC) {
         if(ISRC.trim().isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ISRC cannot be empty");
         }else{
@@ -152,20 +180,12 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
 
 
 
+
+
+
     // Old Version
 
     /* Get a specific album
-
-    @GetMapping(value = "/{ISRC}/{title}")
-    @ResponseBody
-    public ResponseEntity getAlbum(@PathVariable String ISRC, @PathVariable("title") String title){
-        Album album = albumService.findByISRCAndTitle(ISRC, title);
-        if(album != null){
-            return ResponseEntity.ok(album);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Album: " + ISRC + " not found!");
-        }
-    }
 
     @GetMapping(value = "/{ISRC}/{title}", produces = MediaType.TEXT_HTML_VALUE)
     public String getAlbumHtml(Model model, @PathVariable String ISRC, @PathVariable("title") String title) throws Exception {
@@ -181,17 +201,6 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
 
     /* Post
 
-    @PostMapping(value = "/create/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}")
-    @ResponseBody
-    public ResponseEntity createNewAlbum(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
-        if(ISRC.trim().isEmpty() || title.isEmpty() || year == 0 || artist_first_name.isEmpty() || artist_last_name.isEmpty()){
-            String message = "A parameter is incorrect or is empty!";
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-        }
-        albumService.createNewAlbum(ISRC, title, description, year, artist_first_name, artist_last_name);
-        return ResponseEntity.ok("Successfully created new album: " + ISRC);
-    }
-
     @PostMapping(value = "/create/{ISRC}/{title}/{description}/{year}/{artist_first_name}/{artist_last_name}", produces = MediaType.TEXT_HTML_VALUE)
     public String createNewAlbumHtml(@PathVariable("ISRC") String ISRC, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("year") int year, @PathVariable("artist_first_name") String artist_first_name, @PathVariable("artist_last_name") String artist_last_name) throws FileNotFoundException {
         if(ISRC.trim().isEmpty() || title.isEmpty() || year == 0 || artist_first_name.isEmpty() || artist_last_name.isEmpty()){
@@ -202,10 +211,7 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
     }
      */
 
-
-
     /* Not used
-
 
     @PostMapping(value = "/upload")
     @ResponseBody
@@ -227,26 +233,7 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
 
     }
 
-    //Combining both methods together
-    //must be done in postman
-    @PostMapping(value = "/upload2")
-    @ResponseBody
-    public ResponseEntity uploadFile2(@RequestPart("ISRC") String ISRC, @RequestPart("title") String title, @RequestPart("description") String description,@RequestPart("year") String year, @RequestPart("artist_first_name") String artist_first_name, @RequestPart("artist_first_name") String artist_last_name, @RequestPart("cover_image") MultipartFile cover_image) throws IOException {
-        String cover_image_name = FilenameUtils.removeExtension(cover_image.getOriginalFilename());
-        String image_mime = FilenameUtils.getExtension(cover_image.getOriginalFilename());
-        byte[] cover_imageBytes = cover_image.getBytes();
-        int yearInt = Integer.parseInt(year);
-        Album album = albumService.upload2(ISRC,title, description, yearInt, artist_first_name, artist_last_name,cover_image_name, image_mime, cover_imageBytes);
-        if(album != null){
-            return ResponseEntity.ok("Successfully uploaded album + cover image info: " + ISRC);
-        }else{
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("One of the parameters is wrong");
-        }
-
-    }
      */
-
-
 
     /* Delete
 
