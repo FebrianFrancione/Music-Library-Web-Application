@@ -1,37 +1,30 @@
 package com.example.demo.Entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-import java.util.Calendar;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
-@Entity
-@Table(name = "logs")
+@XmlRootElement
 public class Logs {
 
-    @Id
-    @Column(name = "log_id")
+    @XmlSchemaType(name = "int")
     private int logId;
-
-    @Column(name = "time_stamp")
-    private Calendar timeStamp;
-
-    @Column(name = "type_of_change")
-    private int typeOfChange;
-
-    @Column(name = "ISRC")
-    private String ISRC;
+    @XmlSchemaType(name = "dateTime")
+    private XMLGregorianCalendar timeStamp;
+    @XmlSchemaType(name = "string")
+    private String isrc;
+    @XmlSchemaType(name = "string")
+    private String typeOfChange;
 
     public Logs() {
     }
 
-    public Logs(int logId, Calendar timeStamp, int type_of_change, String ISRC) {
+    public Logs(int logId, XMLGregorianCalendar timeStamp, String isrc, String typeOfChange) {
         this.logId = logId;
         this.timeStamp = timeStamp;
-        this.typeOfChange = type_of_change;
-        this.ISRC = ISRC;
+        this.isrc = isrc;
+        this.typeOfChange = typeOfChange;
     }
 
     public int getLogId() {
@@ -42,27 +35,27 @@ public class Logs {
         this.logId = logId;
     }
 
-    public Calendar getTimeStamp() {
+    public XMLGregorianCalendar getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Calendar timeStamp) {
+    public void setTimeStamp(XMLGregorianCalendar timeStamp) {
         this.timeStamp = timeStamp;
     }
 
-    public int getTypeOfChange() {
+    public String getIsrc() {
+        return isrc;
+    }
+
+    public void setIsrc(String isrc) {
+        this.isrc = isrc;
+    }
+
+    public String getTypeOfChange() {
         return typeOfChange;
     }
 
-    public void setTypeOfChange(int typeOfChange) {
+    public void setTypeOfChange(String typeOfChange) {
         this.typeOfChange = typeOfChange;
-    }
-
-    public String getISRC() {
-        return ISRC;
-    }
-
-    public void setISRC(String ISRC) {
-        this.ISRC = ISRC;
     }
 }
