@@ -31,6 +31,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         this.albumService = albumService;
     }
 
+
     @GetMapping("/Get")
     public String showOne(Model model){
         model.addAttribute("album", new Album());

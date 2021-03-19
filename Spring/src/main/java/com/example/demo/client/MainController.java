@@ -122,7 +122,7 @@ public class MainController {
         return "LogsFiltered";
     }
 
-    private LogsService logsServiceInit(){
+    public LogsService logsServiceInit(){
         LogsService port=null;
         try {
             URL url=new URL(STR_URL_);
