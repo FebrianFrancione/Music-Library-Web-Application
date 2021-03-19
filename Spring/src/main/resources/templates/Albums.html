@@ -15,15 +15,13 @@
     </div>
 </header>
 
-<a th:href="@{/album/}"  style="--i: 0.05s;">Home</a>
+<a th:href="@{/album/html/}"  style="--i: 0.05s;">Home</a>
 
 <section class="my-5">
     <div class="container">
         <div class="input-label">
             <h2>Albums</h2>
         </div>
-
-<!--        <a th:href="@{/album/list}" class="list">VIEW ALBUM LIST</a>-->
 
         <div class="result">
             <table>
@@ -39,14 +37,15 @@
                 </tr>
                 <tr th:if = "${album.getYear() != 0}" th:each="album : ${albumList}">
                     <td th:if="${album.getCover_image() != null}"><img class='img-thumbnail' style=" width: 100px;height: 100px; object-fit: fill;" th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(album.getCover_image())}"/></td>
-                    <td th:unless="${album.getCover_image() != null}"><img class='img-thumbnail' style=" width: 100px;height: 100px; object-fit: fill;"/>No image</td>
+                    <td th:unless="${album.getCover_image() != null}">No image</td>
                     <td th:text="${album.getISRC()}"/>
                     <td th:text="${album.getTitle()}"/>
                     <td th:text="${album.getDescription()}"/>
                     <td th:text="${album.getYear()}"/>
                     <td th:text="${album.getArtist_first_name()}"/>
                     <td th:text="${album.getArtist_last_name()}"/>
-                    <td th:text="${album.getCover_image_name()}"/>
+                    <td th:if ="${album.getCover_image_name() != null}" th:text="${album.getCover_image_name()}"/>
+                    <td th:unless ="${album.getCover_image_name() != null}">No name</td>
                     <td><br><hr></td>
                 </tr>
             </table>

@@ -15,7 +15,7 @@
     </div>
 </header>
 
-<a th:href="@{/album/}"  style="--i: 0.05s;">Home</a>
+<a th:href="@{/album/html/}"  style="--i: 0.05s;">Home</a>
 
 <section class="my-5">
     <div class="container">
@@ -25,7 +25,7 @@
 
         <div class="delete">
             <form class="delete-form" action="#" th:method="delete" th:action="@{/album/html/delete}" th:object="${album}">
-                <input type="text" th:field="*{ISRC}" />
+                <input placeholder="ISRC" type="text" th:field="*{ISRC}" />
                 <input type="submit" class="delete-btn" value="DELETE" />
             </form>
         </div>

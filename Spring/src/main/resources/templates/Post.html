@@ -15,7 +15,7 @@
     </div>
 </header>
 
-<a th:href="@{/album/}"  style="--i: 0.05s;">Home</a>
+<a th:href="@{/album/html/}"  style="--i: 0.05s;">Home</a>
 
 <section class="my-5">
     <div class="container">
@@ -26,18 +26,18 @@
         <div class="create">
             <form class="create-form" action="#" method="post" th:action="@{/album/html/create}"
                   th:object="${album}" enctype="multipart/form-data">
-                <input type="text" th:field="*{ISRC}" />
-                <input type="text" th:field="*{title}" />
-                <input type="text" th:field="*{description}" />
-                <input type="text" th:field="*{year}" />
-                <input type="text" th:field="*{artist_first_name}" />
-                <input type="text" th:field="*{artist_last_name}" />
+                <input placeholder="ISRC" type="text" th:field="*{ISRC}" />
+                <input placeholder="Title" type="text" th:field="*{title}" />
+                <input placeholder="Description" type="text" th:field="*{description}" />
+                <input placeholder="Year" type="text" th:field="*{year}" />
+                <input placeholder="Artist Last Name" type="text" th:field="*{artist_first_name}" />
+                <input placeholder="Artist First Name" type="text" th:field="*{artist_last_name}" />
                 <input type="file" name="file" class="cover-image">
                 <input type="submit" class="create-btn" value="CREATE" />
             </form>
         </div>
 
-        <div class="result" th:if = "${updated}">
+        <div class="result" th:if = "${posted}">
             <p class="message">Created new album!</p>
         </div>
     </div>
