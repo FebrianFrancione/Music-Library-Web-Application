@@ -1,16 +1,64 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all"
-          href="../../css/Style.css" th:href="@{/css/Style.css}" />
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/Style.css"/>
+    <script src="/webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8"/>
+    <title>SOAP Client</title>
 </head>
 <body>
+<header>
+    <div class="container">
+        <div class="welcome-banner">
+            <h1>Welcome to Logs Repository Service</h1>
+        </div>
+    </div>
+</header>
 
-<p>Hello World!</p>
-<hr>
-<br>
-Logs
+<section class="my-5">
+    <div class="container">
+        <div class="input-label">
+            <h3><a href="/logs/getLogs/">get all logs</a></h3>
+        </div>
+        <div class="input-label">
+            <h3>Get Logs filtered by Dates</h3>
+        </div>
+        <div class="result">
+            <div class="search">
+                <form class="search-form" action="/logs/getLogsByDate" method="get">
+                    From : <input type="text" name="from" class="form-control"/><br/>
+                    To : <input type="text" name="to" class="form-control"/><br/>
+                    <input type="submit" class="search-btn" value="SEARCH" />
+                </form>
+            </div>
+        </div>
+        <div class="input-label">
+            <h3>Get Logs filtered by Change Type</h3>
+        </div>
+        <div class="result">
+            <div class="search">
+                <form class="search-form" action="/logs/getLogsByChange" method="get">
+                    Change Type : <input type="text" name="change" class="form-control"/><br/>
+                    <input type="submit" class="search-btn" value="SEARCH" />
+                </form>
+            </div>
+        </div>
+        <div class="input-label">
+            <h3>Get Logs filtered by Dates and Change Type</h3>
+        </div>
+        <div class="result">
+            <div class="search">
+                <form class="search-form" action="/logs/getLogsByDateAndChange" method="get">
+                    From : <input type="text" name="from" class="form-control"/><br/>
+                    To : <input type="text" name="to" class="form-control"/><br/>
+                    Change Type : <input type="text" name="change" class="form-control"/><br/>
+                    <input type="submit" class="search-btn" value="SEARCH" />
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 </body>
 </html>

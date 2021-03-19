@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/Style.css"/>
+    <script src="/webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="welcome-banner">
+            <h1>Welcome to Logs Repository</h1>
+        </div>
+    </div>
+</header>
+
+<section class="my-5">
+    <div class="container">
+        <div class="input-label">
+            <h2>Logs</h2>
+        </div>
+        <div class="result">
+            <table>
+                <tr>
+                    <th>Log Id</th>
+                    <th>ISRC</th>
+                    <th>TimeStamp</th>
+                    <th>Type Of Change</th>
+                </tr>
+                <tr th:each="log : ${logs}">
+                    <td th:text="${log.getLogId()}"/>
+                    <td th:text="${log.getIsrc()}"/>
+                    <td th:text="${log.getTimeStamp()}"/>
+                    <td th:text="${log.getTypeOfChange()}"/>
+                    <td><br><hr></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+</body>
+</html>
