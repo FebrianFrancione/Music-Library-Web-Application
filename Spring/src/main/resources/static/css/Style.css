@@ -95,3 +95,7 @@ header{
     align-content: center;
     text-align: center;
 }
+a{
+    margin: 5px;
+    font-size: 15px;
+}
