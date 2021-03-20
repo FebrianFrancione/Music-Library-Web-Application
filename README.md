@@ -10,3 +10,14 @@ separate html from json controllers
 connect logs dao and remove hibernate sql from logs
 
 connect restcontroller album serviceImpl to logs controller
+
+
+POSTMAN Requests:
+
+
+Html Requests:
+Rest:
+localhost:8080/album/html/
+
+SOAP
+localhost:8080/logs/
