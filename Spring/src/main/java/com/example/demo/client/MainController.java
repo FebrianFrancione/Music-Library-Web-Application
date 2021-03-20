@@ -15,11 +15,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.demo.client.entity.*;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Controller
 @RequestMapping(value = "/logs", method = {RequestMethod.GET, RequestMethod.POST})
-public class MainController {
-    private final static String STR_URL_="http://localhost:8090/ws/logs?wsdl";
+public class MainController  implements WebMvcConfigurer {
+
+    private final static String STR_URL_ = "http://localhost:8090/ws/logs?wsdl";
     private boolean fromDateSet = false;
     private boolean toDateSet = false;
     private boolean changeTypeSet = false;
@@ -27,14 +29,14 @@ public class MainController {
     private String to = "";
     private String changeType = "";
 
-    @GetMapping(value = "/")
-    public String showHomePage(){
+    @GetMapping( "/")
+    public String showHomePage() {
         return "Logs";
     }
 
-    @GetMapping(value = "/getLogs", produces = MediaType.TEXT_HTML_VALUE)
-    public String getLogsHtml(Model model) throws JAXBException{
-        LogsService port=logsServiceInit();
+    @GetMapping( "/getLogs")
+    public String getLogsHtml(Model model) {
+        LogsService port = logsServiceInit();
 
         if(port!=null){
             NewLogSet logs = filterLogs(port);
@@ -47,9 +49,9 @@ public class MainController {
         return "LogsFiltered";
     }
 
-    @GetMapping(value = "/getLogsByDate", produces = MediaType.TEXT_HTML_VALUE)
-    public String getLogsByDate(Model model, @RequestParam String from, @RequestParam String to){
-        if(from != null && !from.isEmpty()){
+    @GetMapping( "/getLogsByDate")
+    public String getLogsByDate(Model model, @RequestParam String from, @RequestParam String to) {
+        if (from != null && !from.isEmpty()) {
             this.fromDateSet = true;
             this.from = from;
         }
@@ -72,9 +74,9 @@ public class MainController {
         return "LogsFiltered";
     }
 
-    @GetMapping(value = "/getLogsByChange", produces = MediaType.TEXT_HTML_VALUE)
-    public String getLogsByChangeType(Model model, @RequestParam String change){
-        if(change != null && !change.isEmpty()){
+    @GetMapping("/getLogsByChange")
+    public String getLogsByChangeType(Model model, @RequestParam String change) {
+        if (change != null && !change.isEmpty()) {
             this.changeTypeSet = true;
             this.changeType = change;
         }
@@ -92,9 +94,9 @@ public class MainController {
         return "LogsFiltered";
     }
 
-    @GetMapping(value = "/getLogsByDateAndChange", produces = MediaType.TEXT_HTML_VALUE)
-    public String getLogsByDateAndChange(Model model, @RequestParam String from, @RequestParam String to, @RequestParam String change){
-        if(from != null && !from.isEmpty()){
+    @GetMapping( "/getLogsByDateAndChange")
+    public String getLogsByDateAndChange(Model model, @RequestParam String from, @RequestParam String to, @RequestParam String change) {
+        if (from != null && !from.isEmpty()) {
             this.fromDateSet = true;
             this.from = from;
         }
@@ -122,7 +124,7 @@ public class MainController {
         return "LogsFiltered";
     }
 
-    public LogsService logsServiceInit(){
+    private LogsService logsServiceInit(){
         LogsService port=null;
         try {
             URL url=new URL(STR_URL_);
@@ -137,7 +139,7 @@ public class MainController {
 
     }
 
-    private NewLogSet filterLogs(LogsService port){
+    private NewLogSet filterLogs(LogsService port) {
         List<LogEntry> logsList = new ArrayList<>();
         List<LogEntryEntity> xmlLogs;
         NewLogSet logs = new NewLogSet();

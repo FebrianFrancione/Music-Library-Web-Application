@@ -1,2 +1,2 @@
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://service.soap.example.com/")
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://service.SOAP/")
 package com.example.webservices.logs.client.wsdl;

@@ -16,6 +16,10 @@
     </div>
 </header>
 
+<div class="input-label">
+    <h3><a th:href="@{/logs/}"  style="--i: 0.05s;">Back to Logs Repository</a></h3>
+</div>
+
 <section class="my-5">
     <div class="container">
         <div class="input-label">
@@ -34,7 +38,6 @@
                     <td th:text="${log.getIsrc()}"/>
                     <td th:text="${log.getTimeStamp()}"/>
                     <td th:text="${log.getTypeOfChange()}"/>
-                    <td><br><hr></td>
                 </tr>
             </table>
         </div>

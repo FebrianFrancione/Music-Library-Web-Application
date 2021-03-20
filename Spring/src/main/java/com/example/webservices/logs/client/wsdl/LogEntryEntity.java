@@ -9,9 +9,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * <p>Java class for logEntryEntity complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="logEntryEntity">
  *   &lt;complexContent>
@@ -26,15 +26,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "logEntryEntity", propOrder = {
-    "logId",
-    "timeStamp",
-    "isrc",
-    "typeOfChange"
+        "logId",
+        "timeStamp",
+        "isrc",
+        "typeOfChange"
 })
 public class LogEntryEntity {
 
@@ -45,7 +45,7 @@ public class LogEntryEntity {
 
     /**
      * Gets the value of the logId property.
-     * 
+     *
      */
     public int getLogId() {
         return logId;
@@ -53,7 +53,7 @@ public class LogEntryEntity {
 
     /**
      * Sets the value of the logId property.
-     * 
+     *
      */
     public void setLogId(int value) {
         this.logId = value;
@@ -61,11 +61,11 @@ public class LogEntryEntity {
 
     /**
      * Gets the value of the timeStamp property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link XMLGregorianCalendar }
-     *     
+     *
      */
     public XMLGregorianCalendar getTimeStamp() {
         return timeStamp;
@@ -73,11 +73,11 @@ public class LogEntryEntity {
 
     /**
      * Sets the value of the timeStamp property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link XMLGregorianCalendar }
-     *     
+     *
      */
     public void setTimeStamp(XMLGregorianCalendar value) {
         this.timeStamp = value;
@@ -85,11 +85,11 @@ public class LogEntryEntity {
 
     /**
      * Gets the value of the isrc property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getIsrc() {
         return isrc;
@@ -97,11 +97,11 @@ public class LogEntryEntity {
 
     /**
      * Sets the value of the isrc property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setIsrc(String value) {
         this.isrc = value;
@@ -109,11 +109,11 @@ public class LogEntryEntity {
 
     /**
      * Gets the value of the typeOfChange property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getTypeOfChange() {
         return typeOfChange;
@@ -121,11 +121,11 @@ public class LogEntryEntity {
 
     /**
      * Sets the value of the typeOfChange property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setTypeOfChange(String value) {
         this.typeOfChange = value;
