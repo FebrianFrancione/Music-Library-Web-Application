@@ -168,6 +168,12 @@ public class MainController  implements WebMvcConfigurer {
         else if(fromDateSet && toDateSet)
             xmlLogs = port.getAllLogsByDates(from, to);
 
+        else if(fromDateSet)
+            xmlLogs = port.getAllLogsByDates(from, "");
+
+        else if(toDateSet)
+            xmlLogs = port.getAllLogsByDates("", to);
+
         else if(changeTypeSet)
             xmlLogs = port.getAllLogsByChange(changeType);
 
