@@ -13,7 +13,7 @@ public interface AlbumService {
     boolean createNewAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name, String cover_image_name, String image_mime, byte[] cover_image) throws FileNotFoundException;
     boolean deleteAlbum(String ISRC);
     boolean modifyAlbum(String ISRC, String title, String description, int year, String artist_first_name, String artist_last_name) throws FileNotFoundException;
-
+    boolean addLogEntry(String ISRC, int type_of_change);
 
     /* Not used
 

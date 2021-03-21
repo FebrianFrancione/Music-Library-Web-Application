@@ -2,6 +2,7 @@ package com.example.demo.REST;
 
 import com.example.demo.Entity.Album;
 import com.example.demo.Service.AlbumService;
+import com.example.demo.persistence.helpers.LogEntryType;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -77,6 +78,7 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
         }
         else{
             if(albumService.createNewAlbum(ISRC,title, description, yearInt, artist_first_name, artist_last_name,cover_image_name, image_mime, cover_imageBytes)){
+                albumService.addLogEntry(ISRC, LogEntryType.CREATE.getValue());
                 return ResponseEntity.ok("Successfully created new album: " + ISRC);
             }else{
                 String message = "The album already existed.";
@@ -93,6 +95,7 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ISRC cannot be empty");
         }else{
             if(albumService.deleteAlbum(ISRC) == true) {
+                albumService.addLogEntry(ISRC,LogEntryType.DELETE.getValue());
                 return ResponseEntity.ok("Successfully deleted the album: " + ISRC);
             }else{
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ISRC has not been found");
@@ -107,6 +110,7 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A parameter is incorrect or is empty!");
         }else{
             if(albumService.modifyAlbum(ISRC, title, description, year, artist_first_name, artist_last_name)){
+                albumService.addLogEntry(ISRC,LogEntryType.UPDATE.getValue());
                 return ResponseEntity.ok("Successfully modified the album: " + ISRC);
             }else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Album has not been modified, errors in parameters are present");
@@ -149,6 +153,7 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
         else{
             // Check if ISRC already existed or not
             if(albumService.updateCoverImage(ISRC, cover_image_name, image_mime, cover_imageBytes)){
+                albumService.addLogEntry(ISRC,LogEntryType.UPDATE.getValue());
                 return ResponseEntity.ok("Successfully modified the image: " + ISRC);
             }else{
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The image does not exist.");
@@ -164,6 +169,7 @@ public class AlbumRestControllerJSON implements WebMvcConfigurer {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ISRC cannot be empty");
         }else{
             if(albumService.deleteCoverImage(ISRC)) {
+                albumService.addLogEntry(ISRC,LogEntryType.UPDATE.getValue());
                 return ResponseEntity.ok("Successfully deleted the album: " + ISRC);
             }else{
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ISRC has not been found");

@@ -15,7 +15,8 @@ public class LogsDao {
     private ArrayList<Logs> logs = new ArrayList<>();
     private JDBConfig jdbc = new JDBConfig();
 
-    public void addLogEntry(String ISRC, int type_of_change) {
+    public boolean addLogEntry(String ISRC, int type_of_change) {
+        boolean success = false;
         java.util.Date utilDate = new java.util.Date();
         Timestamp time_stamp = new Timestamp(utilDate.getTime());
         String sql = "insert into logs (time_stamp, type_of_change, ISRC) values (?,?,?)";
@@ -29,7 +30,9 @@ public class LogsDao {
             e.printStackTrace();
         }finally {
             jdbc.close();
+            success = true;
         }
+        return success;
     }
 
     public ArrayList<Logs> getLogEntries(){

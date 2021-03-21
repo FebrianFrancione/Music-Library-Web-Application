@@ -3,6 +3,7 @@ package com.example.demo.Service;
 //import com.example.demo.DAO.AlbumRepository;
 import com.example.demo.Entity.Album;
 import com.example.demo.persistence.AlbumDao;
+import com.example.demo.persistence.LogsDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class AlbumServiceImpl implements AlbumService{
 
     AlbumDao albumDao = new AlbumDao();
+    LogsDao logsDao = new LogsDao();
 
     @Override
     public Album findByISRCAndTitle(String ISRC, String title){
@@ -35,6 +37,11 @@ public class AlbumServiceImpl implements AlbumService{
         image_mime = "image/" + image_mime;
         Album newAlbum = new Album(ISRC, title, description,year,artist_first_name,artist_last_name, cover_image_name, image_mime, cover_image );
         return albumDao.insertAlbum(newAlbum);
+    }
+
+    @Override
+    public boolean addLogEntry(String ISRC, int type_of_change){
+        return logsDao.addLogEntry(ISRC,type_of_change);
     }
 
     @Override

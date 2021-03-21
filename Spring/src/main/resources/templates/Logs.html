@@ -1,11 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="/webjars/bootstrap/3.3.1/css/bootstrap.min.css"/>
-<!--    <link rel="stylesheet" href="/css/Style.css"/>-->
-    <script src="/webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <meta charset="UTF-8"/>
-    <title>SOAP Client</title>
+    <title>Log Service</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" media="all"
           href="../../css/Style.css" th:href="@{/css/Style.css}" />
 </head>
@@ -23,41 +20,41 @@
     <div class="container">
         <div class="input-label">
             <h3><a th:href="@{/logs/getLogs/}"  style="--i: 0.05s;">get all logs</a></h3>
-            <h3><a th:href="@{/album/html/}"  style="--i: 0.05s;">&nbsp;&nbsp;Albums Repository</a></h3>
+            <h3><a th:href="@{/album/html/}"  style="--i: 0.05s;">&nbsp;&nbsp;Albums Repository</a></h3><br>
 
         </div>
-        <div class="input-label">
-            <h3>Get Logs filtered by Dates</h3>
-        </div>
         <div class="result">
-            <div class="search">
+            <div class="message">
+                <h3>Get Logs filtered by Dates</h3>
+            </div>
+
+            <div class="message">
                 <form class="search-form" action="/logs/getLogsByDate" method="get">
-                    From : <input type="text" name="from" class="form-control"/><br/>
-                    To : <input type="text" name="to" class="form-control"/><br/>
+                    <input placeholder="2020-10-01" type="text" name="from"/><br/>
+                    <input placeholder="2020-10-01" type="text" name="to"/><br/>
                     <input type="submit" class="search-btn" value="SEARCH" />
                 </form>
             </div>
-        </div>
-        <div class="input-label">
-            <h3>Get Logs filtered by Change Type</h3>
-        </div>
-        <div class="result">
-            <div class="search">
+
+            <div class="message">
+                <h3>Get Logs filtered by Change Type</h3>
+            </div>
+            <div class="message">
                 <form class="search-form" action="/logs/getLogsByChange" method="get">
-                    Change Type : <input type="text" name="change" class="form-control"/><br/>
+                    <input placeholder="change" type="text" name="change"/><br/>
                     <input type="submit" class="search-btn" value="SEARCH" />
                 </form>
             </div>
-        </div>
-        <div class="input-label">
-            <h3>Get Logs filtered by Dates and Change Type</h3>
-        </div>
-        <div class="result">
-            <div class="search">
+
+            <div class="message">
+                <h3>Get Logs filtered by Dates and Change Type</h3>
+            </div>
+
+            <div class="message">
                 <form class="search-form" action="/logs/getLogsByDateAndChange" method="get">
-                    From : <input type="text" name="from" class="form-control"/><br/>
-                    To : <input type="text" name="to" class="form-control"/><br/>
-                    Change Type : <input type="text" name="change" class="form-control"/><br/>
+                    <input placeholder="2020-10-01" type="text" name="from"/><br/>
+                    <input placeholder="2020-10-01" type="text" name="to"/><br/>
+                    <input placeholder="change" type="text" name="change"/><br/>
                     <input type="submit" class="search-btn" value="SEARCH" />
                 </form>
             </div>

@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
+import com.example.demo.persistence.helpers.LogEntryType;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -107,6 +107,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         else{
             // Check if ISRC already existed or not
             if(albumService.createNewAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name(), cover_image_name, image_mime, cover_imageBytes)){
+                albumService.addLogEntry(album.getISRC(),LogEntryType.CREATE.getValue());
                 model.addAttribute("posted", true);
                 return "Post";
             }else{
@@ -124,6 +125,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         } else {
 
             if (albumService.deleteAlbum(ISRC)) {
+                albumService.addLogEntry(album.getISRC(),LogEntryType.DELETE.getValue());
                 model.addAttribute("deleted", true);
                 return "Delete";
             } else {
@@ -138,6 +140,7 @@ public class AlbumRestController implements WebMvcConfigurer {
             return "Error";
         }else{
             if(albumService.modifyAlbum(album.getISRC(), album.getTitle(), album.getDescription(), album.getYear(), album.getArtist_first_name(), album.getArtist_last_name())){
+                albumService.addLogEntry(album.getISRC(),LogEntryType.UPDATE.getValue());
                 model.addAttribute("modified", true);
                 return "Modify";
             }else {
@@ -172,6 +175,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         else{
             // Check if ISRC already existed or not
             if(albumService.updateCoverImage(album.getISRC(), cover_image_name, image_mime, cover_imageBytes)){
+                albumService.addLogEntry(album.getISRC(),LogEntryType.UPDATE.getValue());
                 model.addAttribute("modified", true);
                 return "Images";
             }else{
@@ -189,6 +193,7 @@ public class AlbumRestController implements WebMvcConfigurer {
         } else {
 
             if (albumService.deleteCoverImage(ISRC)) {
+                albumService.addLogEntry(album.getISRC(),LogEntryType.UPDATE.getValue()); //Here we update album cover image, so register in the log as an update
                 model.addAttribute("deleted", true);
                 return "Images";
             } else {
