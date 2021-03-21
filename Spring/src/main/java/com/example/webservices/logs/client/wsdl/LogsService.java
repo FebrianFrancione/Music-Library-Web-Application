@@ -8,6 +8,7 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.ws.Action;
+import javax.xml.ws.FaultAction;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
@@ -24,6 +25,20 @@ import javax.xml.ws.ResponseWrapper;
 })
 public interface LogsService {
 
+
+    /**
+     *
+     * @throws RepException_Exception
+     */
+    @WebMethod
+    @RequestWrapper(localName = "clearLogs", targetNamespace = "http://service.SOAP/", className = "com.example.webservices.logs.client.wsdl.ClearLogs")
+    @ResponseWrapper(localName = "clearLogsResponse", targetNamespace = "http://service.SOAP/", className = "com.example.webservices.logs.client.wsdl.ClearLogsResponse")
+    @Action(input = "http://service.SOAP/LogsService/clearLogsRequest", output = "http://service.SOAP/LogsService/clearLogsResponse", fault = {
+            @FaultAction(className = RepException_Exception.class, value = "http://service.SOAP/LogsService/clearLogs/Fault/RepException")
+    })
+    public void clearLogs()
+            throws RepException_Exception
+    ;
 
     /**
      *

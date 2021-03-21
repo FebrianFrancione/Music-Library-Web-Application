@@ -1,6 +1,5 @@
 package com.example.demo.client;
 
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.webservices.logs.client.wsdl.*;
 
-import javax.xml.bind.JAXBException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,6 +23,7 @@ public class MainController  implements WebMvcConfigurer {
     private boolean fromDateSet = false;
     private boolean toDateSet = false;
     private boolean changeTypeSet = false;
+    private boolean clearLogsSet = false;
     private String from = "";
     private String to = "";
     private String changeType = "";
@@ -124,6 +123,25 @@ public class MainController  implements WebMvcConfigurer {
         return "LogsFiltered";
     }
 
+    @GetMapping( "/clearLogs")
+    public String clearLogs(Model model) throws RepException_Exception {
+        LogsService port = logsServiceInit();
+
+        if(port!=null){
+            try {
+                port.clearLogs();
+            } catch (RepException_Exception e) {
+                System.out.println("Clear Logs not yet implemented exception " + e.getFaultInfo().getMessage());
+                model.addAttribute("log_message", e.getFaultInfo().getMessage());
+            }
+
+        }else{
+            return "LogsError";
+        }
+
+        return "LogsError";
+    }
+
     private LogsService logsServiceInit(){
         LogsService port=null;
         try {
@@ -170,5 +188,6 @@ public class MainController  implements WebMvcConfigurer {
         this.toDateSet = false;
         this.fromDateSet = false;
         this.changeTypeSet = false;
+        this.clearLogsSet = false;
     }
 }

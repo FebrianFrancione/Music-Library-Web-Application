@@ -42,4 +42,9 @@ public class LogsServiceImpl implements LogsService {
         logs = logRepository.filterLogsByDatesAndChange(from, to, change_type.getValue());
         return logs;
     }
+
+    @Override
+    public void clearLogs() throws RepException{
+        throw new RepException("The method is not yet supported.");
+    }
 }

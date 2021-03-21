@@ -26,4 +26,7 @@ public interface LogsService {
   @WebMethod(operationName = "getAllLogsByDatesAndByChange")
   List<LogEntryEntity> getAllLogsByDatesAndByChange(@WebParam(name="from") String from, @WebParam(name="to") String to,
                                                            @WebParam(name="change_type") String change);
+
+  @WebMethod(operationName = "clearLogs")
+  void clearLogs() throws RepException;
 }

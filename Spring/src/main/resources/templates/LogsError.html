@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Logs Error</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/Style.css" th:href="@{/css/Style.css}" />
+</head>
+<body class="Error">
+
+<header>
+    <div class="container">
+        <div class="welcome-banner">
+            <h1>Welcome to Logs Repository Service</h1>
+        </div>
+    </div>
+</header>
+
+
+<div class="input-label">
+    <h3><a th:href="@{/logs/}"  style="--i: 0.05s;">Back to Logs Repository</a></h3><br>
+</div>
+
+<section class="my-5">
+    <div class="container">
+        <div class="result">
+            <div class="message">
+                <h3 style="margin-top: 25px;color: red;">SOAP Error : <span th:text="${log_message}"></span></h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+</html>
