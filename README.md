@@ -1,4 +1,4 @@
-# Web-Services and Applications: SOEN 487 A2
+# SOEN 487 A2: Web-Services and Applications
 RESTful Web-Service that allows client to create an Album/Artist and upload Cover Images. Implements CRUD requests following MVC Pattern.
 
 ## Created By
