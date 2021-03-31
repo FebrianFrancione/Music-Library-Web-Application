@@ -1,5 +1,6 @@
 # SOEN 487 A2: Web-Services and Applications
-RESTful Web-Service that allows client to create an Album/Artist and upload Cover Images. Implements CRUD requests following MVC Pattern.
+RESTful Web-Service that allows a client to create an Album/Artist and upload Cover Images.
+Implements CRUD requests following MVC Pattern.
 
 ## Created By
 Ivan Gerasymenko, Febrian Francione, Kiho Lee
