@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Displaying Chart</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/Style.css" th:href="@{/css/Style.css}" />
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="welcome-banner">
+            <h1>Welcome to Chart Repository Service</h1>
+        </div>
+    </div>
+</header>
+
+<a th:href="@{/chart/}"  style="--i: 0.05s;">Home</a>
+
+<section class="my-5">
+    <div class="container">
+        <div class="input-label">
+            <h2>Charts</h2>
+        </div>
+
+        <div class="result" th:if="${get}">
+            <img class='img-thumbnail' style=" width: 800px;height: 500px; object-fit: fill;" th:src="${chart}" alt="Chart"/>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
