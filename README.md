@@ -1,6 +1,6 @@
 # SOEN 487 A2: Web-Services and Applications
 RESTful Web-Service that allows a client to create an Album/Artist and upload Cover Images.
-Implements CRUD requests following MVC Pattern.
+Implements CRUD requests following MVC Pattern. Controller allows for Response to return JSON for Postman Requests and HTTP to web browser. 
 
 ## Created By
 Ivan Gerasymenko, Febrian Francione, Kiho Lee
